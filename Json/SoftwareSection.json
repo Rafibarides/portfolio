@@ -1,0 +1,166 @@
+[
+  {
+    "Title": "Marcy Run",
+    "Embed link": "https://marcyrun.top/",
+    "Website": "https://marcyrun.top/",
+    "Screenshot": "",
+    "useScreenshot": false,
+    "Technologies": [
+      "React",
+      "Javascript",
+      "HTML",
+      "Tailwind",
+      "Framer",
+      "UI/UX",
+      "Adobe CC",
+      "Figma"
+    ],
+    "Description": "Click the screen and hit Space to start! Marcy Run is an endless-runner front end game. The tech stack for Marcy Run includes React for the user interface, Howler.js for implementing dynamic audio playback, and Framer Motion for smooth animations and transitions. I illustrated the characters assets using Adobe Creative Suite, and composed and produced the original theme music using Logic Pro X.",
+    "GithubRepoURL": "https://github.com/Rafibarides/marcy-run-2025",
+    "Presentation": "",
+    "AppStore": ""
+  },
+  {
+    "Title": "Worldly",
+    "Embed link": "https://www.playworldly.com",
+    "Website": "https://www.playworldly.com",
+    "Screenshot": "../src/assets/Worldly.avif",
+    "useScreenshot": false,
+    "Technologies": [
+      "React",
+      "React Native",
+      "Firebase",
+      "Javascript",
+      "HTML",
+      "Tailwind",
+      "Framer",
+      "UI/UX",
+      "Adobe CC",
+      "Figma"
+    ],
+    "Description": "Available now on the App Store, Worldly is the social geography game that makes learning the world feel like play. Compete with friends, track your progress, unlock modules, earn badges, and explore countries through games that challenge your knowledge of flags, capitals, and locations\u2014all in a sleek, interactive experience built for casual fun and serious learning.",
+    "GithubRepoURL": "https://github.com/Rafibarides/worldly",
+    "Presentation": "",
+    "AppStore": "https://www.rafi-barides.com/#:~:text=social%20geography%20game-,App%20Store,-%2C%20https%3A//www"
+  },
+  {
+    "Title": "RBM Sounds",
+    "Embed link": "http://rbmsounds.com/",
+    "Website": "http://rbmsounds.com/",
+    "Screenshot": "../src/assets/RBMSounds.avif",
+    "useScreenshot": true,
+    "Technologies": ["Velo", "Javascript", "UI/UX", "Adobe CC", "Figma"],
+    "Description": "RBM Sounds is a fully functional e-commerce website built using the Velo by Wix framework, designed to sell my digital products, including music production resources tailored for producers. The site integrates seamless payment processing, user-friendly navigation, and responsive design to provide an effortless shopping experience.",
+    "GithubRepoURL": "",
+    "Presentation": "",
+    "AppStore": ""
+  },
+  {
+    "Title": "Riff Rabbit",
+    "Embed link": "",
+    "Website": "",
+    "Screenshot": "../src/assets/RiffRabbit.avif",
+    "useScreenshot": false,
+    "Technologies": [
+      "React",
+      "SQL",
+      "Postgres",
+      "Express",
+      "Javascript",
+      "HTML",
+      "Tailwind",
+      "Framer",
+      "UI/UX",
+      "Adobe CC",
+      "Figma"
+    ],
+    "Description": "Riff Rabbit is a full-stack multiplayer interval training game designed for musicians to sharpen their ear training skills in a fun, interactive way. Built with React for the frontend and Node.js with Express for the backend, the game features a structured interval training system and includes user authentication with OAuth. The backend is powered by PostgreSQL, with TablePlus for database management. Custom graphics and user interface designs were created using Figma and Adobe Illustrator.",
+    "GithubRepoURL": "",
+    "Presentation": "https://docs.google.com/presentation/d/e/2PACX-1vRn_xtcRU7Qs6_fx6J0JswMwCprxiKS5Vn0UQ9HtOCNGa-n-bokIq5hBjUEwyW7n7BmUElvKyoKK8nf/pubembed?start=true&loop=true&delayms=5000",
+    "AppStore": ""
+  },
+  {
+    "Title": "Weather Now",
+    "Embed link": "",
+    "Website": "",
+    "Screenshot": "../src/assets/WeatherNow.avif",
+    "useScreenshot": false,
+    "Technologies": [
+      "React",
+      "CSS",
+      "Javascript",
+      "HTML",
+      "UI/UX",
+      "Adobe CC",
+      "figma"
+    ],
+    "Description": "Weather Now is a team project built with React, HTML, and CSS, designed to provide users with real-time weather updates and sunset information. The app integrates API calls to fetch accurate weather data and sunset times based on user location. The clean and intuitive frontend design ensures a seamless user experience, making it easy to check current conditions and plan accordingly.",
+    "GithubRepoURL": "https://github.com/Weather-Now/WeatherNow",
+    "Presentation": "https://docs.google.com/presentation/d/e/2PACX-1vRvRQZGhNDsgXNq7WJiqINuc4Q1LvDxe7-eKi3HoiWmpfhbryeBrA7JYJcvHH1n8EtoW8ewEAQnZHqz/pubembed?start=true&loop=true&delayms=3000",
+    "AppStore": ""
+  },
+  {
+    "Title": "Shabbat Zman",
+    "Embed link": "https://shabbatzman.com/",
+    "Website": "https://shabbatzman.com/",
+    "Screenshot": "../src/assets/ShabbatZman.avif",
+    "useScreenshot": true,
+    "Technologies": [
+      "React",
+      "React Native",
+      "CSS",
+      "Javascript",
+      "HTML",
+      "UI/UX",
+      "Adobe CC",
+      "figma"
+    ],
+    "Description": "Shabbatzman.com is a React-based web app designed to simplify Jewish practice by providing accurate zmanim (prayer times) based on the user's location. The app integrates the Geolocation API to automate location detection, making it easier to observe halachic times without manual input. Key components include a responsive design built with React and modern CSS for accessibility across devices. The app connects to a reliable zmanim API to calculate prayer times according to various halachic opinions, ensuring accuracy and inclusivity.",
+    "GithubRepoURL": "https://github.com/Rafibarides/shabbat-zman-mobile",
+    "Presentation": "",
+    "AppStore": "https://apps.apple.com/us/app/shabbat-zman/id6741112947"
+  },
+  {
+    "Title": "Gelt Capital",
+    "Embed link": "http://geltcapitalusa.com/",
+    "Website": "http://geltcapitalusa.com/",
+    "Screenshot": "../src/assets/GeltCapital.avif",
+    "useScreenshot": true,
+    "Technologies": [
+      "React",
+      "CSS",
+      "Javascript",
+      "HTML",
+      "UI/UX",
+      "Adobe CC",
+      "figma"
+    ],
+    "Description": "Developed with React, this website is for Gelt Capital, a leading fintech firm in the funding space, delivering seamless, high-performance tools for investors and businesses alike. The site blends modern UI design with robust infrastructure to streamline capital management, optimize deal flow, and provide real-time insights\u2014all while maintaining enterprise-grade security and scalability",
+    "GithubRepoURL": "https://github.com/capital-firm-rbm/gelt-equity",
+    "Presentation": "",
+    "AppStore": ""
+  },
+  {
+    "Title": "Communitree",
+    "Embed link": "",
+    "Website": "",
+    "Screenshot": "../src/assets/Communitree.avif",
+    "useScreenshot": false,
+    "Technologies": [
+      "React",
+      "CSS",
+      "Javascript",
+      "Postgres",
+      "SQL",
+      "Express",
+      "HTML",
+      "UI/UX",
+      "Adobe CC",
+      "figma"
+    ],
+    "Description": "Developed with React, this website is for Gelt Capital, a leading fintech firm in the funding space, delivering seamless, high-performance tools for investors and businesses alike. The site blends modern UI design with robust infrastructure to streamline capital management, optimize deal flow, and provide real-time insights\u2014all while maintaining enterprise-grade security and scalability",
+    "GithubRepoURL": "https://github.com/Green-Guild/communiTree",
+    "Presentation": "https://docs.google.com/presentation/d/e/2PACX-1vSTGV5VvIgVwZQDzd-1TXW7mZcpT9H95G-Itlj6QiqTk-CpeRSuD-pk52jk05CSNU7PlpgmKjCrKN7q/pubembed?start=true&loop=true&delayms=3000",
+    "AppStore": ""
+  }
+]
