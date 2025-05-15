@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { palette } from './utils/colors';
 import SoftwareSection from './sections/SoftwareSection';
 import PhotographySection from './sections/PhotographySection';
+import ArtSection from './sections/ArtSection';
+import MusicPerformanceSection from './sections/MusicPerformanceSection';
+import AboutMeModal from './AboutMeModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faCode, 
@@ -12,11 +15,13 @@ import {
   faHeadphones, 
   faVideo, 
   faPodcast,
+  faUser
 } from '@fortawesome/free-solid-svg-icons';
 
 const Portfolio = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [showAboutModal, setShowAboutModal] = useState(false);
   
   // Navigation items with their icons
   const navItems = [
@@ -27,6 +32,7 @@ const Portfolio = () => {
     { name: 'Audio', icon: faHeadphones, section: 'audio' },
     { name: 'Video', icon: faVideo, section: 'video' },
     { name: 'Content\nProduction', icon: faPodcast, section: 'content-production' },
+    { name: 'About\nMe', icon: faUser, section: 'about', isModal: true },
   ];
 
   // Styles
@@ -93,6 +99,15 @@ const Portfolio = () => {
     }
   };
 
+  // Function to handle navigation item click
+  const handleNavItemClick = (item, index) => {
+    if (item.isModal) {
+      setShowAboutModal(true);
+    } else {
+      scrollToSection(item.section);
+    }
+  };
+
   // Function to handle smooth scrolling to sections
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -131,7 +146,7 @@ const Portfolio = () => {
           <motion.a
             key={index}
             style={styles.navLink}
-            onClick={() => scrollToSection(item.section)}
+            onClick={() => handleNavItemClick(item, index)}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
             animate={{
@@ -189,8 +204,13 @@ const Portfolio = () => {
       <main style={styles.content}>
         <SoftwareSection />
         <PhotographySection />
+        <ArtSection />
+        <MusicPerformanceSection />
         {/* Other sections will be added here */}
       </main>
+
+      {/* About Me Modal */}
+      {showAboutModal && <AboutMeModal onClose={() => setShowAboutModal(false)} />}
     </div>
   );
 };
