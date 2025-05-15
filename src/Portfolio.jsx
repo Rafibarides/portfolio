@@ -5,6 +5,9 @@ import SoftwareSection from './sections/SoftwareSection';
 import PhotographySection from './sections/PhotographySection';
 import ArtSection from './sections/ArtSection';
 import MusicPerformanceSection from './sections/MusicPerformanceSection';
+import AudioSection from './sections/AudioSection';
+import VideoSection from './sections/VideoSection';
+import ContentProductionSection from './sections/ContentProductionSection';
 import AboutMeModal from './AboutMeModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -17,6 +20,7 @@ import {
   faPodcast,
   faUser
 } from '@fortawesome/free-solid-svg-icons';
+import ContactSection from './sections/ContactSection';
 
 const Portfolio = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -206,7 +210,10 @@ const Portfolio = () => {
         <PhotographySection />
         <ArtSection />
         <MusicPerformanceSection />
-        {/* Other sections will be added here */}
+        <AudioSection />
+        <VideoSection />
+        <ContentProductionSection />
+        <ContactSection />
       </main>
 
       {/* About Me Modal */}

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { palette } from '../utils/colors';
 import ScrollFontTransition from '../components/ScrollFontTransition';
 import photographyData from '../../Json/PhotographySection.json';
+import { motion } from 'framer-motion';
 
 const PhotographySection = () => {
   const [photos, setPhotos] = useState([]);
@@ -179,6 +180,26 @@ const PhotographySection = () => {
     nextButton: {
       right: '20px',
     },
+    photoItem: {
+      position: 'relative',
+      overflow: 'hidden',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      aspectRatio: '5/7',
+      backgroundColor: 'rgba(20, 20, 20, 0.5)',
+      transition: 'transform 0.3s ease',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+    },
+  };
+
+  const getGridColumn = (index, isMobile) => {
+    if (isMobile) return 'span 1';
+    return index % 2 === 0 ? 'span 1' : 'span 2';
+  };
+
+  const getGridRow = (index, isMobile) => {
+    if (isMobile) return 'span 1';
+    return index < 2 ? 'span 1' : 'span 2';
   };
 
   return (
@@ -196,8 +217,8 @@ const PhotographySection = () => {
       
       <div style={styles.photoGrid}>
         {photos.map((photo, index) => (
-          <div 
-            key={index} 
+          <motion.div 
+            key={index}
             style={styles.photoContainer}
             onClick={() => openPhotoModal(photo, index)}
             onMouseEnter={(e) => {
@@ -210,15 +231,20 @@ const PhotographySection = () => {
               e.currentTarget.querySelector('img').style.transform = 'scale(1)';
               e.currentTarget.querySelector('div').style.opacity = 0;
             }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: false, margin: "-100px" }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.5 }}
           >
-            <img 
-              src={photo} 
-              alt={`Photography ${index + 1}`} 
+            <img
+              src={photo}
+              alt={`Photography ${index + 1}`}
               style={styles.photo}
               loading="lazy"
             />
             <div style={styles.photoOverlay}></div>
-          </div>
+          </motion.div>
         ))}
       </div>
       

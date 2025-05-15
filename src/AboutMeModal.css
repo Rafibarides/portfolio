@@ -1,15 +1,15 @@
 @keyframes profileGlow {
   0% {
-    box-shadow: 0 0 10px 2px rgba(100, 100, 255, 0.3), 
-                0 0 20px 6px rgba(80, 80, 200, 0.2);
+    box-shadow: 0 0 10px 2px rgba(203, 203, 255, 0.3), 
+                0 0 20px 6px rgba(96, 96, 128, 0.2);
   }
   50% {
     box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5), 
                 0 0 30px 10px rgba(152, 152, 163, 0.3);
   }
   100% {
-    box-shadow: 0 0 10px 2px rgba(100, 100, 255, 0.3), 
-                0 0 20px 6px rgba(80, 80, 200, 0.2);
+    box-shadow: 0 0 10px 2px rgba(160, 160, 195, 0.3), 
+                0 0 20px 6px rgba(104, 104, 121, 0.2);
   }
 }
 

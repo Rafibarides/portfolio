@@ -128,6 +128,29 @@ const MusicPerformanceSection = () => {
     },
   };
 
+  // First, define the animation variants
+  const skillsContainerAnimation = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const skillItemAnimation = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.3
+      }
+    }
+  };
+
   return (
     <section id="music-performance" style={styles.section}>
       <h2 style={styles.header}>
@@ -176,11 +199,18 @@ const MusicPerformanceSection = () => {
               )}
               
               {performance.skills && performance.skills.length > 0 && (
-                <div style={styles.skillsContainer}>
+                <motion.div 
+                  style={styles.skillsContainer}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: false, margin: "-50px" }}
+                  variants={skillsContainerAnimation}
+                >
                   {performance.skills.map((skill, skillIndex) => (
                     <motion.span
                       key={skillIndex}
                       style={styles.skillPill}
+                      variants={skillItemAnimation}
                       whileHover={{ 
                         scale: 1.05, 
                         backgroundColor: 'rgba(255, 255, 255, 0.2)'
@@ -189,7 +219,7 @@ const MusicPerformanceSection = () => {
                       {skill}
                     </motion.span>
                   ))}
-                </div>
+                </motion.div>
               )}
             </div>
           </motion.div>

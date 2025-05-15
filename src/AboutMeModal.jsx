@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { palette } from './utils/colors';
 import profilePic from './assets/prof.png';
+import profileBlinkPic from './assets/prof-blink.png';
+import textureGif from './assets/texture.gif';
 import aboutData from '../Json/About.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -10,10 +12,12 @@ import './AboutMeModal.css'; // Import CSS for the glow animation
 const AboutMeModal = ({ onClose }) => {
   const [bio, setBio] = useState('');
   const [scrollY, setScrollY] = useState(0);
+  const [isBlinking, setIsBlinking] = useState(false);
   const modalRef = useRef(null);
   const particlesRef = useRef([]);
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
+  const blinkTimeoutRef = useRef(null);
 
   // Generate random particles for background
   const generateParticles = (count) => {
@@ -122,6 +126,34 @@ const AboutMeModal = ({ onClose }) => {
       window.removeEventListener('keydown', handleEsc);
     };
   }, [onClose]);
+
+  // Set up blinking effect
+  useEffect(() => {
+    const setupBlinking = () => {
+      // Random time between 2-4 seconds for natural blinking
+      const nextBlinkTime = Math.random() * 2000 + 2000;
+      
+      blinkTimeoutRef.current = setTimeout(() => {
+        setIsBlinking(true);
+        
+        // Blink duration (150-250ms)
+        setTimeout(() => {
+          setIsBlinking(false);
+          setupBlinking(); // Schedule next blink
+        }, Math.random() * 100 + 150);
+      }, nextBlinkTime);
+    };
+    
+    // Start the blinking cycle
+    setupBlinking();
+    
+    // Clean up on unmount
+    return () => {
+      if (blinkTimeoutRef.current) {
+        clearTimeout(blinkTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const styles = {
     overlay: {
@@ -296,6 +328,58 @@ const AboutMeModal = ({ onClose }) => {
   // Split bio into paragraphs
   const paragraphs = bio.split('\n\n');
 
+  // Text animation variants
+  const nameTextVariants = {
+    hidden: { 
+      opacity: 0,
+      y: 20
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  };
+  
+  // Staggered children animation for the title
+  const titleContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3
+      }
+    }
+  };
+  
+  const titleItemVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.5
+      }
+    }
+  };
+
+  // Profile texture animation
+  const textureOpacityVariants = {
+    animate: {
+      opacity: [1, 0.1, 0.1, 1],
+      transition: {
+        times: [0, 0.25, 0.875, 1], // 0-25% fade to 10%, stay at 10% for 62.5%, then back to 100%
+        duration: 8, // Total animation duration (8 seconds)
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
     <motion.div
       style={styles.overlay}
@@ -328,13 +412,32 @@ const AboutMeModal = ({ onClose }) => {
         <div style={styles.content}>
           <motion.div style={styles.profileContainer}>
             <motion.img 
-              src={profilePic} 
+              src={isBlinking ? profileBlinkPic : profilePic} 
               alt="Rafi Barides" 
               className="profile-glow"
               style={styles.profileImage}
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.5 }}
+            />
+            <motion.img
+              src={textureGif}
+              alt=""
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '150px',
+                height: '150px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                mixBlendMode: 'screen',
+                zIndex: 3,
+                border: '3px solid rgba(255, 255, 255, 0.3)', // Match the border of the profile image
+              }}
+              initial={{ opacity: 1 }}
+              animate="animate"
+              variants={textureOpacityVariants}
             />
           </motion.div>
           
@@ -345,8 +448,22 @@ const AboutMeModal = ({ onClose }) => {
           >
             <p style={styles.greeting}>Hi, I'm</p>
             <div style={styles.nameContainer}>
-              <span style={styles.firstName}>Rafi</span>
-              <span style={styles.lastName}>Barides</span>
+              <motion.span 
+                style={styles.firstName}
+                initial="hidden"
+                animate="visible"
+                variants={nameTextVariants}
+              >
+                Rafi
+              </motion.span>
+              <motion.span 
+                style={styles.lastName}
+                initial="hidden"
+                animate="visible"
+                variants={nameTextVariants}
+              >
+                Barides
+              </motion.span>
             </div>
           </motion.div>
           

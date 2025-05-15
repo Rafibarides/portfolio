@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
 import { palette } from '../utils/colors';
 import softwareData from '../../Json/SoftwareSection.json';
 import SoftwareDisplayPage from '../SoftwareDisplayPage';
+import TextClipMask from '../components/TextClipMask';
+import texture2Gif from '../assets/texture2.gif';
 
 const SoftwareSection = () => {
   const [projects, setProjects] = useState([]);
@@ -11,19 +13,45 @@ const SoftwareSection = () => {
   const [allTechnologies, setAllTechnologies] = useState([]);
   const sectionRef = useRef(null);
   const vantaEffect = useRef(null);
-  const pillsRef = useRef([]);
+  const pillsRef = useRef(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const titleRef = useRef(null);
+  const isPillsInView = useInView(pillsRef, { once: false, amount: 0.3 });
+  const isTitleInView = useInView(titleRef, { once: false, amount: 0.3 });
+  const [hoveredPill, setHoveredPill] = useState(null);
+
+  // Add animation variants
+  const pillsAnimation = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        staggerChildren: 0.1,
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const pillItemAnimation = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  const titleAnimation = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { duration: 0.7 }
+    }
+  };
 
   // Add a function to normalize technology names
   const normalizeTechName = (tech) => {
-    // Handle specific cases like CSS, HTML, UI/UX
-    if (tech.toLowerCase() === 'css') return 'CSS';
-    if (tech.toLowerCase() === 'html') return 'HTML';
-    if (tech.toLowerCase() === 'ui/ux') return 'UI/UX';
-    if (tech.toLowerCase() === 'figma') return 'Figma';
-    // Add more cases as needed
-    
-    // For other cases, just return the original
+    // Handle special cases
+    if (tech.toLowerCase() === 'react.js' || tech.toLowerCase() === 'reactjs') return 'React';
+    if (tech.toLowerCase() === 'node.js' || tech.toLowerCase() === 'nodejs') return 'Node.js';
     return tech;
   };
 
@@ -337,52 +365,130 @@ const SoftwareSection = () => {
         opacity: 1,
         transform: 'scale(1.1)',
       }
-    }
+    },
+    tooltip: {
+      position: 'absolute',
+      top: '-40px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
+      color: 'white',
+      padding: '6px 10px',
+      borderRadius: '5px',
+      fontSize: '12px',
+      pointerEvents: 'none',
+      whiteSpace: 'nowrap',
+      zIndex: 10,
+      boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
+    },
+    tooltipArrow: {
+      position: 'absolute',
+      bottom: '-5px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      width: '0',
+      height: '0',
+      borderLeft: '5px solid transparent',
+      borderRight: '5px solid transparent',
+      borderTop: '5px solid rgba(0, 0, 0, 0.85)',
+    },
   };
 
   return (
     <section id="software" style={styles.section} ref={sectionRef}>
-      <h2 style={styles.header}>
-        Software <span style={styles.projectsText}>Projects</span>
-      </h2>
+      <div style={styles.header}>
+        <span style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <TextClipMask 
+            text="Software"
+            clipImageSrc={texture2Gif}
+            fontFamily="'Poppins', sans-serif"
+            fontSize="2.5rem"
+            fontWeight={600}
+            color="white"
+            opacity={0.6}
+            blendMode="multiply"
+          />
+        </span>
+        {" "}
+        <span>
+          <TextClipMask 
+            text="Projects"
+            clipImageSrc={texture2Gif}
+            fontFamily="'Caveat', cursive"
+            fontSize="2.5rem"
+            fontWeight={600}
+            color="white"
+            opacity={0.6}
+            blendMode="multiply"
+          />
+        </span>
+      </div>
       
       {/* Filter Pills */}
-      <div style={styles.filterContainer}>
+      <motion.div 
+        ref={pillsRef}
+        style={styles.filterContainer}
+        initial="hidden"
+        animate={isPillsInView ? "visible" : "hidden"}
+        variants={pillsAnimation}
+      >
         {allTechnologies.map((tech, index) => (
-          <div
+          <motion.div
             key={index}
-            ref={el => pillsRef.current[index] = el}
+            variants={pillItemAnimation}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             style={{
               ...styles.filterPill,
               ...(selectedTechnologies.includes(tech)
                 ? styles.activePill
                 : styles.inactivePill),
+              position: 'relative',
             }}
             onClick={() => filterProjects(tech)}
-            onMouseEnter={(e) => handlePillHover(e, true)}
-            onMouseLeave={(e) => handlePillHover(e, false)}
+            onMouseEnter={(e) => {
+              handlePillHover(e, true);
+              setHoveredPill(tech);
+            }}
+            onMouseLeave={(e) => {
+              handlePillHover(e, false);
+              setHoveredPill(null);
+            }}
           >
             {tech}
-          </div>
+            <AnimatePresence>
+              {hoveredPill === tech && (
+                <motion.div 
+                  key={`tooltip-${tech}`}
+                  style={styles.tooltip}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  Display projects using {tech}
+                  <div style={styles.tooltipArrow}></div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
       
       {/* Projects Grid */}
       <div style={styles.projectsGrid}>
         {filteredProjects.map((project, index) => (
-          <motion.div 
-            key={index} 
+          <motion.div
+            key={index}
             style={styles.card}
-            initial={{ scale: 1 }}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.5 }}
             whileHover={{ 
               scale: 1.02,
-              y: -5,
-              boxShadow: '0 12px 30px rgba(0, 0, 0, 0.4)'
-            }}
-            transition={{ 
-              type: "tween",
-              ease: "easeOut",
-              duration: 0.2
+              boxShadow: '0 20px 30px rgba(0, 0, 0, 0.3)'
             }}
             onClick={(e) => handleCardClick(e, project)}
           >
