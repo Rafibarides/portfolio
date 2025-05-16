@@ -47,7 +47,7 @@
     "Title": "RBM Sounds",
     "Embed link": "http://rbmsounds.com/",
     "Website": "http://rbmsounds.com/",
-    "Screenshot": "../src/assets/RBMSounds.avif",
+    "Screenshot": "../assets/RBMSounds.avif",
     "useScreenshot": true,
     "Technologies": ["Velo", "Javascript", "UI/UX", "Adobe CC", "Figma"],
     "Description": "RBM Sounds is a fully functional e-commerce website built using the Velo by Wix framework, designed to sell my digital products, including music production resources tailored for producers. The site integrates seamless payment processing, user-friendly navigation, and responsive design to provide an effortless shopping experience.",
@@ -59,7 +59,7 @@
     "Title": "Riff Rabbit",
     "Embed link": "",
     "Website": "",
-    "Screenshot": "../src/assets/RiffRabbit.avif",
+    "Screenshot": "../assets/RiffRabbit.avif",
     "useScreenshot": false,
     "Technologies": [
       "React",
@@ -83,7 +83,7 @@
     "Title": "Weather Now",
     "Embed link": "",
     "Website": "",
-    "Screenshot": "../src/assets/WeatherNow.avif",
+    "Screenshot": "../assets/WeatherNow.avif",
     "useScreenshot": false,
     "Technologies": [
       "React",
@@ -103,7 +103,7 @@
     "Title": "Shabbat Zman",
     "Embed link": "https://shabbatzman.com/",
     "Website": "https://shabbatzman.com/",
-    "Screenshot": "../src/assets/ShabbatZman.avif",
+    "Screenshot": "../assets/ShabbatZman.avif",
     "useScreenshot": true,
     "Technologies": [
       "React",
@@ -124,7 +124,7 @@
     "Title": "Gelt Capital",
     "Embed link": "http://geltcapitalusa.com/",
     "Website": "http://geltcapitalusa.com/",
-    "Screenshot": "../src/assets/GeltCapital.avif",
+    "Screenshot": "../assets/GeltCapital.avif",
     "useScreenshot": true,
     "Technologies": [
       "React",
@@ -144,7 +144,7 @@
     "Title": "Communitree",
     "Embed link": "",
     "Website": "",
-    "Screenshot": "../src/assets/Communitree.avif",
+    "Screenshot": "../assets/Communitree.avif",
     "useScreenshot": false,
     "Technologies": [
       "React",
