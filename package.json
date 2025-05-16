@@ -6,7 +6,7 @@
   "homepage": "https://rafi-barides.com",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && cp -r src/assets dist/",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
