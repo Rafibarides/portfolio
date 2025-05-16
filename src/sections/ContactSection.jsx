@@ -1,13 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faLinkedin, 
   faGithub, 
   faYoutube 
 } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope, faChevronDown, faChevronUp, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { palette } from '../utils/colors';
+import { faEnvelope, faChevronDown, faChevronUp, faPaperPlane, faCheck } from '@fortawesome/free-solid-svg-icons';
 import RetroTextEffect from '../components/RetroTextEffect';
 
 const ContactSection = () => {
@@ -16,6 +15,27 @@ const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const emailInputRef = useRef(null);
+  
+  // Add state for the animated phrases
+  const [activeIndex, setActiveIndex] = useState(0);
+  const phrases = [
+    "Let's get in touch",
+    "I am available for work",
+    "Thank you for reviewing my portfolio",
+    "Say hi on LinkedIn!",
+    "Get my resume below",
+    "Reach out via email",
+    "Let's create something together"
+  ];
+
+  // Effect to cycle through phrases
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex(prevIndex => (prevIndex + 1) % phrases.length);
+    }, 4000); // 3 seconds for animation + 1 second display
+    
+    return () => clearInterval(interval);
+  }, [phrases.length]);
 
   const toggleResumeDropdown = () => {
     setIsResumeOpen(!isResumeOpen);
@@ -102,6 +122,114 @@ const ContactSection = () => {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Word animation variants (copied from ArtSection)
+  const wordAnimationVariants = {
+    hidden: {
+      opacity: 0,
+      y: 10,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.2,
+      },
+    },
+    exit: {
+      opacity: 0,
+      y: 5,
+      transition: {
+        duration: 0.2,
+      },
+    }
+  };
+
+  // Component for a single animated paragraph (adapted from ArtSection)
+  const AnimatedParagraph = ({ text, isActive }) => {
+    const controls = useAnimation();
+    
+    // Process text into words, ensuring proper handling of spaces
+    const processText = (text) => {
+      const parts = [];
+      const words = text.split(' ');
+      
+      words.forEach((word, i) => {
+        if (word) {
+          parts.push(word);
+        }
+        if (i < words.length - 1) {
+          parts.push(' ');
+        }
+      });
+      
+      return parts;
+    };
+    
+    const words = processText(text);
+    
+    // Start or reset animation when active state changes
+    useEffect(() => {
+      if (isActive) {
+        controls.start("visible");
+      } else {
+        controls.start("hidden");
+      }
+    }, [isActive, controls]);
+    
+    return (
+      <motion.p
+        style={{
+          textAlign: 'center',
+          fontSize: '1.2rem',
+          position: 'absolute',
+          top: '50%',
+          left: 0,
+          right: 0,
+          transform: 'translateY(-50%)',
+          margin: 0,
+          padding: '10px 0',
+          display: isActive ? 'flex' : 'none',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: 'auto',
+          overflow: 'visible'
+        }}
+        initial="hidden"
+        animate={controls}
+        variants={{
+          hidden: {
+            opacity: 0,
+            transition: {
+              duration: 0.3,
+            }
+          },
+          visible: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.02,
+              delayChildren: 0.05,
+              when: "beforeChildren",
+            }
+          }
+        }}
+      >
+        {words.map((word, index) => (
+          <motion.span
+            key={index}
+            variants={wordAnimationVariants}
+            style={{ 
+              display: 'inline-block',
+              whiteSpace: word === ' ' ? 'pre' : 'normal',
+            }}
+          >
+            {word}
+          </motion.span>
+        ))}
+      </motion.p>
+    );
   };
 
   const styles = {
@@ -241,9 +369,45 @@ const ContactSection = () => {
     <section id="contact" style={styles.section}>
       <div style={styles.content}>
         <div style={styles.header}>
-          <RetroTextEffect>
-            <h2 style={{ margin: 0, fontSize: '2rem' }}>Connect With Me</h2>
-          </RetroTextEffect>
+          <h2 style={{ margin: 0, fontSize: '2rem' }}>Connect With Me</h2>
+        </div>
+        
+        {/* Add the animated phrases here */}
+        <div style={{ 
+          marginBottom: '40px', 
+          position: 'relative',
+          width: '100%',
+          height: '60px'
+        }}>
+          <div style={{ position: 'relative', height: '100%', width: '100%' }}>
+            {phrases.map((phrase, index) => (
+              <div 
+                key={index} 
+                style={{ 
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  display: index === activeIndex ? 'block' : 'none'
+                }}
+              >
+                <RetroTextEffect opacity={0.5}>
+                  <div style={{
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <AnimatedText 
+                      text={phrase}
+                      isActive={index === activeIndex}
+                    />
+                  </div>
+                </RetroTextEffect>
+              </div>
+            ))}
+          </div>
         </div>
         
         <div style={styles.socialLinks}>
@@ -334,12 +498,39 @@ const ContactSection = () => {
                   <motion.button
                     type="submit"
                     style={styles.submitButton}
-                    disabled={isSubmitting}
-                    whileHover={{ backgroundColor: '#f0f0f0' }}
+                    disabled={isSubmitting || submitStatus?.success}
+                    whileHover={{ 
+                      backgroundColor: '#000', 
+                      color: '#fff',
+                    }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    {isSubmitting ? 'Sending...' : 'Request Resume'}
-                    {!isSubmitting && <FontAwesomeIcon icon={faPaperPlane} />}
+                    {isSubmitting ? 'Sending...' : submitStatus?.success ? 'Sent!' : 'Request Resume'}
+                    <AnimatePresence mode="wait">
+                      {submitStatus?.success ? (
+                        <motion.div
+                          key="check"
+                          initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                          animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                          exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
+                          transition={{ duration: 0.3 }}
+                          style={{ marginLeft: '8px', display: 'flex' }}
+                        >
+                          <FontAwesomeIcon icon={faCheck} />
+                        </motion.div>
+                      ) : !isSubmitting && (
+                        <motion.div
+                          key="plane"
+                          initial={{ x: -15, opacity: 0, scale: 0.5 }}
+                          animate={{ x: 0, opacity: 1, scale: 1 }}
+                          exit={{ x: 15, opacity: 0, scale: 0.5 }}
+                          transition={{ duration: 0.3 }}
+                          style={{ marginLeft: '8px', display: 'flex' }}
+                        >
+                          <FontAwesomeIcon icon={faPaperPlane} />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </motion.button>
                 </form>
                 
@@ -366,6 +557,95 @@ const ContactSection = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+const AnimatedText = ({ text, isActive }) => {
+  const controls = useAnimation();
+  
+  // Process text into words with proper spacing
+  const processText = (text) => {
+    const result = [];
+    const words = text.split(' ');
+    
+    words.forEach((word, i) => {
+      // Add the word
+      result.push({
+        text: word,
+        isSpace: false
+      });
+      
+      // Add a space after each word except the last one
+      if (i < words.length - 1) {
+        result.push({
+          text: ' ',
+          isSpace: true
+        });
+      }
+    });
+    
+    return result;
+  };
+  
+  const processedWords = processText(text);
+  
+  // Start animation when active
+  useEffect(() => {
+    if (isActive) {
+      controls.start("visible");
+    } else {
+      controls.start("hidden");
+    }
+  }, [isActive, controls]);
+  
+  return (
+    <motion.div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%'
+      }}
+      initial="hidden"
+      animate={controls}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.08,
+            delayChildren: 0.05
+          }
+        }
+      }}
+    >
+      {processedWords.map((item, i) => (
+        <motion.span
+          key={i}
+          style={{ 
+            display: 'inline-block',
+            fontSize: '1.2rem',
+            whiteSpace: item.isSpace ? 'pre' : 'normal'
+          }}
+          variants={{
+            hidden: { 
+              opacity: 0,
+              y: 10
+            },
+            visible: { 
+              opacity: 1,
+              y: 0,
+              transition: {
+                duration: 0.2
+              }
+            }
+          }}
+        >
+          {item.text}
+        </motion.span>
+      ))}
+    </motion.div>
   );
 };
 

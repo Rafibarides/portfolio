@@ -19,56 +19,68 @@ import React from 'react';
 const TextClipMask = ({ 
   text, 
   clipImageSrc,
-  fontFamily = 'inherit',
-  fontSize = 'inherit',
-  fontWeight = 'normal',
+  fontFamily = "'Poppins', sans-serif",
+  fontSize = '2.5rem',
+  fontWeight = 600,
   color = 'white',
-  opacity = 0.4,
+  opacity = 0.6,
   blendMode = 'multiply',
   style = {},
   className = ''
 }) => {
-  const containerStyle = {
-    position: 'relative',
-    display: 'inline-block',
-    ...style
-  };
-  
-  const textStyle = {
-    fontFamily,
-    fontSize,
-    fontWeight,
-    color,
-    position: 'relative',
-    margin: 0,
-    padding: 0,
-    lineHeight: 1.2
-  };
-  
-  const overlayStyle = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundImage: `url(${clipImageSrc})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    mixBlendMode: blendMode,
-    opacity: opacity,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    textFillColor: 'transparent',
-    zIndex: 1
+  const styles = {
+    container: {
+      position: 'relative',
+      display: 'inline-block',
+      lineHeight: 1.2,
+    },
+    text: {
+      fontFamily,
+      fontSize,
+      fontWeight,
+      color,
+      margin: 0,
+      padding: 0,
+      display: 'inline-block',
+    },
+    clipContainer: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      overflow: 'hidden',
+      mixBlendMode: blendMode,
+      opacity,
+    },
+    clipText: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      fontFamily,
+      fontSize,
+      fontWeight,
+      color: 'transparent',
+      WebkitTextFillColor: 'transparent',
+      backgroundImage: `url(${clipImageSrc})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      WebkitBackgroundClip: 'text',
+      backgroundClip: 'text',
+      margin: 0,
+      padding: 0,
+      display: 'inline-block',
+      width: '100%',
+      height: '100%',
+    }
   };
   
   return (
-    <div style={containerStyle} className={className}>
-      <h2 style={textStyle}>
-        {text}
-        <span style={overlayStyle}>{text}</span>
-      </h2>
+    <div style={{...styles.container, ...style}} className={className}>
+      <span style={styles.text}>{text}</span>
+      <div style={styles.clipContainer}>
+        <span style={styles.clipText}>{text}</span>
+      </div>
     </div>
   );
 };

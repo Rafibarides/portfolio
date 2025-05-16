@@ -144,7 +144,7 @@
     "Title": "Communitree",
     "Embed link": "",
     "Website": "",
-    "Screenshot": "../assets/Communitree.avif",
+    "Screenshot": "../assets/communitree.png",
     "useScreenshot": false,
     "Technologies": [
       "React",
@@ -158,7 +158,7 @@
       "Adobe CC",
       "figma"
     ],
-    "Description": "Developed with React, this website is for Gelt Capital, a leading fintech firm in the funding space, delivering seamless, high-performance tools for investors and businesses alike. The site blends modern UI design with robust infrastructure to streamline capital management, optimize deal flow, and provide real-time insights\u2014all while maintaining enterprise-grade security and scalability",
+    "Description": "Communitree is a platform working to foster real-life interactions, building community through sustainability. We began by designing an Entity-Relationship Diagram (ERD) and creating PostgreSQL tables to support the full stack application. A React-based community forum was built to efficiently collect and store user and post data in SQL. The project involved interacting with third-party APIs and libraries to display location data, ensure accessibility, and apply dynamic styling. Consistent visual elements and designs were crafted using Figma, Adobe Creative Suite, and Linearity. Additionally, a Content Delivery Network (CDN) was implemented with Cloudflare to enhance site performance and reduce load times.",
     "GithubRepoURL": "https://github.com/Green-Guild/communiTree",
     "Presentation": "https://docs.google.com/presentation/d/e/2PACX-1vSTGV5VvIgVwZQDzd-1TXW7mZcpT9H95G-Itlj6QiqTk-CpeRSuD-pk52jk05CSNU7PlpgmKjCrKN7q/pubembed?start=true&loop=true&delayms=3000",
     "AppStore": ""

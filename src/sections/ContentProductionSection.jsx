@@ -5,6 +5,7 @@ import ScrollFontTransition from '../components/ScrollFontTransition';
 import contentProductionData from '../../Json/ContentProductionSection.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import Title from '../components/Title';
 
 const ContentProductionSection = () => {
   const [videos, setVideos] = useState([]);
@@ -203,13 +204,7 @@ const ContentProductionSection = () => {
 
   return (
     <section id="content-production" style={styles.section}>
-      {/* Title with ScrollFontTransition */}
-      <h2 style={styles.header}>
-        <div style={styles.customHeader}>
-          <span style={styles.contentText}>Content</span>
-          <span style={styles.productionText}>Production</span>
-        </div>
-      </h2>
+      <Title text="Content Production" />
       
       {/* Videos Grid */}
       <div style={styles.videosContainer}>

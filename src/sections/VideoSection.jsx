@@ -5,6 +5,7 @@ import ScrollFontTransition from '../components/ScrollFontTransition';
 import ShortVideoDisplayModal from '../components/ShortVideoDisplayModal';
 import shortVideosData from '../../Json/ShortVideos.json';
 import videoSectionData from '../../Json/VideoSection.json';
+import Title from '../components/Title';
 
 const VideoSection = () => {
   const [shortVideos, setShortVideos] = useState([]);
@@ -212,17 +213,7 @@ const VideoSection = () => {
 
   return (
     <section id="video" style={styles.section}>
-      {/* Add Video Production title with ScrollFontTransition */}
-      <h2 style={styles.header}>
-        <ScrollFontTransition 
-          text="Video Production"
-          startFont="'Caveat', cursive"
-          endFont="'Poppins', sans-serif"
-          fontWeight={600}
-          threshold={0.2}
-          duration={0.3}
-        />
-      </h2>
+      <Title text="Video Production" />
       
       {/* Short Videos Grid */}
       <div style={styles.videosContainer}>

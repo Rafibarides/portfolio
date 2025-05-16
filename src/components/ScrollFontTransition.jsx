@@ -69,6 +69,7 @@ const ScrollFontTransition = ({
       className={className}
       style={{
         display: 'inline-block',
+        lineHeight: 1.2,
         ...style
       }}
     >

@@ -5,6 +5,7 @@ import softwareData from '../../Json/SoftwareSection.json';
 import SoftwareDisplayPage from '../SoftwareDisplayPage';
 import TextClipMask from '../components/TextClipMask';
 import texture2Gif from '../assets/texture2.gif';
+import Title from '../components/Title';
 
 const SoftwareSection = () => {
   const [projects, setProjects] = useState([]);
@@ -383,6 +384,7 @@ const SoftwareSection = () => {
       alignItems: 'center',
       gap: '4px',
       fontSize: '0.8rem',
+      transition: 'transform 0.3s ease, background-color 0.3s ease',
     },
     iconButton: {
       width: '18px',
@@ -391,10 +393,27 @@ const SoftwareSection = () => {
       cursor: 'pointer',
       opacity: 0.85,
       transition: 'opacity 0.2s ease, transform 0.2s ease',
-      '&:hover': {
-        opacity: 1,
-        transform: 'scale(1.1)',
-      }
+      position: 'relative',
+      zIndex: 2,
+    },
+    iconButtonContainer: {
+      position: 'relative',
+      display: 'inline-block',
+    },
+    iconGlow: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: '0',
+      height: '0',
+      borderRadius: '50%',
+      background: 'radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 70%, rgba(255, 255, 255, 0) 100%)',
+      boxShadow: '0 0 10px 5px rgba(255, 255, 255, 0.15)',
+      transition: 'width 0.3s ease, height 0.3s ease, opacity 0.3s ease',
+      opacity: 0,
+      zIndex: 1,
+      filter: 'blur(3px)',
     },
     tooltip: {
       position: 'absolute',
@@ -536,33 +555,7 @@ const SoftwareSection = () => {
 
   return (
     <section id="software" style={styles.section} ref={sectionRef}>
-      <div style={styles.sectionTitle}>
-        <span style={{ fontFamily: "'Poppins', sans-serif" }}>
-          <TextClipMask 
-            text="Software"
-            clipImageSrc={texture2Gif}
-            fontFamily="'Poppins', sans-serif"
-            fontSize="2.5rem"
-            fontWeight={600}
-            color="white"
-            opacity={0.6}
-            blendMode="multiply"
-          />
-        </span>
-        {" "}
-        <span>
-          <TextClipMask 
-            text="Projects"
-            clipImageSrc={texture2Gif}
-            fontFamily="'Caveat', cursive"
-            fontSize="2.5rem"
-            fontWeight={600}
-            color="white"
-            opacity={0.6}
-            blendMode="multiply"
-          />
-        </span>
-      </div>
+      <Title text="Software Projects" useClipMask={true} />
       
       {/* Filter Pills - conditionally render based on mobile state */}
       {!isMobile && (
@@ -670,11 +663,60 @@ const SoftwareSection = () => {
                       href={project.GithubRepoURL} 
                       target="_blank" 
                       rel="noopener noreferrer"
+                      style={styles.iconButtonContainer}
+                      onMouseEnter={(e) => {
+                        const img = e.currentTarget.querySelector('img');
+                        const glow = e.currentTarget.querySelector('.icon-glow');
+                        if (img) {
+                          img.style.transform = 'scale(1.15)';
+                          img.style.opacity = '1';
+                        }
+                        if (glow) {
+                          glow.style.width = '28px';
+                          glow.style.height = '28px';
+                          glow.style.opacity = '1';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        const img = e.currentTarget.querySelector('img');
+                        const glow = e.currentTarget.querySelector('.icon-glow');
+                        if (img) {
+                          img.style.transform = 'scale(1)';
+                          img.style.opacity = '0.85';
+                        }
+                        if (glow) {
+                          glow.style.width = '0';
+                          glow.style.height = '0';
+                          glow.style.opacity = '0';
+                        }
+                      }}
                     >
+                      <div 
+                        className="icon-glow" 
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          width: '0',
+                          height: '0',
+                          borderRadius: '50%',
+                          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 70%, rgba(255, 255, 255, 0) 100%)',
+                          boxShadow: '0 0 10px 5px rgba(255, 255, 255, 0.15)',
+                          transition: 'width 0.3s ease, height 0.3s ease, opacity 0.3s ease',
+                          opacity: 0,
+                          zIndex: 1,
+                          filter: 'blur(3px)',
+                        }}
+                      ></div>
                       <img 
                         src="../assets/github.png" 
                         alt="GitHub" 
-                        style={styles.iconButton}
+                        style={{
+                          ...styles.iconButton,
+                          position: 'relative',
+                          zIndex: 2,
+                        }}
                       />
                     </a>
                   )}
@@ -684,11 +726,60 @@ const SoftwareSection = () => {
                       href={project.AppStore} 
                       target="_blank" 
                       rel="noopener noreferrer"
+                      style={styles.iconButtonContainer}
+                      onMouseEnter={(e) => {
+                        const img = e.currentTarget.querySelector('img');
+                        const glow = e.currentTarget.querySelector('.icon-glow');
+                        if (img) {
+                          img.style.transform = 'scale(1.15)';
+                          img.style.opacity = '1';
+                        }
+                        if (glow) {
+                          glow.style.width = '28px';
+                          glow.style.height = '28px';
+                          glow.style.opacity = '1';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        const img = e.currentTarget.querySelector('img');
+                        const glow = e.currentTarget.querySelector('.icon-glow');
+                        if (img) {
+                          img.style.transform = 'scale(1)';
+                          img.style.opacity = '0.85';
+                        }
+                        if (glow) {
+                          glow.style.width = '0';
+                          glow.style.height = '0';
+                          glow.style.opacity = '0';
+                        }
+                      }}
                     >
+                      <div 
+                        className="icon-glow" 
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          width: '0',
+                          height: '0',
+                          borderRadius: '50%',
+                          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 70%, rgba(255, 255, 255, 0) 100%)',
+                          boxShadow: '0 0 10px 5px rgba(255, 255, 255, 0.15)',
+                          transition: 'width 0.3s ease, height 0.3s ease, opacity 0.3s ease',
+                          opacity: 0,
+                          zIndex: 1,
+                          filter: 'blur(3px)',
+                        }}
+                      ></div>
                       <img 
                         src="../assets/applestore.png" 
                         alt="App Store" 
-                        style={styles.iconButton}
+                        style={{
+                          ...styles.iconButton,
+                          position: 'relative',
+                          zIndex: 2,
+                        }}
                       />
                     </a>
                   )}
@@ -735,6 +826,14 @@ const SoftwareSection = () => {
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={styles.linkButton}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#1e554c';
+                      e.target.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = palette.accent;
+                      e.target.style.transform = 'scale(1)';
+                    }}
                   >
                     Demo
                   </a>
@@ -746,6 +845,14 @@ const SoftwareSection = () => {
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={styles.linkButton}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#1e554c';
+                      e.target.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = palette.accent;
+                      e.target.style.transform = 'scale(1)';
+                    }}
                   >
                     Demo
                   </a>
@@ -761,6 +868,14 @@ const SoftwareSection = () => {
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={styles.linkButton}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#1e554c';
+                      e.target.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = palette.accent;
+                      e.target.style.transform = 'scale(1)';
+                    }}
                   >
                     Demo
                   </a>
@@ -772,6 +887,14 @@ const SoftwareSection = () => {
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={styles.linkButton}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = '#1e554c';
+                      e.target.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = palette.accent;
+                      e.target.style.transform = 'scale(1)';
+                    }}
                   >
                     Presentation
                   </a>

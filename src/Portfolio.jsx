@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { palette } from './utils/colors';
 import SoftwareSection from './sections/SoftwareSection';
 import PhotographySection from './sections/PhotographySection';
@@ -30,6 +30,8 @@ const Portfolio = () => {
   const [showAboutModal, setShowAboutModal] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState(null);
+  const [isNavigating, setIsNavigating] = useState(false);
   
   // Navigation items with their icons
   const navItems = [
@@ -154,6 +156,16 @@ const Portfolio = () => {
     mobileNavOpen: {
       transform: 'translateX(0)',
     },
+    fadeOverlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: palette.background,
+      zIndex: 999,
+      pointerEvents: 'none',
+    },
   };
 
   // Add resize listener to detect mobile
@@ -177,11 +189,27 @@ const Portfolio = () => {
     if (item.isModal) {
       setShowAboutModal(true);
     } else {
-      scrollToSection(item.section);
+      // Start the navigation transition
+      setIsNavigating(true);
+      setActiveSection(item.section);
+      
+      // After a short delay, scroll to the section and end the transition
+      setTimeout(() => {
+        const element = document.getElementById(item.section);
+        if (element) {
+          // Scroll to element without smooth behavior to avoid double animation
+          element.scrollIntoView({ behavior: 'auto' });
+          
+          // End the navigation transition after the fade completes
+          setTimeout(() => {
+            setIsNavigating(false);
+          }, 300);
+        }
+      }, 300);
     }
   };
 
-  // Function to handle smooth scrolling to sections
+  // Function to handle smooth scrolling to sections (for natural scrolling)
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -196,6 +224,19 @@ const Portfolio = () => {
 
   return (
     <div style={styles.container}>
+      {/* Fade transition overlay */}
+      <AnimatePresence>
+        {isNavigating && (
+          <motion.div
+            style={styles.fadeOverlay}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          />
+        )}
+      </AnimatePresence>
+
       {/* Desktop Sidebar - Only show when NOT on mobile */}
       {!isMobile && (
         <motion.nav

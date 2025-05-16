@@ -6,6 +6,7 @@ import Visualizer from '../components/Visualizer';
 import audioData from '../../Json/AudioSection.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import Title from '../components/Title';
 
 const AudioSection = () => {
   const [audioTracks, setAudioTracks] = useState([]);
@@ -308,12 +309,7 @@ const AudioSection = () => {
 
   return (
     <section id="audio" style={styles.section}>
-      <h2 style={styles.header}>
-        <div style={styles.customHeader}>
-          <span style={styles.audioText}>Audio</span>
-          <span style={styles.productionText}>Production</span>
-        </div>
-      </h2>
+      <Title text="Audio" />
       
       <div style={styles.cardsContainer}>
         {audioTracks.map((track, index) => (

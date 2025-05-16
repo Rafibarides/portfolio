@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { palette } from '../utils/colors';
 import ScrollFontTransition from '../components/ScrollFontTransition';
 import musicPerformanceData from '../../Json/MusicPerformanceSection.json';
+import Title from '../components/Title';
 
 const MusicPerformanceSection = () => {
   const [performances, setPerformances] = useState([]);
@@ -128,37 +129,31 @@ const MusicPerformanceSection = () => {
     },
   };
 
-  // First, define the animation variants
+  // Updated animation variants - removing staggering effect
   const skillsContainerAnimation = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        duration: 0.5
       }
     }
   };
 
+  // Simplified skill item animation - no y movement to avoid flickering
   const skillItemAnimation = {
-    hidden: { opacity: 0, y: 10 },
+    hidden: { opacity: 0 },
     visible: { 
-      opacity: 1, 
-      y: 0,
+      opacity: 1,
       transition: {
-        duration: 0.3
+        duration: 0.5
       }
     }
   };
 
   return (
     <section id="music-performance" style={styles.section}>
-      <h2 style={styles.header}>
-        <div style={styles.customHeader}>
-          <span style={styles.musicText}>Music</span>
-          <span style={styles.performanceText}>Performance</span>
-        </div>
-      </h2>
+      <Title text="Music Performance" />
       
       {performances.map((performance, index) => {
         const videoId = getYoutubeVideoId(performance.url);

@@ -7,6 +7,7 @@ import textureGif from './assets/texture.gif';
 import aboutData from '../Json/About.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import './AboutMeModal.css'; // Import CSS for the glow animation
 
 const AboutMeModal = ({ onClose }) => {
@@ -154,6 +155,19 @@ const AboutMeModal = ({ onClose }) => {
       }
     };
   }, []);
+
+  // Add a function to handle navigation to the contact section
+  const handleContactClick = () => {
+    onClose(); // Close the modal first
+    
+    // Use setTimeout to ensure the modal is closed before scrolling
+    setTimeout(() => {
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 300);
+  };
 
   const styles = {
     overlay: {
@@ -513,6 +527,17 @@ const AboutMeModal = ({ onClose }) => {
             >
               <FontAwesomeIcon icon={faGithub} />
             </motion.a>
+            
+            {/* Add Contact Me button */}
+            <motion.button 
+              onClick={handleContactClick}
+              style={styles.socialButton}
+              whileHover={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="Contact Me"
+            >
+              <FontAwesomeIcon icon={faEnvelope} />
+            </motion.button>
           </motion.div>
         </div>
       </motion.div>

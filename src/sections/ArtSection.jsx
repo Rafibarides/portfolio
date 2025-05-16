@@ -4,6 +4,7 @@ import { palette } from '../utils/colors';
 import ScrollFontTransition from '../components/ScrollFontTransition';
 import RetroTextEffect from '../components/RetroTextEffect';
 import artData from '../../Json/ArtSection.json';
+import Title from '../components/Title';
 
 const ArtSection = () => {
   const [artworks, setArtworks] = useState([]);
@@ -586,37 +587,15 @@ const ArtSection = () => {
 
   return (
     <section id="art" style={styles.section} ref={sectionRef}>
+      <Title text="Art" />
+      
       <motion.div 
         style={styles.gradientBackground}
         animate="animate"
         variants={gradientAnimation}
       />
       
-      <h2 style={styles.header}>
-        <ScrollFontTransition 
-          text="Artwork"
-          startFont="'Caveat', cursive"
-          endFont="'Poppins', sans-serif"
-          fontWeight={600}
-          threshold={0.2}
-          duration={0.3}
-        />
-      </h2>
-      
-      {/* Featured Artworks with Text (at the end) */}
-      {featuredArtworks.length > 0 && (
-        <>
-          {featuredArtworks.map((artwork, index) => (
-            <GrowOnScrollSection 
-              key={index}
-              artwork={artwork}
-              index={index}
-            />
-          ))}
-        </>
-      )}
-      
-      {/* Regular Artworks Grid */}
+      {/* Regular Artworks Grid - Moved to appear first */}
       {regularArtworks.length > 0 && (
         <div style={styles.artGrid}>
           {regularArtworks.map((artwork, index) => (
@@ -648,6 +627,19 @@ const ArtSection = () => {
             </motion.div>
           ))}
         </div>
+      )}
+      
+      {/* Featured Artworks with Text - Moved to appear after the grid */}
+      {featuredArtworks.length > 0 && (
+        <>
+          {featuredArtworks.map((artwork, index) => (
+            <GrowOnScrollSection 
+              key={index}
+              artwork={artwork}
+              index={index}
+            />
+          ))}
+        </>
       )}
       
       {/* Modal for viewing artwork */}

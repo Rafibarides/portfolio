@@ -3,6 +3,7 @@ import { palette } from '../utils/colors';
 import ScrollFontTransition from '../components/ScrollFontTransition';
 import photographyData from '../../Json/PhotographySection.json';
 import { motion } from 'framer-motion';
+import Title from '../components/Title';
 
 const PhotographySection = () => {
   const [photos, setPhotos] = useState([]);
@@ -203,16 +204,7 @@ const PhotographySection = () => {
 
   return (
     <section id="photography" style={styles.section}>
-      <h2 style={styles.header}>
-        <ScrollFontTransition 
-          text="Photography"
-          startFont="'Caveat', cursive"
-          endFont="'Poppins', sans-serif"
-          fontWeight={600}
-          threshold={0.2}
-          duration={0.3}
-        />
-      </h2>
+      <Title text="Photography" />
       
       <div style={styles.photoGrid}>
         {photos.map((photo, index) => (

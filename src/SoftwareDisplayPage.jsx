@@ -178,11 +178,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
       display: 'inline-flex',
       alignItems: 'center',
       gap: '8px',
-      transition: 'transform 0.2s ease, background-color 0.2s ease',
-      '&:hover': {
-        transform: 'translateY(-2px)',
-        backgroundColor: 'rgba(100, 100, 100, 0.7)',
-      },
+      transition: 'transform 0.3s ease, background-color 0.3s ease',
     },
     embedContainer: {
       width: '90%',
@@ -301,6 +297,14 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={styles.linkButton}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#1e554c';
+                  e.target.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = palette.accent;
+                  e.target.style.transform = 'scale(1)';
+                }}
               >
                 GitHub Repository
               </a>
@@ -312,6 +316,14 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={styles.linkButton}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#1e554c';
+                  e.target.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = palette.accent;
+                  e.target.style.transform = 'scale(1)';
+                }}
               >
                 Visit Website
               </a>
@@ -323,6 +335,14 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={styles.linkButton}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = '#1e554c';
+                  e.target.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = palette.accent;
+                  e.target.style.transform = 'scale(1)';
+                }}
               >
                 App Store
               </a>
