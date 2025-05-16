@@ -125,7 +125,7 @@ const Portfolio = () => {
       border: 'none',
       borderRadius: '5px',
       padding: '10px',
-      display: 'none', // Hidden by default, shown via media query
+      display: 'none', 
       cursor: 'pointer',
     },
     mobileNavOverlay: {
