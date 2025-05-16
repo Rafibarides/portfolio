@@ -29,7 +29,7 @@ const ContactSection = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!email.trim()) {
@@ -44,24 +44,64 @@ const ContactSection = () => {
     
     setIsSubmitting(true);
     
-    // Simulate sending the request
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus({ 
-        success: true, 
-        message: 'Thank you! I will send my resume to your email shortly.' 
-      });
+    try {
+      // Your updated Google Apps Script Web App URL
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbyVFDo7ETj7nobDlyb_-PhfaURRMMQnbaiECIfdB86bXuV63oTQ-8sknnDeFRKG2CB3ug/exec';
       
-      // Reset form after successful submission
+      // Create a hidden form and submit it
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = scriptUrl;
+      form.target = 'hidden_iframe';
+      form.style.display = 'none';
+      
+      // Add email as a form field - use 'email' as the parameter name
+      const emailInput = document.createElement('input');
+      emailInput.type = 'text';
+      emailInput.name = 'email';
+      emailInput.value = email;
+      form.appendChild(emailInput);
+      
+      // Create a hidden iframe to handle the response
+      const iframe = document.createElement('iframe');
+      iframe.name = 'hidden_iframe';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      
+      // Add the form to the document
+      document.body.appendChild(form);
+      
+      // Submit the form
+      form.submit();
+      
+      // Set a timeout to assume success after 2 seconds
       setTimeout(() => {
-        setEmail('');
-        setIsResumeOpen(false);
-        setSubmitStatus(null);
-      }, 3000);
-    }, 1500);
-    
-    // In a real implementation, you would send this data to your backend
-    console.log('Resume requested by:', email);
+        setSubmitStatus({ 
+          success: true, 
+          message: 'Thank you! I will send my resume to your email shortly.' 
+        });
+        
+        // Clean up
+        document.body.removeChild(form);
+        document.body.removeChild(iframe);
+        
+        // Reset form after successful submission
+        setTimeout(() => {
+          setEmail('');
+          setIsResumeOpen(false);
+          setSubmitStatus(null);
+        }, 3000);
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Error submitting email:', error);
+      setSubmitStatus({ 
+        success: false, 
+        message: 'Sorry, there was an error. Please try again or email me directly.' 
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const styles = {
@@ -282,6 +322,7 @@ const ContactSection = () => {
                     <input
                       ref={emailInputRef}
                       type="email"
+                      name="email"
                       placeholder="Your email address"
                       style={styles.input}
                       value={email}
