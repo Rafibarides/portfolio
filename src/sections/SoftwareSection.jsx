@@ -550,7 +550,7 @@ const SoftwareSection = () => {
                       rel="noopener noreferrer"
                     >
                       <img 
-                        src="/src/assets/github.png" 
+                        src="../assets/github.png" 
                         alt="GitHub" 
                         style={styles.iconButton}
                       />
@@ -564,7 +564,7 @@ const SoftwareSection = () => {
                       rel="noopener noreferrer"
                     >
                       <img 
-                        src="/src/assets/applestore.png" 
+                        src="../assets/applestore.png" 
                         alt="App Store" 
                         style={styles.iconButton}
                       />
