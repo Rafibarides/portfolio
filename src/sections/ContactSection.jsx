@@ -121,11 +121,11 @@ const ContactSection = () => {
       width: '100%',
       textAlign: 'center',
     },
-    title: {
-      fontSize: '2rem',
-      marginBottom: '40px',
+    header: {
+      fontSize: window.innerWidth <= 768 ? '1.75rem' : '3.5rem',
+      marginBottom: '30px',
+      textAlign: 'center',
       fontFamily: "'Poppins', sans-serif",
-      fontWeight: 600,
     },
     socialLinks: {
       display: 'flex',
@@ -240,7 +240,7 @@ const ContactSection = () => {
   return (
     <section id="contact" style={styles.section}>
       <div style={styles.content}>
-        <div style={styles.title}>
+        <div style={styles.header}>
           <RetroTextEffect>
             <h2 style={{ margin: 0, fontSize: '2rem' }}>Connect With Me</h2>
           </RetroTextEffect>

@@ -1,0 +1,31 @@
+@media (max-width: 768px) {
+  .filter-pills-container {
+    display: none !important;
+  }
+
+  /* Hamburger menu styles - FIXED VERSION */
+  .hamburger-button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 15px;
+    right: 15px; /* Changed from left to right as requested */
+    z-index: 9999; /* Increased z-index to ensure visibility */
+    background-color: rgba(28, 28, 28, 0.9); /* Slightly darker for better visibility */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px; /* Slightly larger tap target */
+    cursor: pointer;
+    width: 45px; /* Fixed width */
+    height: 45px; /* Fixed height */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Add shadow for better visibility */
+  }
+  
+  /* Make sure icons inside the button are visible */
+  .hamburger-button svg {
+    font-size: 20px;
+    color: white !important; /* Force white color */
+  }
+} 

@@ -57,8 +57,8 @@ const MusicPerformanceSection = () => {
       background: 'linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 50%)',
     },
     header: {
-      fontSize: '2.5rem',
-      margin: '50px',
+      fontSize: window.innerWidth <= 768 ? '1rem' : '3.5rem',
+      marginBottom: '50px',
       textAlign: 'center',
       fontFamily: "'Poppins', sans-serif",
     },

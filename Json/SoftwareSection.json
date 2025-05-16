@@ -3,7 +3,7 @@
     "Title": "Marcy Run",
     "Embed link": "https://marcyrun.top/",
     "Website": "https://marcyrun.top/",
-    "Screenshot": "",
+    "Screenshot": "../assets/marcy-run.png",
     "useScreenshot": false,
     "Technologies": [
       "React",
@@ -24,7 +24,7 @@
     "Title": "Worldly",
     "Embed link": "https://www.playworldly.com",
     "Website": "https://www.playworldly.com",
-    "Screenshot": "../src/assets/Worldly.avif",
+    "Screenshot": "../assets/worldly.png",
     "useScreenshot": false,
     "Technologies": [
       "React",
@@ -103,7 +103,7 @@
     "Title": "Shabbat Zman",
     "Embed link": "https://shabbatzman.com/",
     "Website": "https://shabbatzman.com/",
-    "Screenshot": "../assets/ShabbatZman.avif",
+    "Screenshot": "../assets/ShabbatZman.png",
     "useScreenshot": true,
     "Technologies": [
       "React",

@@ -77,11 +77,10 @@ const PhotographySection = () => {
       borderTop: '2px solid rgba(255, 255, 255, 0.2)',
     },
     header: {
-      fontSize: '2.5rem',
-      margin: '50px',
+      fontSize: window.innerWidth <= 768 ? '1rem' : '3.5rem',
+      marginBottom: '50px',
       textAlign: 'center',
       fontFamily: "'Poppins', sans-serif",
-
     },
     photoGrid: {
       display: 'grid',

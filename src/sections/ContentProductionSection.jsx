@@ -97,7 +97,7 @@ const ContentProductionSection = () => {
       background: 'linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 50%)',
     },
     header: {
-      fontSize: isMobile ? '2.5rem' : '3.5rem',
+      fontSize: isMobile ? '1rem' : '3.5rem',
       marginBottom: '50px',
       textAlign: 'center',
       fontFamily: "'Poppins', sans-serif",
@@ -180,8 +180,14 @@ const ContentProductionSection = () => {
       fontSize: '16px',
     },
     customHeader: {
-      display: 'inline-block',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      fontSize: window.innerWidth <= 768 ? '1.75rem' : '3.5rem', // Smaller on mobile
+      fontWeight: 'bold',
+      marginBottom: '30px',
       textAlign: 'center',
+      fontFamily: "'Poppins', sans-serif",
     },
     contentText: {
       fontFamily: "'Poppins', sans-serif",

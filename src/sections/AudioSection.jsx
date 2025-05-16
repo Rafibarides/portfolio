@@ -150,7 +150,7 @@ const AudioSection = () => {
       background: 'linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 50%)',
     },
     header: {
-      fontSize: isMobile ? '2.5rem' : '3.5rem',
+      fontSize: window.innerWidth <= 768 ? '1rem' : '3.5rem',
       marginBottom: '50px',
       textAlign: 'center',
       fontFamily: "'Poppins', sans-serif",

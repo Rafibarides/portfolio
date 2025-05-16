@@ -19,6 +19,7 @@ const SoftwareSection = () => {
   const isPillsInView = useInView(pillsRef, { once: false, amount: 0.3 });
   const isTitleInView = useInView(titleRef, { once: false, amount: 0.3 });
   const [hoveredPill, setHoveredPill] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   // Add animation variants
   const pillsAnimation = {
@@ -140,6 +141,18 @@ const SoftwareSection = () => {
     };
   }, []);
 
+  useEffect(() => {
+    // Immediately set the correct initial value
+    setIsMobile(window.innerWidth <= 768);
+    
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Filter projects based on selected technologies
   const filterProjects = (tech) => {
     let updatedSelectedTechs;
@@ -170,7 +183,13 @@ const SoftwareSection = () => {
     }
   };
 
-  // Add a function to handle card clicks
+  // Add this utility function near your other functions
+  const shouldPreventModalOnMobile = () => {
+    // Double check for mobile to be absolutely sure
+    return isMobile || window.innerWidth <= 768;
+  };
+
+  // Then modify handleCardClick to use it
   const handleCardClick = (e, project) => {
     // Don't open modal if clicking on a link or button
     if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || 
@@ -178,6 +197,12 @@ const SoftwareSection = () => {
       return;
     }
     
+    // PREVENT MODAL ON MOBILE - Desktop only feature
+    if (shouldPreventModalOnMobile()) {
+      return;
+    }
+    
+    // Desktop only - open the modal
     setSelectedProject(project.Title);
   };
   
@@ -197,8 +222,9 @@ const SoftwareSection = () => {
       zIndex: 0,
       fontFamily: "'Poppins', sans-serif",
     },
-    header: {
-      fontSize: '2.5rem',
+    sectionTitle: {
+      fontSize: window.innerWidth <= 768 ? '1rem' : '3.5rem',
+      fontWeight: 'bold',
       marginBottom: '30px',
       textAlign: 'center',
       fontFamily: "'Poppins', sans-serif",
@@ -262,9 +288,13 @@ const SoftwareSection = () => {
     },
     previewContainer: {
       width: '100%',
-      height: '305px',
+      height: isMobile ? 'auto' : '305px',
       overflow: 'hidden',
       position: 'relative',
+      ...(isMobile && {
+        paddingBottom: '56.25%',
+        height: 0,
+      }),
     },
     iframe: {
       width: '100%',
@@ -392,11 +422,121 @@ const SoftwareSection = () => {
       borderRight: '5px solid transparent',
       borderTop: '5px solid rgba(0, 0, 0, 0.85)',
     },
+    filterPills: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '10px',
+      marginBottom: '20px',
+      '@media (max-width: 768px)': {
+        display: 'none',
+      }
+    },
+    projectImageContainer: {
+      width: '100%',
+      position: 'relative',
+      overflow: 'hidden',
+      borderRadius: '8px 8px 0 0',
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    },
+    projectImage: {
+      width: '100%',
+      objectFit: 'cover',
+      display: 'block',
+      transition: 'transform 0.3s ease',
+    },
+    mobileProjectImageContainer: isMobile ? {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      overflow: 'hidden',
+      borderRadius: '8px 8px 0 0',
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    } : {},
+    mobileProjectImage: isMobile ? {
+      width: 'auto !important',
+      height: 'auto !important',
+      maxWidth: '100%',
+      maxHeight: '100%',
+      objectFit: 'contain',
+      objectPosition: 'center',
+      display: 'block',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    } : {},
+  };
+
+  // Replace the project preview rendering with this GUARANTEED solution
+  const renderProjectPreview = (project) => {
+    // SAFETY CHECK: Force mobile detection
+    const forceMobileCheck = window.innerWidth <= 768;
+    
+    // MOBILE BRANCH - SCREENSHOT ONLY, NO EXCEPTIONS
+    if (forceMobileCheck || isMobile) {
+      return project.Screenshot ? (
+        <div style={styles.mobileProjectImageContainer}>
+          <img
+            src={project.Screenshot}
+            alt={project.Title}
+            style={styles.mobileProjectImage}
+          />
+        </div>
+      ) : (
+        <div style={{
+          ...styles.screenshot,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          color: 'rgba(255, 255, 255, 0.7)',
+        }}>
+          No preview available
+        </div>
+      );
+    }
+    
+    // DESKTOP BRANCH
+    if (project["Embed link"] && !project.useScreenshot) {
+      return (
+        <iframe
+          src={project["Embed link"]}
+          style={styles.iframe}
+          title={project.Title}
+        />
+      );
+    } else if (project.Screenshot) {
+      return (
+        <div style={styles.projectImageContainer}>
+          <img
+            src={project.Screenshot}
+            alt={project.Title}
+            style={styles.projectImage}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div style={{
+          ...styles.screenshot,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
+          color: 'rgba(255, 255, 255, 0.7)',
+        }}>
+          No preview available
+        </div>
+      );
+    }
   };
 
   return (
     <section id="software" style={styles.section} ref={sectionRef}>
-      <div style={styles.header}>
+      <div style={styles.sectionTitle}>
         <span style={{ fontFamily: "'Poppins', sans-serif" }}>
           <TextClipMask 
             text="Software"
@@ -424,56 +564,58 @@ const SoftwareSection = () => {
         </span>
       </div>
       
-      {/* Filter Pills */}
-      <motion.div 
-        ref={pillsRef}
-        style={styles.filterContainer}
-        initial="hidden"
-        animate={isPillsInView ? "visible" : "hidden"}
-        variants={pillsAnimation}
-      >
-        {allTechnologies.map((tech, index) => (
-          <motion.div
-            key={index}
-            variants={pillItemAnimation}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            style={{
-              ...styles.filterPill,
-              ...(selectedTechnologies.includes(tech)
-                ? styles.activePill
-                : styles.inactivePill),
-              position: 'relative',
-            }}
-            onClick={() => filterProjects(tech)}
-            onMouseEnter={(e) => {
-              handlePillHover(e, true);
-              setHoveredPill(tech);
-            }}
-            onMouseLeave={(e) => {
-              handlePillHover(e, false);
-              setHoveredPill(null);
-            }}
-          >
-            {tech}
-            <AnimatePresence>
-              {hoveredPill === tech && (
-                <motion.div 
-                  key={`tooltip-${tech}`}
-                  style={styles.tooltip}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  Display projects using {tech}
-                  <div style={styles.tooltipArrow}></div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        ))}
-      </motion.div>
+      {/* Filter Pills - conditionally render based on mobile state */}
+      {!isMobile && (
+        <motion.div 
+          ref={pillsRef}
+          style={styles.filterContainer}
+          initial="hidden"
+          animate={isPillsInView ? "visible" : "hidden"}
+          variants={pillsAnimation}
+        >
+          {allTechnologies.map((tech, index) => (
+            <motion.div
+              key={index}
+              variants={pillItemAnimation}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{
+                ...styles.filterPill,
+                ...(selectedTechnologies.includes(tech)
+                  ? styles.activePill
+                  : styles.inactivePill),
+                position: 'relative',
+              }}
+              onClick={() => filterProjects(tech)}
+              onMouseEnter={(e) => {
+                handlePillHover(e, true);
+                setHoveredPill(tech);
+              }}
+              onMouseLeave={(e) => {
+                handlePillHover(e, false);
+                setHoveredPill(null);
+              }}
+            >
+              {tech}
+              <AnimatePresence>
+                {hoveredPill === tech && (
+                  <motion.div 
+                    key={`tooltip-${tech}`}
+                    style={styles.tooltip}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    Display projects using {tech}
+                    <div style={styles.tooltipArrow}></div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
       
       {/* Projects Grid */}
       <div style={styles.projectsGrid}>
@@ -481,40 +623,20 @@ const SoftwareSection = () => {
           <motion.div
             key={index}
             style={styles.card}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-100px" }}
-            exit={{ opacity: 0, y: 50 }}
-            transition={{ duration: 0.5 }}
-            whileHover={{ 
+            initial={index < 2 ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+            whileInView={index < 2 ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            viewport={{ once: index < 2 ? true : false, margin: "-100px" }}
+            exit={index < 2 ? {} : { opacity: 0, y: 50 }}
+            transition={index < 2 ? {} : { duration: 0.5 }}
+            whileHover={index < 2 ? {} : { 
               scale: 1.02,
               boxShadow: '0 20px 30px rgba(0, 0, 0, 0.3)'
             }}
             onClick={(e) => handleCardClick(e, project)}
           >
-            {/* Preview (Embed or Screenshot) */}
-            <div style={styles.previewContainer}>
-              {project["Embed link"] && !project.useScreenshot ? (
-                <iframe 
-                  src={project["Embed link"]} 
-                  style={styles.iframe}
-                  title={project.Title}
-                />
-              ) : project.Screenshot ? (
-                <img 
-                  src={project.Screenshot} 
-                  alt={project.Title} 
-                  style={styles.screenshot}
-                />
-              ) : (
-                <div style={{
-                  ...styles.screenshot,
-                  backgroundColor: palette.medium,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>No Preview Available</div>
-              )}
+            {/* Preview Container */}
+            <div style={{...styles.previewContainer}}>
+              {renderProjectPreview(project)}
             </div>
             
             {/* Content */}
@@ -592,11 +714,14 @@ const SoftwareSection = () => {
               
               {/* Read More Link */}
               <a 
+                style={styles.readMore}
                 onClick={(e) => {
                   e.preventDefault();
+                  if (shouldPreventModalOnMobile()) {
+                    return;
+                  }
                   setSelectedProject(project.Title);
                 }}
-                style={styles.readMore}
               >
                 Read More
               </a>
