@@ -92,7 +92,7 @@
       "HTML",
       "UI/UX",
       "Adobe CC",
-      "figma"
+      "Figma"
     ],
     "Description": "Weather Now is a team project built with React, HTML, and CSS, designed to provide users with real-time weather updates and sunset information. The app integrates API calls to fetch accurate weather data and sunset times based on user location. The clean and intuitive frontend design ensures a seamless user experience, making it easy to check current conditions and plan accordingly.",
     "GithubRepoURL": "https://github.com/Weather-Now/WeatherNow",
@@ -113,7 +113,7 @@
       "HTML",
       "UI/UX",
       "Adobe CC",
-      "figma"
+      "Figma"
     ],
     "Description": "Shabbatzman.com is a React-based web app designed to simplify Jewish practice by providing accurate zmanim (prayer times) based on the user's location. The app integrates the Geolocation API to automate location detection, making it easier to observe halachic times without manual input. Key components include a responsive design built with React and modern CSS for accessibility across devices. The app connects to a reliable zmanim API to calculate prayer times according to various halachic opinions, ensuring accuracy and inclusivity.",
     "GithubRepoURL": "https://github.com/Rafibarides/shabbat-zman-mobile",
@@ -133,7 +133,7 @@
       "HTML",
       "UI/UX",
       "Adobe CC",
-      "figma"
+      "Figma"
     ],
     "Description": "Developed with React, this website is for Gelt Capital, a leading fintech firm in the funding space, delivering seamless, high-performance tools for investors and businesses alike. The site blends modern UI design with robust infrastructure to streamline capital management, optimize deal flow, and provide real-time insights\u2014all while maintaining enterprise-grade security and scalability",
     "GithubRepoURL": "https://github.com/capital-firm-rbm/gelt-equity",
@@ -156,7 +156,7 @@
       "HTML",
       "UI/UX",
       "Adobe CC",
-      "figma"
+      "Figma"
     ],
     "Description": "Communitree is a platform working to foster real-life interactions, building community through sustainability. We began by designing an Entity-Relationship Diagram (ERD) and creating PostgreSQL tables to support the full stack application. A React-based community forum was built to efficiently collect and store user and post data in SQL. The project involved interacting with third-party APIs and libraries to display location data, ensure accessibility, and apply dynamic styling. Consistent visual elements and designs were crafted using Figma, Adobe Creative Suite, and Linearity. Additionally, a Content Delivery Network (CDN) was implemented with Cloudflare to enhance site performance and reduce load times.",
     "GithubRepoURL": "https://github.com/Green-Guild/communiTree",
