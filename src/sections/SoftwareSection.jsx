@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useAnimation, useInView, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { palette } from '../utils/colors';
 import softwareData from '../../Json/SoftwareSection.json';
 import SoftwareDisplayPage from '../SoftwareDisplayPage';
@@ -553,8 +553,41 @@ const SoftwareSection = () => {
     }
   };
 
+  // Add these lines for parallax scrolling
+  const { scrollY } = useScroll();
+  const backgroundY = useTransform(scrollY, [0, 1000], [0, 300]); // Adjust the 300 value to control parallax intensity
+
   return (
-    <section id="software" style={styles.section} ref={sectionRef}>
+    <section id="software" style={{...styles.section, position: 'relative', overflow: 'hidden'}} ref={sectionRef}>
+      {/* Add a container for the Vanta effect with parallax */}
+      <motion.div 
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: -1,
+          y: backgroundY, // Apply the parallax transform
+        }}
+      >
+        {/* This div will be the target for the Vanta effect */}
+        <div 
+          ref={el => {
+            if (el && !vantaEffect.current) {
+              sectionRef.current = el; // Update the ref for Vanta
+            }
+          }}
+          style={{
+            width: '100%',
+            height: '120%', // Make it taller to account for parallax movement
+            position: 'absolute',
+            top: 0,
+            left: 0,
+          }}
+        />
+      </motion.div>
+
       <Title text="Software Projects" useClipMask={true} />
       
       {/* Filter Pills - conditionally render based on mobile state */}
