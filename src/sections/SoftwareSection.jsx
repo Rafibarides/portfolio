@@ -21,6 +21,7 @@ const SoftwareSection = () => {
   const isTitleInView = useInView(titleRef, { once: false, amount: 0.3 });
   const [hoveredPill, setHoveredPill] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [showMobilePopup, setShowMobilePopup] = useState(false);
 
   // Add animation variants
   const pillsAnimation = {
@@ -489,6 +490,58 @@ const SoftwareSection = () => {
     } : {},
   };
 
+  // Mobile popup modal styles
+  const mobilePopupStyles = {
+    overlay: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.7)',
+      backdropFilter: 'blur(5px)',
+      WebkitBackdropFilter: 'blur(5px)',
+      zIndex: 1000,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '20px',
+    },
+    modal: {
+      backgroundColor: 'rgba(30, 30, 30, 0.95)',
+      borderRadius: '12px',
+      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
+      width: '85%',
+      maxWidth: '350px',
+      padding: '30px 20px',
+      position: 'relative',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      textAlign: 'center',
+    },
+    title: {
+      fontSize: '1.4rem',
+      marginBottom: '15px',
+      fontWeight: 600,
+      color: palette.text,
+    },
+    message: {
+      fontSize: '1rem',
+      lineHeight: 1.5,
+      marginBottom: '25px',
+      color: 'rgba(255, 255, 255, 0.8)',
+    },
+    button: {
+      backgroundColor: palette.accent,
+      color: palette.text,
+      border: 'none',
+      padding: '10px 20px',
+      borderRadius: '8px',
+      fontSize: '0.9rem',
+      cursor: 'pointer',
+      transition: 'transform 0.2s ease, background-color 0.2s ease',
+    },
+  };
+
   // Replace the project preview rendering with this GUARANTEED solution
   const renderProjectPreview = (project) => {
     // SAFETY CHECK: Force mobile detection
@@ -842,6 +895,7 @@ const SoftwareSection = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   if (shouldPreventModalOnMobile()) {
+                    setShowMobilePopup(true);
                     return;
                   }
                   setSelectedProject(project.Title);
@@ -944,6 +998,38 @@ const SoftwareSection = () => {
           projectTitle={selectedProject} 
           onClose={closeModal} 
         />
+      )}
+
+      {showMobilePopup && isMobile && (
+        <motion.div
+          style={mobilePopupStyles.overlay}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setShowMobilePopup(false)}
+        >
+          <motion.div
+            style={mobilePopupStyles.modal}
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ type: "spring", damping: 20 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 style={mobilePopupStyles.title}>Desktop Experience</h3>
+            <p style={mobilePopupStyles.message}>
+              For the full interactive project details, case studies, and embedded content, please visit this portfolio on a desktop device.
+            </p>
+            <motion.button
+              style={mobilePopupStyles.button}
+              whileHover={{ scale: 1.05, backgroundColor: '#1e554c' }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setShowMobilePopup(false)}
+            >
+              Got it
+            </motion.button>
+          </motion.div>
+        </motion.div>
       )}
     </section>
   );

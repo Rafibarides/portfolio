@@ -32,6 +32,9 @@ const Portfolio = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
   const [isNavigating, setIsNavigating] = useState(false);
+  // Add cursor states
+  const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
+  const [isOverSidebar, setIsOverSidebar] = useState(false);
   
   // Navigation items with their icons
   const navItems = [
@@ -44,6 +47,16 @@ const Portfolio = () => {
     { name: 'Content\nProduction', icon: faPodcast, section: 'content-production' },
     { name: 'About\nMe', icon: faUser, section: 'about', isModal: true },
   ];
+
+  // Track mouse position for custom cursor
+  useEffect(() => {
+    const updateCursorPosition = (e) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+    };
+    
+    window.addEventListener('mousemove', updateCursorPosition);
+    return () => window.removeEventListener('mousemove', updateCursorPosition);
+  }, []);
 
   // Styles
   const styles = {
@@ -166,6 +179,23 @@ const Portfolio = () => {
       zIndex: 999,
       pointerEvents: 'none',
     },
+    // Custom cursor styles
+    customCursor: {
+      position: 'fixed',
+      width: '15px',
+      height: '15px',
+      backgroundColor: 'white',
+      borderRadius: '0',
+      transform: 'translate(-50%, -50%) rotate(45deg)', // Properly center and rotate for diamond shape
+      pointerEvents: 'none',
+      zIndex: 9999,
+      opacity: isOverSidebar ? 1 : 0,
+      transition: 'opacity 0.3s ease, transform 0.2s ease, width 0.2s ease, height 0.2s ease',
+      mixBlendMode: 'normal',
+      boxShadow: '0 0 15px 2px rgba(255, 255, 255, 0.7), 0 0 5px 1px rgba(255, 255, 255, 1)',
+      left: cursorPosition.x, // Use exact position - transform will handle centering
+      top: cursorPosition.y,  // Use exact position - transform will handle centering
+    },
   };
 
   // Add resize listener to detect mobile
@@ -224,6 +254,18 @@ const Portfolio = () => {
 
   return (
     <div style={styles.container}>
+      {/* Custom cursor */}
+      <motion.div 
+        style={styles.customCursor}
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={{ 
+          scale: isOverSidebar ? (hoveredIndex !== null ? 1.3 : 1) : 0.5,
+          opacity: isOverSidebar ? 1 : 0,
+          rotate: 45, // Ensure rotation is applied through animation too
+        }}
+        transition={{ duration: 0.2 }}
+      />
+
       {/* Fade transition overlay */}
       <AnimatePresence>
         {isNavigating && (
@@ -243,8 +285,14 @@ const Portfolio = () => {
           initial={{ width: '70px' }}
           animate={{ width: isExpanded ? '200px' : '70px' }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
-          onHoverStart={() => setIsExpanded(true)}
-          onHoverEnd={() => setIsExpanded(false)}
+          onHoverStart={() => {
+            setIsExpanded(true);
+            setIsOverSidebar(true);
+          }}
+          onHoverEnd={() => {
+            setIsExpanded(false);
+            setIsOverSidebar(false);
+          }}
           style={{
             position: 'fixed',
             top: 0,
@@ -256,6 +304,7 @@ const Portfolio = () => {
             overflow: 'hidden',
             zIndex: 10,
             transition: 'width 0.3s ease',
+            cursor: 'none', // Hide default cursor when over sidebar
           }}
         >
           {/* Logo space */}
@@ -265,7 +314,10 @@ const Portfolio = () => {
           {navItems.map((item, index) => (
             <motion.a
               key={index}
-              style={styles.navLink}
+              style={{
+                ...styles.navLink,
+                cursor: 'none', // Hide default cursor on nav items
+              }}
               onClick={() => handleNavItemClick(item, index)}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}

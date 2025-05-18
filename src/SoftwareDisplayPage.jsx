@@ -148,6 +148,19 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
   
   const youtubeEmbedUrl = getYoutubeEmbedUrl(youtubeUrl);
 
+  // Styles for the Google Slide presentation embed
+  const presentationEmbedStyles = {
+    width: '90%',
+    maxWidth: '800px',
+    margin: '0 auto 50px auto',
+    borderRadius: '8px',
+    overflow: 'hidden',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    position: 'relative',
+    paddingTop: '56.25%', // Correct 16:9 aspect ratio (9÷16 = 0.5625 or 56.25%)
+    height: 0,
+  };
+
   const styles = {
     overlay: {
       position: 'fixed',
@@ -644,7 +657,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
                     variants={collapsibleVariants}
                     style={{ overflow: 'hidden' }}
                   >
-                    <div style={styles.embedContainer}>
+                    <div style={presentationEmbedStyles}>
                       <iframe
                         src={project.Presentation}
                         style={styles.iframe}
