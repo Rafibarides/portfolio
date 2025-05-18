@@ -1,26 +1,5 @@
 [
   {
-    "Title": "Marcy Run",
-    "Embed link": "https://marcyrun.top/",
-    "Website": "https://marcyrun.top/",
-    "Screenshot": "../assets/marcy-run.png",
-    "useScreenshot": false,
-    "Technologies": [
-      "React",
-      "Javascript",
-      "HTML",
-      "Tailwind",
-      "Framer",
-      "UI/UX",
-      "Adobe CC",
-      "Figma"
-    ],
-    "Description": "Click the screen and hit Space to start! Marcy Run is an endless-runner front end game. The tech stack for Marcy Run includes React for the user interface, Howler.js for implementing dynamic audio playback, and Framer Motion for smooth animations and transitions. I illustrated the characters assets using Adobe Creative Suite, and composed and produced the original theme music using Logic Pro X.",
-    "GithubRepoURL": "https://github.com/Rafibarides/marcy-run-2025",
-    "Presentation": "",
-    "AppStore": ""
-  },
-  {
     "Title": "Worldly",
     "Embed link": "https://www.playworldly.com",
     "Website": "https://www.playworldly.com",
@@ -38,10 +17,91 @@
       "Adobe CC",
       "Figma"
     ],
-    "Description": "Available now on the App Store, Worldly is the social geography game that makes learning the world feel like play. Compete with friends, track your progress, unlock modules, earn badges, and explore countries through games that challenge your knowledge of flags, capitals, and locations\u2014all in a sleek, interactive experience built for casual fun and serious learning.",
+    "Description": "Available now on the App Store, Worldly is the social geography game that makes learning the world feel like play. Compete with friends, track your progress, unlock modules, earn badges, and explore countries through games that challenge your knowledge of flags, capitals, and locations in a sleek, interactive experience built for casual fun and serious learning.",
     "GithubRepoURL": "https://github.com/Rafibarides/worldly",
     "Presentation": "",
-    "AppStore": "https://apps.apple.com/us/app/play-worldly/id6743803487"
+    "AppStore": "https://apps.apple.com/us/app/play-worldly/id6743803487",
+    "CaseStudy": {
+      "Worldly: Geography Made Fun": {
+        "Project Overview": "<strong>Worldly</strong> is a fullstack multiplayer mobile game that I designed, built, and shipped as a solo project. It is built on a simple idea: make geography engaging, social, and easy to retain.<br /><br />With a friendly mascot named <strong>Yoram</strong>, and realtime multiplayer gameplay, Worldly turns geography into an interactive experience that encourages both competition and learning."
+      },
+      "Problem": "Geographic illiteracy is more widespread than many realize.<br /><br /><ul><li>Only 17% of young Americans can locate Afghanistan on a map.</li><li>88% cannot name a single country in Africa.</li><li>60% of adults believe Africa is a country.</li></ul><br />This lack of knowledge represents a disconnection from global awareness. Geography is a critical entry point into understanding <strong>history, culture, conflict, climate, and connection</strong>. We can't aspire to visit or empathize with places we've never even heard of.",
+      "My Solution": "I built a game.<br /><br /><strong>Worldly</strong> is a mobile app that gamifies geography education using real-time multiplayer challenges and module based learning. It was designed to make global learning accessible, competitive, and fun.",
+      "Target Personas": "Worldly was designed for:<br /><ul><li><strong>Curious learners</strong> of all ages who enjoy geography and visual games</li><li><strong>Parents and educators</strong> looking for alternatives to bland memorization methods</li><li><strong>Casual gamers</strong> who prefer low-friction mobile experiences with some educational value</li></ul>",
+      "Key Features": "<ul><li><strong>Multiplayer</strong>: Face off with others in real-time map challenges</li><li><strong>Learning Modules</strong>: Unlock structured continent-based lessons</li><li><strong>Mascot Design</strong>: <em>Yoram</em> is a child-friendly guide who walks players through each challenge</li><li><strong>Audio Feedback</strong>: Reinforces right/wrong answers for better memory and engagement</li><li><strong>Color Psychology</strong>: The green interface was chosen deliberately. Green is linked to nature, peace, and balance. Research shows it improves focus, reduces stress, and enhances creative thinking, perfect for a geography themed learning environment.</li></ul>",
+      "Color Palette": ["#74A651", "#97BF7A", "#F2B05E", "#FCC257", "#DEDEDE"],
+      "Iterative Design": "After the initial beta release, I shared a Google Form with early users and gathered detailed feedback from over 30 testers. Common themes included:<br /><ul><li>A desire for more guided and structured learning</li><li>Requests for sound effects and clearer visual cues</li><li>Confusion about game flow in early rounds</li></ul><br />This led to several improvements:<br /><ul><li>Added <strong>audio cues</strong> for interaction and feedback</li><li>Improved onboarding and UI flow</li><li>Introduced <strong>progress tracking</strong> and <strong>unlockable learning paths</strong></li><li>Balanced the challenge system across skill levels</li></ul>",
+      "Results": "<ul><li>300+ games played in the first month post-beta</li><li>4.7 average rating across user feedback forms</li><li>Positive reception from both children and adults:</li></ul><blockquote>“My kid begged to play again after dinner—and he learned where Laos is.”<br />“I have never had more fun losing a game. I am learning countries I didn not even know existed.”</blockquote>",
+      "Why It Matters": "Geography is the foundation of understanding our world. From migration patterns to international relations, learning about the planet we live on fosters empathy and global consciousness.<br /><br />With Worldly, players are connecting the dots between knowledge and curiosity."
+    }
+  },
+  {
+    "Title": "Weather Now",
+    "Embed link": "",
+    "Website": "",
+    "Screenshot": "../assets/WeatherNow.avif",
+    "useScreenshot": false,
+    "Technologies": [
+      "React",
+      "CSS",
+      "Javascript",
+      "HTML",
+      "UI/UX",
+      "Adobe CC",
+      "Figma",
+      "Tailwind"
+    ],
+    "Description": "Weather Now is a team project built with React, HTML, and CSS, designed to provide users with real-time weather updates and sunset information. The app integrates API calls to fetch accurate weather data and sunset times based on user location. The clean and intuitive frontend design ensures a seamless user experience, making it easy to check current conditions and plan accordingly.",
+    "GithubRepoURL": "https://github.com/Weather-Now/WeatherNow",
+    "Presentation": "https://docs.google.com/presentation/d/e/2PACX-1vRvRQZGhNDsgXNq7WJiqINuc4Q1LvDxe7-eKi3HoiWmpfhbryeBrA7JYJcvHH1n8EtoW8ewEAQnZHqz/pubembed?start=true&loop=true&delayms=3000",
+    "AppStore": "",
+    "CaseStudy": {
+      "Weather Now: Weather at a Glance": {
+        "Project Overview": "Weather Now is a sleek and dynamic weather app co-created with developer Angelica Ibarlucea. Designed as both a functional weather tool and a stylish screensaver, it delivers real-time local weather, time, lunar phase, and sunset (Shkia) information for planning, religious observance, or ambiance. Built using React and JSON data structures, the app features a tropical, glassmorphism-inspired UI that transitions between light and dark themes automatically based on local time."
+      },
+      "Problem": "Weather apps can be cluttered, bland, or overloaded with utility features. I wanted a beautiful, full-screen app that functions as a desktop or TV screensaver, with clear weather and Shkia times for observant users, without sacrificing visual appeal or simplicity.",
+      "My Solution": "We built a minimalistic, responsive React app that fetches real-time local weather and astronomical data. By using glassmorphism and tropical color themes, the interface becomes not only useful but also visually captivating. Sunset and lunar cycle info were added for deeper daily planning and spiritual awareness.",
+      "Target Personas": "<ul><li>Observant individuals needing clear sunset/Shkia times for religious practices.</li><li>Designers and creatives who want a beautiful desktop experience.</li><li>Photographers or event planners needing quick access to weather and light info.</li><li>Casual users looking for ambient displays with real-time utility.</li></ul>",
+      "Key Features": "<ul><li>Real-time weather data via API</li><li>Automatic theme switching (light/dark) based on local time</li><li>Shkia (sunset) and lunar phase data for planning and religious observance</li><li>Full-screen UI optimized for TV and desktop screensavers</li><li>Glassmorphism UI with vibrant tropical colors</li><li>Built with React and local JSON fallback support</li></ul>",
+      "Color Palette": ["#355770", "#F27507", "#F2935C", "#F27A5E", "#F25E5E"],
+      "Iterative Design": "The project began with a basic layout in Figma and went through multiple feedback cycles focused on simplifying visual noise, enhancing readability from a distance, and optimizing data placement. We fine-tuned contrast for both light and dark modes, adjusted spacing, and added lunar cycle support based on user suggestions.",
+      "Results": "We successfully built and published this aesthetic, weather-at-a-glance display—and I use it on my TV all the time. Friends have shared that they love how the UI slowly fades into dark mode in the evening, creating a calm and ambient vibe.",
+      "Why It Matters": "Weather Now bridges utility and aestetic, something sometimes overlooked in productivity tools. By respecting both functional and spiritual needs (like Shkia times), it demonstrates how UX can serve deeply personal contexts while still being elegant and modern. It reflects our belief that design should be both beautiful and meaningful."
+    }
+  },
+  {
+    "Title": "Shabbat Zman",
+    "Embed link": "https://shabbatzman.com/",
+    "Website": "https://shabbatzman.com/",
+    "Screenshot": "../assets/ShabbatZman.png",
+    "useScreenshot": true,
+    "Technologies": [
+      "React",
+      "React Native",
+      "CSS",
+      "Javascript",
+      "HTML",
+      "UI/UX",
+      "Adobe CC",
+      "Figma"
+    ],
+    "Description": "Shabbatzman.com is a React-based web app designed to simplify Jewish practice by providing accurate zmanim (prayer times) based on the user's location. The app integrates the Geolocation API to automate location detection, making it easier to observe halachic times without manual input. Key components include a responsive design built with React and modern CSS for accessibility across devices. The app connects to a reliable zmanim API to calculate prayer times according to various halachic opinions, ensuring accuracy and inclusivity.",
+    "GithubRepoURL": "https://github.com/Rafibarides/shabbat-zman-mobile",
+    "Presentation": "",
+    "AppStore": "https://apps.apple.com/us/app/shabbat-zman/id6741112947",
+    "CaseStudy": {
+      "Shabbat Zman": {
+        "Project Overview": "Shabbatzman is a tool that provides beautiful, geolocation-based sunset and lunar data for Jewish observance. It's designed to replace outdated, confusing zmanim sites with a clean, modern, and spiritually resonant interface."
+      },
+      "Problem": "Most existing Jewish Zmanim websites were built in the early 2000s. They're visually outdated and often confusing, with cluttered layouts and overlapping zmanim terminology that make it hard for users to know when Shabbat begins, when candle lighting is, or when certain prayers apply.",
+      "My Solution": "I created a clean, one-pager mobile and web app with original digital art and a focus on simplicity. The app uses real-time geolocation and several APIs to give users accurate, beautifully presented zmanim and moon phase data. I also built a Hebrew-to-Gregorian calendar algorithm to handle lunar-solar conversions in JavaScript.",
+      "Target Personas": "<ul><li>Observant individuals needing clear sunset/Shkia times for religious practices</li><li>Designers and creatives who want a beautiful, ambient screen experience</li><li>People exploring Jewish identity and looking for spiritual tech tools</li><li>Casual users curious about moon phases and celestial rhythms</li></ul>",
+      "Key Features": "<ul><li>Real-time zmanim based on user geolocation</li><li>Beautiful, Shabbat-themed color palette inspired by royalty and calm</li><li>Original digital art and sprites created in Adobe Illustrator</li><li>One-page fullscreen UI, optimized for both phones and TV screens</li><li>Custom-built algorithm to convert Gregorian dates into Hebrew calendar equivalents</li></ul>",
+      "Color Palette": ["#1E0A26", "#741B8C", "#9704BF", "#F2D8F2", "#FBF9F0"],
+      "Iterative Design": "While building the lunar-solar calendar algorithm, I encountered several complexities around leap years, intercalated months, and fixed date anchors between the Hebrew and Gregorian systems. This led to many revisions and testing cycles. I also iterated on the UI after testing it on different screen types (TV, mobile, tablet) to make sure it felt peaceful and legible in all environments.",
+      "Results": "I successfully built and shipped this aesthetic utility tool. It's Jewish tech that feels deeply personal to me, helping mark sacred time in a way that feels modern, clear, and intentional. Friends have shared that they appreciate how simple and beautiful it is.",
+      "Why It Matters": "This project is a personal expression of Jewish identity through tech. It bridges ancient tradition and modern design, offering users a mindful way to track sacred time. By creating something beautiful and useful, it encourages spiritual curiosity and makes observance easier and more accessible."
+    }
   },
   {
     "Title": "RBM Sounds",
@@ -49,11 +109,38 @@
     "Website": "http://rbmsounds.com/",
     "Screenshot": "../assets/RBMSounds.avif",
     "useScreenshot": true,
-    "Technologies": ["Velo", "Javascript", "UI/UX", "Adobe CC", "Figma"],
+    "Technologies": [
+      "Velo",
+      "Javascript",
+      "UI/UX",
+      "Adobe CC",
+      "Figma",
+      "CSS",
+      "HTML"
+    ],
     "Description": "RBM Sounds is a fully functional e-commerce website built using the Velo by Wix framework, designed to sell my digital products, including music production resources tailored for producers. The site integrates seamless payment processing, user-friendly navigation, and responsive design to provide an effortless shopping experience.",
     "GithubRepoURL": "",
     "Presentation": "",
-    "AppStore": ""
+    "AppStore": "",
+      "CaseStudy": {
+        "RBM Sounds": {
+          "Project Overview": "RBM Sounds is an e-commerce platform I designed and developed to sell original sample packs and music production resources. Born from a desire to have full control over sales, branding, and customer interaction, this site provides music producers with a seamless experience to discover, preview, and purchase high-quality sound kits crafted in my Brooklyn studio."
+        },
+        "Problem": "I needed a dedicated platform to sell my sample packs directly to music producers without relying on third-party marketplaces like Splice, which take a large cut and control the traffic. I could not find a focused or flexible enough solution online, and I wanted my digital products to have a home that truly reflected my brand and mission.",
+        "My Solution": "I built RBM Sounds, a sleek, minimalist, fully branded website with clean UX and a smooth purchasing flow. The site was developed to highlight the care and professionalism behind each kit, featuring embedded audio previews, detailed descriptions, and aesthetic continuity from page to page.",
+        "Target Personas": "<ul><li>Music producers looking to preview and buy high-quality sounds to spark creativity</li><li>Professional musicians seeking curated and versatile samples</li><li>Content creators or beatmakers who need ready-to-use loops and hits</li></ul>",
+        "Key Features": "<ul><li>Embedded sample previews with waveform visualization</li><li>Fully functional e-commerce site with seamless payment processing</li><li>Responsive design optimized for mobile and desktop</li></ul>",
+        "Color Palette": [
+          "#999999",
+          "#595959",
+          "#E6E6E6",
+          "#000000",
+          "#D9D9D9"
+        ],
+        "Iterative Design": "I tested multiple iterations of product layout and checkout flow using user feedback from early site visitors and collaborators. I refined the typography, improved loading times, and shifted to a monochrome palette to keep the focus on the sounds. A/B testing of cover art sizes and CTA placement helped boost clarity and user interaction.",
+        "Results": "<ul><li>RBM Sounds has become the central hub for all my sound kit distribution</li><li>Users reported a smooth and intuitive shopping experience</li><li>Multiple collaborations and shoutouts from music creators came directly through the site</li><li>Built a growing list of newsletter subscribers and direct customers</li></ul>",
+        "Why It Matters": "RBM Sounds embodies the intersection of independence and intentionality. Rather than waiting for a platform to meet my needs, I built one. This project reflects a broader mindset, where creators can take control of their vision, brand, and livelihood with thoughtful design and user-centered thinking."
+    }
   },
   {
     "Title": "Riff Rabbit",
@@ -80,45 +167,25 @@
     "AppStore": ""
   },
   {
-    "Title": "Weather Now",
-    "Embed link": "",
-    "Website": "",
-    "Screenshot": "../assets/WeatherNow.avif",
+    "Title": "Marcy Run",
+    "Embed link": "https://marcyrun.top/",
+    "Website": "https://marcyrun.top/",
+    "Screenshot": "../assets/marcy-run.png",
     "useScreenshot": false,
     "Technologies": [
       "React",
-      "CSS",
       "Javascript",
       "HTML",
+      "Tailwind",
+      "Framer",
       "UI/UX",
       "Adobe CC",
       "Figma"
     ],
-    "Description": "Weather Now is a team project built with React, HTML, and CSS, designed to provide users with real-time weather updates and sunset information. The app integrates API calls to fetch accurate weather data and sunset times based on user location. The clean and intuitive frontend design ensures a seamless user experience, making it easy to check current conditions and plan accordingly.",
-    "GithubRepoURL": "https://github.com/Weather-Now/WeatherNow",
-    "Presentation": "https://docs.google.com/presentation/d/e/2PACX-1vRvRQZGhNDsgXNq7WJiqINuc4Q1LvDxe7-eKi3HoiWmpfhbryeBrA7JYJcvHH1n8EtoW8ewEAQnZHqz/pubembed?start=true&loop=true&delayms=3000",
-    "AppStore": ""
-  },
-  {
-    "Title": "Shabbat Zman",
-    "Embed link": "https://shabbatzman.com/",
-    "Website": "https://shabbatzman.com/",
-    "Screenshot": "../assets/ShabbatZman.png",
-    "useScreenshot": true,
-    "Technologies": [
-      "React",
-      "React Native",
-      "CSS",
-      "Javascript",
-      "HTML",
-      "UI/UX",
-      "Adobe CC",
-      "Figma"
-    ],
-    "Description": "Shabbatzman.com is a React-based web app designed to simplify Jewish practice by providing accurate zmanim (prayer times) based on the user's location. The app integrates the Geolocation API to automate location detection, making it easier to observe halachic times without manual input. Key components include a responsive design built with React and modern CSS for accessibility across devices. The app connects to a reliable zmanim API to calculate prayer times according to various halachic opinions, ensuring accuracy and inclusivity.",
-    "GithubRepoURL": "https://github.com/Rafibarides/shabbat-zman-mobile",
+    "Description": "Click the screen and hit Space to start! Marcy Run is an endless-runner front end game. The tech stack for Marcy Run includes React for the user interface, Howler.js for implementing dynamic audio playback, and Framer Motion for smooth animations and transitions. I illustrated the characters assets using Adobe Creative Suite, and composed and produced the original theme music using Logic Pro X.",
+    "GithubRepoURL": "https://github.com/Rafibarides/marcy-run-2025",
     "Presentation": "",
-    "AppStore": "https://apps.apple.com/us/app/shabbat-zman/id6741112947"
+    "AppStore": ""
   },
   {
     "Title": "Gelt Capital",

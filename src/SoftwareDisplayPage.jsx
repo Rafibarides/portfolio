@@ -1,10 +1,58 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { palette } from './utils/colors';
 import softwareData from '../Json/SoftwareSection.json';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
   const [project, setProject] = useState(null);
+  const [isDemoExpanded, setIsDemoExpanded] = useState(false);
+  const [isPresentationExpanded, setIsPresentationExpanded] = useState(false);
+  const [isCaseStudyExpanded, setIsCaseStudyExpanded] = useState(false);
+  const [visibleSections, setVisibleSections] = useState({});
+  const sectionRefs = useRef({});
+
+  // Add animation variants
+  const collapsibleVariants = {
+    hidden: { 
+      height: 0,
+      opacity: 0,
+      transition: { 
+        height: { duration: 0.3, ease: "easeInOut" },
+        opacity: { duration: 0.2 }
+      }
+    },
+    visible: { 
+      height: "auto",
+      opacity: 1,
+      transition: { 
+        height: { duration: 0.3, ease: "easeInOut" },
+        opacity: { duration: 0.3, delay: 0.1 }
+      }
+    }
+  };
+
+  // Add fade-in animation variants
+  const fadeInVariants = {
+    hidden: { 
+      opacity: 0,
+      y: 20,
+    },
+    visible: { 
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  // Function to parse HTML content from strings
+  const createMarkup = (htmlContent) => {
+    return { __html: htmlContent };
+  };
 
   useEffect(() => {
     // Find the project with the matching title
@@ -21,6 +69,41 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
       document.body.style.overflow = 'auto';
     };
   }, [projectTitle]);
+
+  // Set up intersection observer for fade-in effect
+  useEffect(() => {
+    if (isCaseStudyExpanded && project?.CaseStudy) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setVisibleSections(prev => ({
+                ...prev,
+                [entry.target.dataset.section]: true
+              }));
+            }
+          });
+        },
+        { threshold: 0.2 } // Trigger when 20% of the element is visible
+      );
+
+      // Observe all section refs
+      Object.keys(sectionRefs.current).forEach(key => {
+        if (sectionRefs.current[key]) {
+          observer.observe(sectionRefs.current[key]);
+        }
+      });
+
+      return () => {
+        // Cleanup observer
+        Object.keys(sectionRefs.current).forEach(key => {
+          if (sectionRefs.current[key]) {
+            observer.unobserve(sectionRefs.current[key]);
+          }
+        });
+      };
+    }
+  }, [isCaseStudyExpanded, project]);
 
   if (!project) {
     return null;
@@ -191,7 +274,120 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
       paddingTop: '50.625%',
       height: 0,
     },
+    collapsibleStyles: {
+      sectionHeader: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        cursor: 'pointer',
+        padding: '5px 0',
+      },
+      chevron: {
+        marginLeft: '10px',
+        transition: 'transform 0.3s ease',
+      },
+      collapsibleContent: {
+        overflow: 'hidden',
+        transition: 'height 0.3s ease',
+      }
+    },
+    caseStudy: {
+      marginBottom: '30px',
+    },
+    caseStudySection: {
+      marginBottom: '25px',
+    },
+    caseStudySectionTitle: {
+      fontSize: '1.4rem',
+      fontWeight: '600',
+      marginBottom: '10px',
+      color: '#fff',
+    },
+    caseStudyContent: {
+      fontSize: '0.95rem',
+      fontWeight: '300',
+      lineHeight: '1.6',
+    },
+    caseStudyList: {
+      listStyleType: 'none',
+      paddingLeft: '1.5rem',
+    },
+    caseStudyListItem: {
+      position: 'relative',
+      marginBottom: '8px',
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        left: '-1.2rem',
+        top: '0.5rem',
+        width: '6px',
+        height: '6px',
+        backgroundColor: palette.accent,
+        borderRadius: '50%',
+      }
+    },
+    colorPalette: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: '20px',
+      marginTop: '15px',
+    },
+    colorSwatchContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '5px',
+    },
+    colorSwatch: {
+      width: '60px',
+      height: '60px',
+      borderRadius: '8px',
+      position: 'relative',
+    },
+    colorHex: {
+      fontSize: '0.6rem',
+      color: '#fff',
+      fontFamily: 'monospace',
+      textAlign: 'center',
+    },
   };
+
+  // Update the caseStudyStyles to style blockquotes
+  const caseStudyStyles = `
+    .case-study-content ul,
+    .case-study-content ol {
+      list-style-type: none;
+      padding-left: 1.5rem;
+      margin-top: 1rem; /* Add spacing before lists */
+    }
+    
+    .case-study-content li {
+      position: relative;
+      margin-bottom: 8px;
+    }
+    
+    .case-study-content li::before {
+      content: "";
+      position: absolute;
+      left: -1.2rem;
+      top: 0.5rem;
+      width: 6px;
+      height: 6px;
+      background-color: ${palette.accent};
+      border-radius: 50%;
+    }
+    
+    .case-study-content blockquote {
+      font-style: italic;
+      opacity: 0.9;
+      border-left: 3px solid ${palette.accent};
+      padding-left: 1rem;
+      margin-left: 0;
+      margin-right: 0;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+  `;
 
   return (
     <motion.div 
@@ -258,34 +454,207 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
             ))}
           </div>
           
+          {/* Case Study Section - Add after Technologies section */}
+          {project.CaseStudy && (
+            <>
+              <h2 
+                style={{...styles.sectionTitle, ...styles.collapsibleStyles.sectionHeader}} 
+                onClick={() => setIsCaseStudyExpanded(!isCaseStudyExpanded)}
+              >
+                Case Study
+                <FontAwesomeIcon 
+                  icon={isCaseStudyExpanded ? faChevronUp : faChevronDown} 
+                  style={{
+                    ...styles.collapsibleStyles.chevron,
+                    transform: isCaseStudyExpanded ? 'rotate(0deg)' : 'rotate(0deg)',
+                    opacity: 0.6,
+                    transition: 'opacity 0.2s ease, transform 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => e.target.style.opacity = 1}
+                  onMouseLeave={(e) => e.target.style.opacity = 0.6}
+                />
+              </h2>
+              <AnimatePresence initial={false}>
+                {isCaseStudyExpanded && (
+                  <motion.div
+                    key="case-study-content"
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={collapsibleVariants}
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <div style={styles.caseStudy}>
+                      {/* Render each section of the case study */}
+                      {Object.entries(project.CaseStudy).map(([key, value]) => {
+                        // Special handling for the first key which has a nested object
+                        if (typeof value === 'object' && !Array.isArray(value)) {
+                          const sectionKey = `${key}-${Object.keys(value)[0]}`;
+                          return (
+                            <motion.div 
+                              key={sectionKey} 
+                              style={styles.caseStudySection}
+                              ref={el => sectionRefs.current[sectionKey] = el}
+                              data-section={sectionKey}
+                              initial="hidden"
+                              animate={visibleSections[sectionKey] ? "visible" : "hidden"}
+                              variants={fadeInVariants}
+                            >
+                              <h3 style={styles.caseStudySectionTitle}>{key}</h3>
+                              <div 
+                                className="case-study-content"
+                                style={styles.caseStudyContent} 
+                                dangerouslySetInnerHTML={createMarkup(value[Object.keys(value)[0]])} 
+                              />
+                            </motion.div>
+                          );
+                        }
+                        // Special handling for Color Palette
+                        else if (key === "Color Palette" && Array.isArray(value)) {
+                          const sectionKey = key;
+                          return (
+                            <motion.div 
+                              key={sectionKey} 
+                              style={styles.caseStudySection}
+                              ref={el => sectionRefs.current[sectionKey] = el}
+                              data-section={sectionKey}
+                              initial="hidden"
+                              animate={visibleSections[sectionKey] ? "visible" : "hidden"}
+                              variants={fadeInVariants}
+                            >
+                              <h3 style={styles.caseStudySectionTitle}>{key}</h3>
+                              <div style={styles.colorPalette}>
+                                {value.map((color, index) => (
+                                  <div key={index} style={styles.colorSwatchContainer}>
+                                    <div 
+                                      style={{
+                                        ...styles.colorSwatch,
+                                        backgroundColor: color
+                                      }}
+                                    />
+                                    <span style={styles.colorHex}>{color}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </motion.div>
+                          );
+                        }
+                        // Regular sections
+                        else {
+                          const sectionKey = key;
+                          return (
+                            <motion.div 
+                              key={sectionKey} 
+                              style={styles.caseStudySection}
+                              ref={el => sectionRefs.current[sectionKey] = el}
+                              data-section={sectionKey}
+                              initial="hidden"
+                              animate={visibleSections[sectionKey] ? "visible" : "hidden"}
+                              variants={fadeInVariants}
+                            >
+                              <h3 style={styles.caseStudySectionTitle}>{key}</h3>
+                              <div 
+                                className="case-study-content"
+                                style={styles.caseStudyContent}
+                                dangerouslySetInnerHTML={createMarkup(value)} 
+                              />
+                            </motion.div>
+                          );
+                        }
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </>
+          )}
+          
           {/* YouTube Demo if available */}
           {youtubeEmbedUrl && (
             <>
-              <h2 style={styles.sectionTitle}>Demo Video</h2>
-              <div style={styles.embedContainer}>
-                <iframe
-                  src={youtubeEmbedUrl}
-                  style={styles.iframe}
-                  title={`${project.Title} Demo`}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
+              <h2 
+                style={{...styles.sectionTitle, ...styles.collapsibleStyles.sectionHeader}} 
+                onClick={() => setIsDemoExpanded(!isDemoExpanded)}
+              >
+                Demo Video
+                <FontAwesomeIcon 
+                  icon={isDemoExpanded ? faChevronUp : faChevronDown} 
+                  style={{
+                    ...styles.collapsibleStyles.chevron,
+                    transform: isDemoExpanded ? 'rotate(0deg)' : 'rotate(0deg)',
+                    opacity: 0.6,
+                    transition: 'opacity 0.2s ease, transform 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => e.target.style.opacity = 1}
+                  onMouseLeave={(e) => e.target.style.opacity = 0.6}
                 />
-              </div>
+              </h2>
+              <AnimatePresence initial={false}>
+                {isDemoExpanded && (
+                  <motion.div
+                    key="demo-content"
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={collapsibleVariants}
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <div style={styles.embedContainer}>
+                      <iframe
+                        src={youtubeEmbedUrl}
+                        style={styles.iframe}
+                        title={`${project.Title} Demo`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </>
           )}
           
           {/* Presentation if available */}
           {project.Presentation && project.Presentation.includes('docs.google.com') && (
             <>
-              <h2 style={styles.sectionTitle}>Presentation</h2>
-              <div style={styles.embedContainer}>
-                <iframe
-                  src={project.Presentation}
-                  style={styles.iframe}
-                  title={`${project.Title} Presentation`}
-                  allowFullScreen
+              <h2 
+                style={{...styles.sectionTitle, ...styles.collapsibleStyles.sectionHeader}} 
+                onClick={() => setIsPresentationExpanded(!isPresentationExpanded)}
+              >
+                Presentation
+                <FontAwesomeIcon 
+                  icon={isPresentationExpanded ? faChevronUp : faChevronDown} 
+                  style={{
+                    ...styles.collapsibleStyles.chevron,
+                    transform: isPresentationExpanded ? 'rotate(0deg)' : 'rotate(0deg)',
+                    opacity: 0.6,
+                    transition: 'opacity 0.2s ease, transform 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => e.target.style.opacity = 1}
+                  onMouseLeave={(e) => e.target.style.opacity = 0.6}
                 />
-              </div>
+              </h2>
+              <AnimatePresence initial={false}>
+                {isPresentationExpanded && (
+                  <motion.div
+                    key="presentation-content"
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={collapsibleVariants}
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <div style={styles.embedContainer}>
+                      <iframe
+                        src={project.Presentation}
+                        style={styles.iframe}
+                        title={`${project.Title} Presentation`}
+                        allowFullScreen
+                      />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </>
           )}
           
@@ -349,6 +718,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
             )}
           </div>
         </div>
+        <style>{caseStudyStyles}</style>
       </motion.div>
     </motion.div>
   );
