@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <!-- Favicon path - this will be served from the src/assets directory during development 
          and should be moved to the public directory for production builds -->
-    <link rel="icon" type="image/png" href="/assets/favicon-ztofyhoJ.png" />
+    <link rel="icon" type="image/avif" href="/src/assets/favicon.avif" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rafi Barides Portfolio</title>
     
@@ -17,16 +17,39 @@
     <meta property="og:url" content="https://rafibarides.com/">
     <meta property="og:title" content="Rafi Barides Portfolio">
     <meta property="og:description" content="Software engineer, musician, and creative technologist showcasing projects in web development, mobile apps, music production, and more.">
-    <meta property="og:image" content="/assets/prof-DsmYEeYV.png">
+    <meta property="og:image" content="/src/assets/preview.avif">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://rafibarides.com/">
     <meta property="twitter:title" content="Rafi Barides Portfolio">
     <meta property="twitter:description" content="Software engineer, musician, and creative technologist showcasing projects in web development, mobile apps, music production, and more.">
-    <meta property="twitter:image" content="/src/assets/prof.png">
-    <script type="module" crossorigin src="/assets/index-B5ro9Bhc.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DNI9UH2g.css">
+    <meta property="twitter:image" content="/src/assets/prof.avif">
+
+    <!-- Preconnect to domains for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Update font loading links to include Charm instead of Hurricane -->
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Remove or modify problematic preload -->
+    <!-- <link rel="preload" href="/assets/worldly.avif" as="image"> -->
+    
+    <!-- If it's an important image that will be used later, we can defer preloading -->
+    <link rel="prefetch" href="/assets/worldly.avif" as="image">
+
+    <!-- Update preload for Charm font -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/charm/v11/7cHmv4oii5K0MdY8K-4E4Q.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Add local Charm font as preload -->
+    <link rel="preload" href="/fonts/Charm-Regular.ttf" as="font" type="font/ttf" crossorigin>
+    <script type="module" crossorigin src="/assets/index-CcqeZRyt.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/react-DJG_os-6.js">
+    <link rel="modulepreload" crossorigin href="/assets/framer-CpTVDtNv.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-Cr2npCaM.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-EfCTQ4F8.css">
   </head>
   <body>
     <div id="root"></div>
