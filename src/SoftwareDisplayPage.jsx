@@ -4,6 +4,8 @@ import { palette } from './utils/colors';
 import softwareData from '../Json/SoftwareSection.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { useModal } from './context/ModalContext';
+import ReactDOM from 'react-dom';
 
 const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
   const [project, setProject] = useState(null);
@@ -12,6 +14,87 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
   const [isCaseStudyExpanded, setIsCaseStudyExpanded] = useState(false);
   const [visibleSections, setVisibleSections] = useState({});
   const sectionRefs = useRef({});
+  const { openModal, closeModal } = useModal();
+
+  // Create a DOM element for the portal if it doesn't exist - MOVED UP HERE to maintain hook order
+  useEffect(() => {
+    let modalRoot = document.getElementById('modal-root');
+    if (!modalRoot) {
+      modalRoot = document.createElement('div');
+      modalRoot.id = 'modal-root';
+      document.body.appendChild(modalRoot);
+    }
+    
+    // Add a global style to ensure modal root has highest z-index
+    const styleElement = document.createElement('style');
+    styleElement.textContent = `
+      #modal-root {
+        position: relative;
+        z-index: 999999;
+      }
+    `;
+    document.head.appendChild(styleElement);
+    
+    return () => {
+      if (styleElement.parentNode) {
+        document.head.removeChild(styleElement);
+      }
+    };
+  }, []);
+
+  // Find project useEffect - order maintained
+  useEffect(() => {
+    // Find the project with the matching title
+    const foundProject = softwareData.find(
+      p => p.Title.toLowerCase() === decodeURIComponent(projectTitle).toLowerCase()
+    );
+    setProject(foundProject);
+    
+    // Prevent body scrolling when modal is open
+    document.body.style.overflow = 'hidden';
+    openModal(); // Notify context that modal is open
+    
+    // Re-enable scrolling when component unmounts
+    return () => {
+      document.body.style.overflow = 'auto';
+      closeModal(); // Notify context that modal is closed
+    };
+  }, [projectTitle, openModal, closeModal]);
+
+  // Intersection observer useEffect - order maintained
+  useEffect(() => {
+    if (isCaseStudyExpanded && project?.CaseStudy) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              setVisibleSections(prev => ({
+                ...prev,
+                [entry.target.dataset.section]: true
+              }));
+            }
+          });
+        },
+        { threshold: 0.2 } // Trigger when 20% of the element is visible
+      );
+
+      // Observe all section refs
+      Object.keys(sectionRefs.current).forEach(key => {
+        if (sectionRefs.current[key]) {
+          observer.observe(sectionRefs.current[key]);
+        }
+      });
+
+      return () => {
+        // Cleanup observer
+        Object.keys(sectionRefs.current).forEach(key => {
+          if (sectionRefs.current[key]) {
+            observer.unobserve(sectionRefs.current[key]);
+          }
+        });
+      };
+    }
+  }, [isCaseStudyExpanded, project]);
 
   // Add animation variants
   const collapsibleVariants = {
@@ -54,57 +137,6 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
     return { __html: htmlContent };
   };
 
-  useEffect(() => {
-    // Find the project with the matching title
-    const foundProject = softwareData.find(
-      p => p.Title.toLowerCase() === decodeURIComponent(projectTitle).toLowerCase()
-    );
-    setProject(foundProject);
-    
-    // Prevent body scrolling when modal is open
-    document.body.style.overflow = 'hidden';
-    
-    // Re-enable scrolling when component unmounts
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [projectTitle]);
-
-  // Set up intersection observer for fade-in effect
-  useEffect(() => {
-    if (isCaseStudyExpanded && project?.CaseStudy) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              setVisibleSections(prev => ({
-                ...prev,
-                [entry.target.dataset.section]: true
-              }));
-            }
-          });
-        },
-        { threshold: 0.2 } // Trigger when 20% of the element is visible
-      );
-
-      // Observe all section refs
-      Object.keys(sectionRefs.current).forEach(key => {
-        if (sectionRefs.current[key]) {
-          observer.observe(sectionRefs.current[key]);
-        }
-      });
-
-      return () => {
-        // Cleanup observer
-        Object.keys(sectionRefs.current).forEach(key => {
-          if (sectionRefs.current[key]) {
-            observer.unobserve(sectionRefs.current[key]);
-          }
-        });
-      };
-    }
-  }, [isCaseStudyExpanded, project]);
-
   if (!project) {
     return null;
   }
@@ -122,7 +154,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
     return (
       <>
         <span style={{ fontFamily: "'Poppins', sans-serif" }}>{firstPart} </span>
-        <span style={{ fontFamily: "'Caveat', cursive", fontWeight: 600 }}>{lastWord}</span>
+        <span style={{ fontFamily: "var(--font-accent)", fontWeight: 600 }}>{lastWord}</span>
       </>
     );
   };
@@ -157,8 +189,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
     overflow: 'hidden',
     border: '1px solid rgba(255, 255, 255, 0.1)',
     position: 'relative',
-    paddingTop: '56.25%', // Correct 16:9 aspect ratio (9÷16 = 0.5625 or 56.25%)
-    height: 0,
+    height: '450px',
   };
 
   const styles = {
@@ -168,13 +199,14 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.75)',
-      backdropFilter: 'blur(5px)',
-      zIndex: 1000,
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
+      backdropFilter: 'blur(8px)',
+      zIndex: 999999,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
       padding: '20px',
+      isolation: 'isolate',
     },
     modal: {
       backgroundColor: 'rgba(15, 15, 15, 0.95)',
@@ -187,6 +219,9 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
       position: 'relative',
       border: '1px solid rgba(255, 255, 255, 0.1)',
       fontFamily: "'Poppins', sans-serif",
+      display: 'flex',
+      flexDirection: 'column',
+      zIndex: 1000000,
     },
     closeButton: {
       position: 'absolute',
@@ -202,6 +237,9 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
     content: {
       padding: '40px 80px',
       color: palette.text,
+      overflow: 'visible',
+      width: '100%',
+      boxSizing: 'border-box',
     },
     header: {
       fontSize: '2.5rem',
@@ -215,6 +253,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
       overflow: 'hidden',
       borderRadius: '8px',
       border: '1px solid rgba(255, 255, 255, 0.1)',
+      position: 'relative',
     },
     iframe: {
       position: 'absolute',
@@ -223,6 +262,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
       width: '100%',
       height: '100%',
       border: 'none',
+      backgroundColor: 'rgba(0, 0, 0, 0.2)',
     },
     screenshot: {
       width: '100%',
@@ -284,8 +324,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
       overflow: 'hidden',
       border: '1px solid rgba(255, 255, 255, 0.1)',
       position: 'relative',
-      paddingTop: '50.625%',
-      height: 0,
+      height: '450px',
     },
     collapsibleStyles: {
       sectionHeader: {
@@ -363,6 +402,75 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
       fontFamily: 'monospace',
       textAlign: 'center',
     },
+    assetsGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gap: '20px',
+      marginTop: '20px',
+      position: 'relative',
+      padding: '20px',
+      borderRadius: '12px',
+      background: 'radial-gradient(circle at center, rgba(30, 30, 30, 0.5) 0%, rgba(30, 30, 30, 0.2) 60%, rgba(30, 30, 30, 0) 100%)',
+      '@media (max-width: 768px)': {
+        gridTemplateColumns: 'repeat(2, 1fr)',
+      },
+      '@media (max-width: 480px)': {
+        gridTemplateColumns: '1fr',
+      },
+    },
+    assetContainer: {
+      overflow: 'hidden',
+      borderRadius: '8px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+      '&:hover': {
+        transform: 'translateY(-5px)',
+        boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+      },
+    },
+    verticalAsset: {
+      width: '100%',
+      height: 'auto',
+      display: 'block',
+      objectFit: 'cover',
+      transition: 'transform 0.5s ease',
+      '&:hover': {
+        transform: 'scale(1.03)',
+      },
+    },
+    horizontalAssetsGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gap: '20px',
+      marginTop: '20px',
+      position: 'relative',
+      padding: '20px',
+      borderRadius: '12px',
+      background: 'radial-gradient(circle at center, rgba(30, 30, 30, 0.5) 0%, rgba(30, 30, 30, 0.2) 60%, rgba(30, 30, 30, 0) 100%)',
+      '@media (max-width: 768px)': {
+        gridTemplateColumns: '1fr',
+      },
+    },
+    horizontalAssetContainer: {
+      overflow: 'hidden',
+      borderRadius: '8px',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+      '&:hover': {
+        transform: 'translateY(-5px)',
+        boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+      },
+    },
+    horizontalAsset: {
+      width: '100%',
+      height: 'auto',
+      display: 'block',
+      objectFit: 'cover',
+      transition: 'transform 0.5s ease',
+      '&:hover': {
+        transform: 'scale(1.03)',
+      },
+    },
   };
 
   // Update the caseStudyStyles to style blockquotes
@@ -400,17 +508,290 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
       margin-top: 1rem;
       margin-bottom: 1rem;
     }
+    
+    /* Asset grid styles */
+    .assets-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+      position: relative;
+      padding: 20px;
+      border-radius: 12px;
+      background: radial-gradient(circle at center, rgba(30, 30, 30, 0.5) 0%, rgba(30, 30, 30, 0.2) 60%, rgba(30, 30, 30, 0) 100%);
+    }
+    
+    .horizontal-assets-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+      position: relative;
+      padding: 20px;
+      border-radius: 12px;
+      background: radial-gradient(circle at center, rgba(30, 30, 30, 0.5) 0%, rgba(30, 30, 30, 0.2) 60%, rgba(30, 30, 30, 0) 100%);
+    }
+    
+    .asset-container {
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .asset-container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .vertical-asset, .horizontal-asset {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .vertical-asset:hover, .horizontal-asset:hover {
+      transform: scale(1.03);
+    }
+    
+    @media (max-width: 768px) {
+      .assets-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .horizontal-assets-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .assets-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   `;
 
-  return (
+  // Add additional CSS to ensure consistent containment
+  const containerStyles = `
+    .embed-container, .presentation-container {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .embed-container iframe, .presentation-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    @media (max-width: 768px) {
+      .embed-container, .presentation-container {
+        height: 300px;
+      }
+    }
+  `;
+
+  const renderCaseStudyContent = (content, parentKey) => {
+    if (typeof content === 'object' && content !== null) {
+      return Object.entries(content).map(([key, value]) => {
+        // Special handling for Color Palette
+        if (key === "Color Palette" && Array.isArray(value)) {
+          const sectionKey = key;
+          return (
+            <motion.div 
+              key={sectionKey} 
+              style={styles.caseStudySection}
+              ref={el => sectionRefs.current[sectionKey] = el}
+              data-section={sectionKey}
+              initial="hidden"
+              animate={visibleSections[sectionKey] ? "visible" : "hidden"}
+              variants={fadeInVariants}
+            >
+              <h3 style={styles.caseStudySectionTitle}>{sectionKey}</h3>
+              <div style={styles.colorPalette}>
+                {value.map((color, index) => (
+                  <div key={index} style={styles.colorSwatchContainer}>
+                    <div 
+                      style={{
+                        ...styles.colorSwatch,
+                        backgroundColor: color,
+                      }}
+                    />
+                    <div style={styles.colorHex}>{color}</div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          );
+        }
+        // Special handling for Assets
+        else if (key === "Assets" && typeof value === 'object') {
+          const sectionKey = key;
+          return (
+            <motion.div 
+              key={sectionKey} 
+              style={styles.caseStudySection}
+              ref={el => sectionRefs.current[sectionKey] = el}
+              data-section={sectionKey}
+              initial="hidden"
+              animate={visibleSections[sectionKey] ? "visible" : "hidden"}
+              variants={fadeInVariants}
+            >
+              {/* Vertical assets */}
+              {value.Vertical && value.Vertical.length > 0 && (
+                <div className="assets-grid">
+                  {value.Vertical.map((asset, index) => (
+                    <div key={`vertical-${index}`} className="asset-container">
+                      <img 
+                        src={asset} 
+                        alt={`Project asset ${index + 1}`} 
+                        className="vertical-asset"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {/* Horizontal assets */}
+              {value.Horizontal && value.Horizontal.length > 0 && (
+                <div className="horizontal-assets-grid">
+                  {value.Horizontal.map((asset, index) => (
+                    <div key={`horizontal-${index}`} className="asset-container">
+                      <img 
+                        src={asset} 
+                        alt={`Project asset ${index + 1}`} 
+                        className="horizontal-asset"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          );
+        }
+        // Regular sections
+        else {
+          const sectionKey = key;
+          return (
+            <motion.div 
+              key={sectionKey} 
+              style={styles.caseStudySection}
+              ref={el => sectionRefs.current[sectionKey] = el}
+              data-section={sectionKey}
+              initial="hidden"
+              animate={visibleSections[sectionKey] ? "visible" : "hidden"}
+              variants={fadeInVariants}
+            >
+              <h3 style={styles.caseStudySectionTitle}>{sectionKey}</h3>
+              {typeof value === 'string' ? (
+                <div 
+                  className="case-study-content"
+                  style={styles.caseStudyContent} 
+                  dangerouslySetInnerHTML={createMarkup(value)} 
+                />
+              ) : (
+                renderCaseStudyContent(value, key)
+              )}
+            </motion.div>
+          );
+        }
+      });
+    }
+    return null;
+  };
+
+  // Add a media query for smaller screens
+  const mediaQueryStyles = `
+    @media (max-width: 768px) {
+      .software-modal-content {
+        padding: 30px 20px !important;
+      }
+      
+      .embed-container, .presentation-container {
+        width: 100% !important;
+        margin: 0 auto 30px auto !important;
+      }
+    }
+  `;
+
+  // Update the forceTopLayerStyles to include the fixed close button
+  const forceTopLayerStyles = `
+    #modal-root {
+      position: relative;
+      z-index: 999999;
+    }
+    
+    .software-display-modal-overlay {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      z-index: 999999 !important;
+      isolation: isolate !important;
+    }
+    
+    .software-display-modal {
+      z-index: 1000000 !important;
+      isolation: isolate !important;
+    }
+    
+    .modal-fixed-close-button {
+      z-index: 1000001 !important;
+    }
+  `;
+
+  // The modal content JSX
+  const modalContent = project && (
     <motion.div 
+      className="software-display-modal-overlay"
       style={styles.overlay}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
+      {/* Fixed close button that stays in top right corner */}
+      <motion.button 
+        className="modal-fixed-close-button"
+        style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          background: 'none',
+          border: 'none',
+          color: 'white',
+          fontSize: '28px',
+          cursor: 'pointer',
+          zIndex: 1000001,
+          padding: '8px',
+          lineHeight: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        onClick={onClose}
+        whileHover={{ 
+          scale: 1.1,
+          textShadow: '0 0 10px rgba(255, 255, 255, 0.5)' 
+        }}
+        whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+      >
+        ×
+      </motion.button>
+      
       <motion.div 
+        className="software-display-modal"
         style={styles.modal}
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -418,9 +799,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
         transition={{ type: "spring", damping: 20 }}
         onClick={(e) => e.stopPropagation()}
       >
-        <button style={styles.closeButton} onClick={onClose}>×</button>
-        
-        <div style={styles.content}>
+        <div style={styles.content} className="software-modal-content">
           <h1 style={styles.header}>{formatTitle(project.Title)}</h1>
           
           {/* Preview (Embed or Screenshot) */}
@@ -498,83 +877,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
                     style={{ overflow: 'hidden' }}
                   >
                     <div style={styles.caseStudy}>
-                      {/* Render each section of the case study */}
-                      {Object.entries(project.CaseStudy).map(([key, value]) => {
-                        // Special handling for the first key which has a nested object
-                        if (typeof value === 'object' && !Array.isArray(value)) {
-                          const sectionKey = `${key}-${Object.keys(value)[0]}`;
-                          return (
-                            <motion.div 
-                              key={sectionKey} 
-                              style={styles.caseStudySection}
-                              ref={el => sectionRefs.current[sectionKey] = el}
-                              data-section={sectionKey}
-                              initial="hidden"
-                              animate={visibleSections[sectionKey] ? "visible" : "hidden"}
-                              variants={fadeInVariants}
-                            >
-                              <h3 style={styles.caseStudySectionTitle}>{key}</h3>
-                              <div 
-                                className="case-study-content"
-                                style={styles.caseStudyContent} 
-                                dangerouslySetInnerHTML={createMarkup(value[Object.keys(value)[0]])} 
-                              />
-                            </motion.div>
-                          );
-                        }
-                        // Special handling for Color Palette
-                        else if (key === "Color Palette" && Array.isArray(value)) {
-                          const sectionKey = key;
-                          return (
-                            <motion.div 
-                              key={sectionKey} 
-                              style={styles.caseStudySection}
-                              ref={el => sectionRefs.current[sectionKey] = el}
-                              data-section={sectionKey}
-                              initial="hidden"
-                              animate={visibleSections[sectionKey] ? "visible" : "hidden"}
-                              variants={fadeInVariants}
-                            >
-                              <h3 style={styles.caseStudySectionTitle}>{key}</h3>
-                              <div style={styles.colorPalette}>
-                                {value.map((color, index) => (
-                                  <div key={index} style={styles.colorSwatchContainer}>
-                                    <div 
-                                      style={{
-                                        ...styles.colorSwatch,
-                                        backgroundColor: color
-                                      }}
-                                    />
-                                    <span style={styles.colorHex}>{color}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </motion.div>
-                          );
-                        }
-                        // Regular sections
-                        else {
-                          const sectionKey = key;
-                          return (
-                            <motion.div 
-                              key={sectionKey} 
-                              style={styles.caseStudySection}
-                              ref={el => sectionRefs.current[sectionKey] = el}
-                              data-section={sectionKey}
-                              initial="hidden"
-                              animate={visibleSections[sectionKey] ? "visible" : "hidden"}
-                              variants={fadeInVariants}
-                            >
-                              <h3 style={styles.caseStudySectionTitle}>{key}</h3>
-                              <div 
-                                className="case-study-content"
-                                style={styles.caseStudyContent}
-                                dangerouslySetInnerHTML={createMarkup(value)} 
-                              />
-                            </motion.div>
-                          );
-                        }
-                      })}
+                      {renderCaseStudyContent(project.CaseStudy, null)}
                     </div>
                   </motion.div>
                 )}
@@ -612,7 +915,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
                     variants={collapsibleVariants}
                     style={{ overflow: 'hidden' }}
                   >
-                    <div style={styles.embedContainer}>
+                    <div style={styles.embedContainer} className="embed-container">
                       <iframe
                         src={youtubeEmbedUrl}
                         style={styles.iframe}
@@ -657,7 +960,7 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
                     variants={collapsibleVariants}
                     style={{ overflow: 'hidden' }}
                   >
-                    <div style={presentationEmbedStyles}>
+                    <div style={presentationEmbedStyles} className="presentation-container">
                       <iframe
                         src={project.Presentation}
                         style={styles.iframe}
@@ -732,9 +1035,18 @@ const SoftwareDisplayPage = ({ projectTitle, onClose }) => {
           </div>
         </div>
         <style>{caseStudyStyles}</style>
+        <style>{mediaQueryStyles}</style>
+        <style>{containerStyles}</style>
+        <style>{forceTopLayerStyles}</style>
       </motion.div>
     </motion.div>
   );
+
+  // Use createPortal to render the modal directly to the body
+  return project ? ReactDOM.createPortal(
+    modalContent,
+    document.getElementById('modal-root') || document.body
+  ) : null;
 };
 
 export default SoftwareDisplayPage;

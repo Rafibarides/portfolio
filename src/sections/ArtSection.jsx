@@ -5,6 +5,7 @@ import ScrollFontTransition from '../components/ScrollFontTransition';
 import RetroTextEffect from '../components/RetroTextEffect';
 import artData from '../../Json/ArtSection.json';
 import Title from '../components/Title';
+import { useModal } from '../context/ModalContext';
 
 const ArtSection = () => {
   const [artworks, setArtworks] = useState([]);
@@ -12,6 +13,7 @@ const ArtSection = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const sectionRef = useRef(null);
+  const { openModal, closeModal } = useModal();
 
   useEffect(() => {
     setArtworks(artData);
@@ -29,12 +31,14 @@ const ArtSection = () => {
     setSelectedArt(artwork);
     setSelectedIndex(index);
     document.body.style.overflow = 'hidden';
+    openModal();
   };
 
   const closeArtModal = () => {
     setSelectedArt(null);
     setSelectedIndex(null);
     document.body.style.overflow = 'auto';
+    closeModal();
   };
 
   const navigateArt = useCallback((direction) => {
@@ -490,19 +494,17 @@ const ArtSection = () => {
     );
   });
 
-  // Add a new component for the fade-in/fade-out artwork
+  // Update the FadeInOutImage component to fix the animation control issue
   const FadeInOutImage = ({ src, alt, style, onClick }) => {
     const controls = useAnimation();
     const imageRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
     
     useEffect(() => {
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) {
-            controls.start("visible");
-          } else {
-            controls.start("hidden");
-          }
+          // Update state instead of directly controlling animation
+          setIsVisible(entry.isIntersecting);
         },
         { threshold: 0.2 }
       );
@@ -516,7 +518,16 @@ const ArtSection = () => {
           observer.unobserve(imageRef.current);
         }
       };
-    }, [controls]);
+    }, []);
+    
+    // Control animation based on visibility state
+    useEffect(() => {
+      if (isVisible) {
+        controls.start("visible");
+      } else {
+        controls.start("hidden");
+      }
+    }, [isVisible, controls]);
     
     return (
       <motion.img
@@ -599,32 +610,37 @@ const ArtSection = () => {
       {regularArtworks.length > 0 && (
         <div style={styles.artGrid}>
           {regularArtworks.map((artwork, index) => (
-            <motion.div 
+            <div 
               key={index} 
               style={styles.artContainer}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.1 * (index % 3) }}
               onClick={() => openArtModal(artwork, index)}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'scale(1.03)';
-                e.currentTarget.querySelector('img').style.transform = 'scale(1.1)';
-                e.currentTarget.querySelector('div').style.opacity = 1;
+                if (e.currentTarget.querySelector('img')) {
+                  e.currentTarget.querySelector('img').style.transform = 'scale(1.1)';
+                }
+                if (e.currentTarget.querySelector('div')) {
+                  e.currentTarget.querySelector('div').style.opacity = 1;
+                }
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.querySelector('img').style.transform = 'scale(1)';
-                e.currentTarget.querySelector('div').style.opacity = 0;
+                if (e.currentTarget.querySelector('img')) {
+                  e.currentTarget.querySelector('img').style.transform = 'scale(1)';
+                }
+                if (e.currentTarget.querySelector('div')) {
+                  e.currentTarget.querySelector('div').style.opacity = 0;
+                }
               }}
             >
-              <FadeInOutImage
+              <img
                 src={artwork.url} 
                 alt={`Artwork ${index + 1}`} 
                 style={styles.art}
+                loading="lazy"
               />
               <div style={styles.artOverlay}></div>
-            </motion.div>
+            </div>
           ))}
         </div>
       )}

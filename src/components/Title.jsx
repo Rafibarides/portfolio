@@ -27,7 +27,7 @@ const Title = ({ text, useClipMask = false }) => {
     container: {
       marginBottom: '30px',
       textAlign: 'center',
-      fontFamily: "'Poppins', sans-serif",
+      fontFamily: "var(--font-primary)",
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -41,12 +41,12 @@ const Title = ({ text, useClipMask = false }) => {
       lineHeight: 1.2, // Consistent line height
     },
     poppinsWord: {
-      fontFamily: "'Poppins', sans-serif",
+      fontFamily: "var(--font-primary)",
       fontWeight: 600,
       fontSize: fontSize,
     },
     caveatWord: {
-      fontFamily: "'Caveat', cursive",
+      fontFamily: "var(--font-accent)",
       fontWeight: 600,
       fontSize: fontSize, // Same base font size for consistency
       display: 'inline-block',
@@ -61,7 +61,7 @@ const Title = ({ text, useClipMask = false }) => {
       <h2 style={styles.container}>
         <ScrollFontTransition 
           text={text}
-          startFont="'Caveat', cursive"
+          startFont="var(--font-accent)"
           endFont="'Poppins', sans-serif"
           fontWeight={600}
           threshold={0.2}
@@ -82,7 +82,7 @@ const Title = ({ text, useClipMask = false }) => {
               <TextClipMask 
                 text={word}
                 clipImageSrc={texture2Gif}
-                fontFamily="'Poppins', sans-serif"
+                fontFamily="var(--font-primary)"
                 fontSize={fontSize} // Use consistent font size
                 fontWeight={600}
                 color="white"
@@ -95,7 +95,7 @@ const Title = ({ text, useClipMask = false }) => {
             <TextClipMask 
               text={words[words.length - 1]}
               clipImageSrc={texture2Gif}
-              fontFamily="'Caveat', cursive"
+              fontFamily="var(--font-accent)"
               fontSize={fontSize} // Use consistent font size
               fontWeight={600}
               color="white"

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { palette } from './utils/colors';
+import WelcomeSection from './sections/WelcomeSection';
 import SoftwareSection from './sections/SoftwareSection';
 import PhotographySection from './sections/PhotographySection';
 import ArtSection from './sections/ArtSection';
@@ -23,6 +24,7 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import ContactSection from './sections/ContactSection';
+import { useModal } from './context/ModalContext';
 
 const Portfolio = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -35,10 +37,15 @@ const Portfolio = () => {
   // Add cursor states
   const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
   const [isOverSidebar, setIsOverSidebar] = useState(false);
+  // Add new state for scroll tracking
+  const [hasScrolled, setHasScrolled] = useState(false);
+  
+  // Add the modal context
+  const { isModalOpen } = useModal();
   
   // Navigation items with their icons
   const navItems = [
-    { name: 'Software', icon: faCode, section: 'software' },
+    { name: 'Software/\nDesign', icon: faCode, section: 'software' },
     { name: 'Photography', icon: faCamera, section: 'photography' },
     { name: 'Art', icon: faPaintBrush, section: 'art' },
     { name: 'Music\nPerformance', icon: faMusic, section: 'music-performance' },
@@ -57,6 +64,18 @@ const Portfolio = () => {
     window.addEventListener('mousemove', updateCursorPosition);
     return () => window.removeEventListener('mousemove', updateCursorPosition);
   }, []);
+
+  // Add scroll event handler
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10 && !hasScrolled) {
+        setHasScrolled(true);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasScrolled]);
 
   // Styles
   const styles = {
@@ -196,6 +215,20 @@ const Portfolio = () => {
       left: cursorPosition.x, // Use exact position - transform will handle centering
       top: cursorPosition.y,  // Use exact position - transform will handle centering
     },
+    navbar: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '80px',
+      backgroundColor: palette.sidebar,
+      display: 'flex',
+      alignItems: 'center',
+      zIndex: 1000,
+      x: isModalOpen ? -100 : 0,
+      opacity: isModalOpen ? 0 : 1,
+      transition: 'x 0.3s ease, opacity 0.3s ease',
+    },
   };
 
   // Add resize listener to detect mobile
@@ -261,7 +294,7 @@ const Portfolio = () => {
         animate={{ 
           scale: isOverSidebar ? (hoveredIndex !== null ? 1.3 : 1) : 0.5,
           opacity: isOverSidebar ? 1 : 0,
-          rotate: 45, // Ensure rotation is applied through animation too
+          rotate: 45,
         }}
         transition={{ duration: 0.2 }}
       />
@@ -283,15 +316,26 @@ const Portfolio = () => {
       {!isMobile && (
         <motion.nav
           initial={{ width: '70px' }}
-          animate={{ width: isExpanded ? '200px' : '70px' }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          animate={{ 
+            width: isExpanded ? '200px' : '70px',
+            x: isModalOpen ? -100 : 0,
+            opacity: isModalOpen ? 0 : 1
+          }}
+          transition={{ 
+            duration: 0.3, 
+            ease: "easeInOut" 
+          }}
           onHoverStart={() => {
-            setIsExpanded(true);
-            setIsOverSidebar(true);
+            if (!isModalOpen) {
+              setIsExpanded(true);
+              setIsOverSidebar(true);
+            }
           }}
           onHoverEnd={() => {
-            setIsExpanded(false);
-            setIsOverSidebar(false);
+            if (!isModalOpen) {
+              setIsExpanded(false);
+              setIsOverSidebar(false);
+            }
           }}
           style={{
             position: 'fixed',
@@ -303,7 +347,7 @@ const Portfolio = () => {
             flexDirection: 'column',
             overflow: 'hidden',
             zIndex: 10,
-            transition: 'width 0.3s ease',
+            transition: 'width 0.3s ease, transform 0.3s ease, opacity 0.3s ease',
             cursor: 'none', // Hide default cursor when over sidebar
           }}
         >
@@ -379,7 +423,8 @@ const Portfolio = () => {
         marginLeft: isMobile ? 0 : (isExpanded ? '200px' : '70px'),
         width: isMobile ? '100%' : (isExpanded ? 'calc(100% - 200px)' : 'calc(100% - 70px)'),
       }}>
-        <SoftwareSection />
+        <WelcomeSection />
+        <SoftwareSection hasScrolled={hasScrolled} />
         <PhotographySection />
         <ArtSection />
         <MusicPerformanceSection />
@@ -408,6 +453,12 @@ const Portfolio = () => {
             padding: '12px',
             cursor: 'pointer',
           }}
+          animate={{
+            opacity: isModalOpen ? 0 : 1,
+            x: isModalOpen ? 100 : 0,
+            pointerEvents: isModalOpen ? 'none' : 'auto'
+          }}
+          transition={{ duration: 0.3 }}
           onClick={toggleMobileMenu}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}

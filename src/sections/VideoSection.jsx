@@ -16,17 +16,22 @@ const VideoSection = () => {
   const [loadedVideos, setLoadedVideos] = useState({});
 
   useEffect(() => {
-    // Load video data from JSON
-    setShortVideos(shortVideosData);
-    
-    // Add default titles and skills if not present in the data
-    const processedData = videoSectionData.map(video => ({
-      ...video,
-      title: video.title || "Video Project",
-      skills: video.skills || []
-    }));
-    
-    setVideos(processedData);
+    // Use Promise.all to load data in parallel
+    Promise.all([
+      Promise.resolve(shortVideosData),
+      Promise.resolve(videoSectionData)
+    ]).then(([shortData, videoData]) => {
+      setShortVideos(shortData);
+      
+      // Process video data
+      const processedData = videoData.map(video => ({
+        ...video,
+        title: video.title || "Video Project",
+        skills: video.skills || []
+      }));
+      
+      setVideos(processedData);
+    });
     
     // Handle responsive layout
     const handleResize = () => {
@@ -37,10 +42,20 @@ const VideoSection = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const openVideoModal = (video) => {
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+
+  const debouncedOpenVideoModal = debounce((video) => {
     setSelectedVideo(video);
     setShowModal(true);
-  };
+  }, 50);
 
   const closeVideoModal = () => {
     setShowModal(false);
@@ -119,6 +134,7 @@ const VideoSection = () => {
       width: isMobile ? '100%' : '260px',
       height: '330px',
       marginBottom: '50px',
+      willChange: 'transform',
     },
     video: {
       width: '100%',
@@ -212,7 +228,7 @@ const VideoSection = () => {
   };
 
   return (
-    <section id="video" style={styles.section}>
+    <section id="video" style={styles.section} className="content-visibility-auto">
       <Title text="Video Production" />
       
       {/* Short Videos Grid */}
@@ -229,10 +245,15 @@ const VideoSection = () => {
               scale: 1.03,
               transition: { duration: 0.3 }
             }}
-            onClick={() => openVideoModal(video)}
+            onClick={() => debouncedOpenVideoModal(video)}
           >
             <video 
-              style={styles.video}
+              style={{
+                ...styles.video,
+                width: '100%',
+                height: '100%',
+                aspectRatio: '9/16',
+              }}
               src={video.url}
               playsInline
               muted
@@ -269,7 +290,11 @@ const VideoSection = () => {
                 <iframe
                   src={`https://www.youtube.com/embed/${videoId}?rel=0`}
                   title={video.title || `Video Project ${index + 1}`}
-                  style={styles.iframe}
+                  style={{
+                    ...styles.iframe,
+                    width: '100%',
+                    height: '100%',
+                  }}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   onLoad={() => handleVideoLoaded(index)}
@@ -317,10 +342,15 @@ const VideoSection = () => {
       )}
       
       {/* Add CSS for loading animation */}
-      <style jsx>{`
+      <style>{`
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
+        }
+        
+        .content-visibility-auto {
+          content-visibility: auto;
+          contain-intrinsic-size: 1px 5000px; /* Estimate of content size */
         }
       `}</style>
     </section>

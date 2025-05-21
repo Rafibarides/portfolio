@@ -4,6 +4,7 @@ import { palette } from '../utils/colors';
 import ScrollFontTransition from '../components/ScrollFontTransition';
 import musicPerformanceData from '../../Json/MusicPerformanceSection.json';
 import Title from '../components/Title';
+import LazyYouTubeEmbed from '../components/LazyYouTubeEmbed';
 
 const MusicPerformanceSection = () => {
   const [performances, setPerformances] = useState([]);
@@ -173,14 +174,10 @@ const MusicPerformanceSection = () => {
             whileTap={{ scale: 1.02 }}
           >
             <div style={styles.videoWrapper}>
-              <iframe
-                src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+              <LazyYouTubeEmbed
+                videoId={videoId}
                 title={performance.title || `Music Performance ${index + 1}`}
                 style={styles.iframe}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                onLoad={() => handleVideoLoaded(index)}
-                loading="lazy"
               />
             </div>
             

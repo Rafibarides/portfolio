@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "analyze": "vite build --mode analyze"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.7.2",

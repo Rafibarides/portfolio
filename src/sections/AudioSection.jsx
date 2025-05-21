@@ -7,6 +7,7 @@ import audioData from '../../Json/AudioSection.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import Title from '../components/Title';
+import OptimizedImage from '../components/OptimizedImage';
 
 const AudioSection = () => {
   const [audioTracks, setAudioTracks] = useState([]);
@@ -30,6 +31,24 @@ const AudioSection = () => {
     
     window.addEventListener('resize', handleResize);
     
+    // Only preload metadata initially, not the full audio
+    const loadAudioMetadata = () => {
+      audioTracks.forEach((track, index) => {
+        if (audioRefs.current[index]) {
+          audioRefs.current[index].preload = "metadata";
+        }
+      });
+    };
+    
+    loadAudioMetadata();
+    
+    // When a track is about to be played, load its full content
+    const loadFullAudio = (index) => {
+      if (audioRefs.current[index]) {
+        audioRefs.current[index].preload = "auto";
+      }
+    };
+    
     // Clean up on unmount
     return () => {
       // Stop any playing audio
@@ -44,7 +63,7 @@ const AudioSection = () => {
       
       window.removeEventListener('resize', handleResize);
     };
-  }, [currentlyPlaying]);
+  }, [audioTracks, currentlyPlaying]);
 
   // Handle audio playback
   const togglePlay = (index) => {
@@ -406,7 +425,7 @@ const AudioSection = () => {
         <h2 style={styles.playlistTitle}>Produced by Rafi Barides Playlist</h2>
         <div style={styles.streamingContainer}>
           <motion.a
-            href="https://music.apple.com/us/playlist/produced-by-rafi-barides/pl.u-PDb44ZBtLk3JWbP"
+            href="https://music.apple.com/us/artist/rafi-barides-music/1646336887"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.streamingCard}
@@ -416,16 +435,18 @@ const AudioSection = () => {
             transition={{ duration: 0.5 }}
             whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(0, 0, 0, 0.3)' }}
           >
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Apple_Music_icon.svg" 
-              alt="Apple Music" 
-              style={styles.streamingLogo} 
+            <OptimizedImage
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/1024px-Apple_Music_icon.svg.png"
+              alt="Apple Music"
+              style={styles.streamingLogo}
+              width={50}
+              height={50}
             />
             <p style={styles.streamingText}>Apple Music</p>
           </motion.a>
           
           <motion.a
-            href="https://open.spotify.com/playlist/3hZcLNraAEURVVy8Wu1cZl"
+            href="https://open.spotify.com/artist/2CvGhSqdSQQ05RYoBwYrcs?si=_9bIL0-NRXGr6-vwCJtXMA"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.streamingCard}
@@ -435,16 +456,18 @@ const AudioSection = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(0, 0, 0, 0.3)' }}
           >
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" 
+            <OptimizedImage
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/2048px-Spotify_logo_without_text.svg.png"
               alt="Spotify" 
-              style={styles.streamingLogo} 
+              style={styles.streamingLogo}
+              width={50}
+              height={50}
             />
             <p style={styles.streamingText}>Spotify</p>
           </motion.a>
           
           <motion.a
-            href="https://www.youtube.com/playlist?list=PL-hlJHqy1BFptzGhVzXRtvg_KluTamG3p"
+            href="https://music.youtube.com/channel/UCoLdoHRJl2uXI6dqiO8MVwA?si=mMnhCBKbhCGMkXV7"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.streamingCard}
@@ -454,10 +477,12 @@ const AudioSection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(0, 0, 0, 0.3)' }}
           >
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg" 
-              alt="YouTube Music" 
-              style={styles.streamingLogo} 
+            <OptimizedImage
+              src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg"
+              alt="YouTube Music"
+              style={styles.streamingLogo}
+              width={50}
+              height={50}
             />
             <p style={styles.streamingText}>YouTube Music</p>
           </motion.a>
@@ -465,7 +490,7 @@ const AudioSection = () => {
       </div>
       
       {/* Add CSS for loading animation */}
-      <style jsx>{`
+      <style>{`
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }

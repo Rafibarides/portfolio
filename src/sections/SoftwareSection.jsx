@@ -6,8 +6,9 @@ import SoftwareDisplayPage from '../SoftwareDisplayPage';
 import TextClipMask from '../components/TextClipMask';
 import texture2Gif from '../assets/texture2.gif';
 import Title from '../components/Title';
+import { useIntersectionObserver } from '../utils/useIntersectionObserver';
 
-const SoftwareSection = () => {
+const SoftwareSection = ({ hasScrolled = false }) => {
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [selectedTechnologies, setSelectedTechnologies] = useState([]);
@@ -22,6 +23,7 @@ const SoftwareSection = () => {
   const [hoveredPill, setHoveredPill] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showMobilePopup, setShowMobilePopup] = useState(false);
+  const vantaEffectInitialized = useRef(false);
 
   // Add animation variants
   const pillsAnimation = {
@@ -43,9 +45,10 @@ const SoftwareSection = () => {
   };
 
   const titleAnimation = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: -20 },
     visible: { 
-      opacity: 1,
+      opacity: 1, 
+      y: 0,
       transition: { duration: 0.7 }
     }
   };
@@ -98,16 +101,32 @@ const SoftwareSection = () => {
     setAllTechnologies(Array.from(techSet).sort());
   }, []);
 
-  // Initialize Vanta effect
+  // Modify the Vanta effect initialization to defer loading
   useEffect(() => {
-    // Check if the section ref is available and if VANTA is loaded
-    if (!sectionRef.current) return;
+    if (!sectionRef.current) return; // Skip if no section ref
+
+    // Function to load scripts dynamically
+    const loadScript = (src) => {
+      return new Promise((resolve, reject) => {
+        // Check if script is already loaded
+        if (document.querySelector(`script[src="${src}"]`)) {
+          resolve();
+          return;
+        }
+        
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
+      });
+    };
     
-    // Function to initialize the effect
+    // Define initVantaEffect function
     const initVantaEffect = () => {
       if (vantaEffect.current) return; // Already initialized
       
-      if (window.VANTA && window.VANTA.FOG) {
+      if (window.VANTA && window.VANTA.FOG && sectionRef.current) {
         console.log('Initializing Vanta FOG effect');
         vantaEffect.current = window.VANTA.FOG({
           el: sectionRef.current,
@@ -124,18 +143,48 @@ const SoftwareSection = () => {
           speed: 0.5,
           zoom: 1.20
         });
-      } else {
-        // If VANTA is not available yet, try again in a moment
-        console.log('VANTA not available yet, retrying...');
-        setTimeout(initVantaEffect, 500);
       }
     };
+
+    // Load the required scripts and initialize the effect
+    const loadVantaEffect = async () => {
+      try {
+        // Load Three.js first if not already loaded
+        if (!window.THREE) {
+          console.log('Loading Three.js...');
+          await loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js');
+        }
+        
+        // Then load Vanta.fog
+        if (!window.VANTA) {
+          console.log('Loading Vanta.js...');
+          await loadScript('https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js');
+        }
+        
+        // Initialize the effect
+        initVantaEffect();
+        vantaEffectInitialized.current = true;
+      } catch (error) {
+        console.error('Error loading Vanta scripts:', error);
+      }
+    };
+
+    // Use Intersection Observer to lazy-load the effect
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && !vantaEffectInitialized.current) {
+          loadVantaEffect();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
     
-    // Start the initialization process
-    initVantaEffect();
+    observer.observe(sectionRef.current);
     
-    // Clean up effect on component unmount
     return () => {
+      observer.disconnect();
       if (vantaEffect.current) {
         vantaEffect.current.destroy();
         vantaEffect.current = null;
@@ -606,14 +655,18 @@ const SoftwareSection = () => {
     }
   };
 
-  // Add these lines for parallax scrolling
-  const { scrollY } = useScroll();
-  const backgroundY = useTransform(scrollY, [0, 1000], [0, 300]); // Adjust the 300 value to control parallax intensity
+  // Combine scroll state with in-view detection
+  const shouldShowTitle = hasScrolled && isTitleInView;
+  const shouldShowPills = hasScrolled && isPillsInView;
 
   return (
-    <section id="software" style={{...styles.section, position: 'relative', overflow: 'hidden'}} ref={sectionRef}>
-      {/* Add a container for the Vanta effect with parallax */}
-      <motion.div 
+    <section 
+      id="software" 
+      style={styles.section}
+      ref={sectionRef}
+    >
+      {/* Replace the parallax container with a simple div */}
+      <div 
         style={{
           position: 'absolute',
           top: 0,
@@ -621,7 +674,7 @@ const SoftwareSection = () => {
           right: 0,
           bottom: 0,
           zIndex: -1,
-          y: backgroundY, // Apply the parallax transform
+          overflow: 'hidden'
         }}
       >
         {/* This div will be the target for the Vanta effect */}
@@ -633,64 +686,50 @@ const SoftwareSection = () => {
           }}
           style={{
             width: '100%',
-            height: '120%', // Make it taller to account for parallax movement
+            height: '100%',
             position: 'absolute',
             top: 0,
             left: 0,
           }}
         />
-      </motion.div>
+      </div>
 
-      <Title text="Software Projects" useClipMask={true} />
+      {/* Title now uses the combined condition */}
+      <motion.div
+        ref={titleRef}
+        initial="hidden"
+        animate={shouldShowTitle ? "visible" : "hidden"}
+        variants={titleAnimation}
+        style={{ width: '100%', textAlign: 'center' }}
+      >
+        <Title text="Software Projects" useClipMask={true} />
+      </motion.div>
       
-      {/* Filter Pills - conditionally render based on mobile state */}
+      {/* Filter Pills also use the combined condition */}
       {!isMobile && (
         <motion.div 
           ref={pillsRef}
           style={styles.filterContainer}
           initial="hidden"
-          animate={isPillsInView ? "visible" : "hidden"}
+          animate={shouldShowPills ? "visible" : "hidden"}
           variants={pillsAnimation}
         >
           {allTechnologies.map((tech, index) => (
             <motion.div
               key={index}
               variants={pillItemAnimation}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
               style={{
                 ...styles.filterPill,
-                ...(selectedTechnologies.includes(tech)
-                  ? styles.activePill
-                  : styles.inactivePill),
-                position: 'relative',
+                ...(selectedTechnologies.includes(tech) ? styles.activePill : styles.inactivePill),
+                transform: hoveredPill === tech ? 'scale(1.05)' : 'scale(1)',
               }}
               onClick={() => filterProjects(tech)}
-              onMouseEnter={(e) => {
-                handlePillHover(e, true);
-                setHoveredPill(tech);
-              }}
-              onMouseLeave={(e) => {
-                handlePillHover(e, false);
-                setHoveredPill(null);
-              }}
+              onMouseEnter={() => setHoveredPill(tech)}
+              onMouseLeave={() => setHoveredPill(null)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
             >
               {tech}
-              <AnimatePresence>
-                {hoveredPill === tech && (
-                  <motion.div 
-                    key={`tooltip-${tech}`}
-                    style={styles.tooltip}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    Display projects using {tech}
-                    <div style={styles.tooltipArrow}></div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </motion.div>
           ))}
         </motion.div>
@@ -796,7 +835,7 @@ const SoftwareSection = () => {
                         }}
                       ></div>
                       <img 
-                        src="../assets/github.png" 
+                        src="../assets/github.avif" 
                         alt="GitHub" 
                         style={{
                           ...styles.iconButton,
@@ -859,7 +898,7 @@ const SoftwareSection = () => {
                         }}
                       ></div>
                       <img 
-                        src="../assets/applestore.png" 
+                        src="../assets/applestore.avif" 
                         alt="App Store" 
                         style={{
                           ...styles.iconButton,

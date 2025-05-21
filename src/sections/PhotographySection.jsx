@@ -1,18 +1,27 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { palette } from '../utils/colors';
 import ScrollFontTransition from '../components/ScrollFontTransition';
 import photographyData from '../../Json/PhotographySection.json';
 import { motion } from 'framer-motion';
 import Title from '../components/Title';
+import { useModal } from '../context/ModalContext';
+import { useIntersectionObserver } from '../utils/useIntersectionObserver';
+import OptimizedImage from '../components/OptimizedImage';
 
 const PhotographySection = () => {
   const [photos, setPhotos] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const { openModal, closeModal } = useModal();
+
+  // Memoize the photos data to prevent unnecessary rerenders
+  const memoizedPhotos = useMemo(() => {
+    return photographyData;
+  }, []);
 
   useEffect(() => {
-    setPhotos(photographyData);
+    setPhotos(memoizedPhotos);
     
     // Handle responsive layout
     const handleResize = () => {
@@ -21,18 +30,20 @@ const PhotographySection = () => {
     
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [memoizedPhotos]);
 
   const openPhotoModal = (photoUrl, index) => {
     setSelectedPhoto(photoUrl);
     setSelectedIndex(index);
     document.body.style.overflow = 'hidden';
+    openModal();
   };
 
   const closePhotoModal = () => {
     setSelectedPhoto(null);
     setSelectedIndex(null);
     document.body.style.overflow = 'auto';
+    closeModal();
   };
 
   const navigatePhoto = useCallback((direction) => {
@@ -66,6 +77,39 @@ const PhotographySection = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedPhoto, navigatePhoto]);
+
+  // Fix the hover issue by updating mouse event handlers
+  const handleMouseEnter = (e) => {
+    e.currentTarget.style.transform = 'scale(1.03)';
+    // Find the image container inside OptimizedImage, which has the actual img
+    const imgContainer = e.currentTarget.querySelector('div');
+    if (imgContainer) {
+      const img = imgContainer.querySelector('img');
+      if (img) {
+        img.style.transform = 'scale(1.1)';
+      }
+    }
+    const overlay = e.currentTarget.querySelector('.photo-overlay');
+    if (overlay) {
+      overlay.style.opacity = 1;
+    }
+  };
+
+  const handleMouseLeave = (e) => {
+    e.currentTarget.style.transform = 'scale(1)';
+    // Find the image container inside OptimizedImage
+    const imgContainer = e.currentTarget.querySelector('div');
+    if (imgContainer) {
+      const img = imgContainer.querySelector('img');
+      if (img) {
+        img.style.transform = 'scale(1)';
+      }
+    }
+    const overlay = e.currentTarget.querySelector('.photo-overlay');
+    if (overlay) {
+      overlay.style.opacity = 0;
+    }
+  };
 
   const styles = {
     section: {
@@ -212,33 +256,37 @@ const PhotographySection = () => {
             key={index}
             style={styles.photoContainer}
             onClick={() => openPhotoModal(photo, index)}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.03)';
-              e.currentTarget.querySelector('img').style.transform = 'scale(1.1)';
-              e.currentTarget.querySelector('div').style.opacity = 1;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.querySelector('img').style.transform = 'scale(1)';
-              e.currentTarget.querySelector('div').style.opacity = 0;
-            }}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false, margin: "-100px" }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
           >
-            <img
-              src={photo}
-              alt={`Photography ${index + 1}`}
-              style={styles.photo}
-              loading="lazy"
-            />
-            <div style={styles.photoOverlay}></div>
+            {index === 0 ? (
+              // First image loads eagerly and is marked as potential LCP element
+              <OptimizedImage
+                src={photo}
+                alt={`Photography ${index + 1}`}
+                style={styles.photo}
+                priority={true}
+                isLCP={true}  // Mark as LCP candidate
+              />
+            ) : (
+              // Other images load lazily based on viewport
+              <OptimizedImage
+                src={photo}
+                alt={`Photography ${index + 1}`}
+                style={styles.photo}
+                priority={false}
+              />
+            )}
+            <div className="photo-overlay" style={styles.photoOverlay}></div>
           </motion.div>
         ))}
       </div>
       
+      {/* Modal content... */}
       {selectedPhoto && (
         <div 
           style={styles.modalOverlay}
@@ -256,7 +304,7 @@ const PhotographySection = () => {
           
           <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
             <button style={styles.closeButton} onClick={closePhotoModal}>×</button>
-            <img 
+            <img
               src={selectedPhoto} 
               alt={`Photography ${selectedIndex + 1}`} 
               style={styles.modalImage}

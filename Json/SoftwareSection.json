@@ -3,7 +3,9 @@
     "Title": "Worldly",
     "Embed link": "https://www.playworldly.com",
     "Website": "https://www.playworldly.com",
-    "Screenshot": "../assets/worldly.png",
+    "Screenshot": "../assets/worldly.avif",
+    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotFormat": "avif",
     "useScreenshot": false,
     "Technologies": [
       "React",
@@ -31,6 +33,10 @@
       "Key Features": "<ul><li><strong>Multiplayer</strong>: Face off with others in real-time map challenges</li><li><strong>Learning Modules</strong>: Unlock structured continent-based lessons</li><li><strong>Mascot Design</strong>: <em>Yoram</em> is a child-friendly guide who walks players through each challenge</li><li><strong>Audio Feedback</strong>: Reinforces right/wrong answers for better memory and engagement</li><li><strong>Color Psychology</strong>: The green interface was chosen deliberately. Green is linked to nature, peace, and balance. Research shows it improves focus, reduces stress, and enhances creative thinking, perfect for a geography themed learning environment.</li></ul>",
       "Color Palette": ["#74A651", "#97BF7A", "#F2B05E", "#FCC257", "#DEDEDE"],
       "Iterative Design": "After the initial beta release, I shared a Google Form with early users and gathered detailed feedback from over 30 testers. Common themes included:<br /><ul><li>A desire for more guided and structured learning</li><li>Requests for sound effects and clearer visual cues</li><li>Confusion about game flow in early rounds</li></ul><br />This led to several improvements:<br /><ul><li>Added <strong>audio cues</strong> for interaction and feedback</li><li>Improved onboarding and UI flow</li><li>Introduced <strong>progress tracking</strong> and <strong>unlockable learning paths</strong></li><li>Balanced the challenge system across skill levels</li></ul>",
+      "Assets": {
+        "Vertical": ["../assets/w1.avif", "../assets/w2.avif", "../assets/w3.avif"],
+        "Horizontal": []
+      },
       "Results": "<ul><li>300+ games played in the first month post-beta</li><li>4.7 average rating across user feedback forms</li><li>Positive reception from both children and adults:</li></ul><blockquote>“My kid begged to play again after dinner—and he learned where Laos is.”<br />“I have never had more fun losing a game. I am learning countries I didn not even know existed.”</blockquote>",
       "Why It Matters": "Geography is the foundation of understanding our world. From migration patterns to international relations, learning about the planet we live on fosters empathy and global consciousness.<br /><br />With Worldly, players are connecting the dots between knowledge and curiosity."
     }
@@ -40,6 +46,8 @@
     "Embed link": "",
     "Website": "",
     "Screenshot": "../assets/WeatherNow.avif",
+    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotFormat": "avif",
     "useScreenshot": false,
     "Technologies": [
       "React",
@@ -73,7 +81,9 @@
     "Title": "Shabbat Zman",
     "Embed link": "https://shabbatzman.com/",
     "Website": "https://shabbatzman.com/",
-    "Screenshot": "../assets/ShabbatZman.png",
+    "Screenshot": "../assets/ShabbatZman.avif",
+    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotFormat": "avif",
     "useScreenshot": true,
     "Technologies": [
       "React",
@@ -108,6 +118,8 @@
     "Embed link": "http://rbmsounds.com/",
     "Website": "http://rbmsounds.com/",
     "Screenshot": "../assets/RBMSounds.avif",
+    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotFormat": "avif",
     "useScreenshot": true,
     "Technologies": [
       "Velo",
@@ -138,6 +150,10 @@
           "#D9D9D9"
         ],
         "Iterative Design": "I tested multiple iterations of product layout and checkout flow using user feedback from early site visitors and collaborators. I refined the typography, improved loading times, and shifted to a monochrome palette to keep the focus on the sounds. A/B testing of cover art sizes and CTA placement helped boost clarity and user interaction.",
+        "Assets": {
+          "Vertical": [],
+          "Horizontal": []
+        },
         "Results": "<ul><li>RBM Sounds has become the central hub for all my sound kit distribution</li><li>Users reported a smooth and intuitive shopping experience</li><li>Multiple collaborations and shoutouts from music creators came directly through the site</li><li>Built a growing list of newsletter subscribers and direct customers</li></ul>",
         "Why It Matters": "RBM Sounds embodies the intersection of independence and intentionality. Rather than waiting for a platform to meet my needs, I built one. This project reflects a broader mindset, where creators can take control of their vision, brand, and livelihood with thoughtful design and user-centered thinking."
     }
@@ -147,6 +163,8 @@
     "Embed link": "",
     "Website": "",
     "Screenshot": "../assets/RiffRabbit.avif",
+    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotFormat": "avif",
     "useScreenshot": false,
     "Technologies": [
       "React",
@@ -170,7 +188,9 @@
     "Title": "Marcy Run",
     "Embed link": "https://marcyrun.top/",
     "Website": "https://marcyrun.top/",
-    "Screenshot": "../assets/marcy-run.png",
+    "Screenshot": "../assets/marcy-run.avif",
+    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotFormat": "avif",
     "useScreenshot": false,
     "Technologies": [
       "React",
@@ -192,6 +212,8 @@
     "Embed link": "http://geltcapitalusa.com/",
     "Website": "http://geltcapitalusa.com/",
     "Screenshot": "../assets/GeltCapital.avif",
+    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotFormat": "avif",
     "useScreenshot": true,
     "Technologies": [
       "React",
@@ -211,7 +233,9 @@
     "Title": "Communitree",
     "Embed link": "",
     "Website": "",
-    "Screenshot": "../assets/communitree.png",
+    "Screenshot": "../public/assets/Communitree.avif",
+    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotFormat": "avif",
     "useScreenshot": false,
     "Technologies": [
       "React",

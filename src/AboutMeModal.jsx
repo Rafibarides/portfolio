@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { palette } from './utils/colors';
-import profilePic from './assets/prof.png';
-import profileBlinkPic from './assets/prof-blink.png';
+import profilePic from '../public/assets/prof.avif';
+import profileBlinkPic from '../public/assets/prof-blink.avif';
 import textureGif from './assets/texture.gif';
 import aboutData from '../Json/About.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -271,7 +271,7 @@ const AboutMeModal = ({ onClose }) => {
       fontWeight: 600,
     },
     lastName: {
-      fontFamily: "'Caveat', cursive",
+      fontFamily: "var(--font-accent)",
       fontWeight: 400,
       marginLeft: '8px',
     },
@@ -410,6 +410,37 @@ const AboutMeModal = ({ onClose }) => {
         variants={gradientVariants}
       />
       
+      {/* Fixed close button that stays in top right corner */}
+      <motion.button 
+        style={{
+          position: 'fixed',
+          top: '20px',
+          right: '20px',
+          background: 'none',
+          border: 'none',
+          color: 'white',
+          fontSize: '28px',
+          cursor: 'pointer',
+          zIndex: 9999,
+          padding: '8px',
+          lineHeight: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        onClick={onClose}
+        whileHover={{ 
+          scale: 1.1,
+          textShadow: '0 0 10px rgba(255, 255, 255, 0.5)' 
+        }}
+        whileTap={{ scale: 0.95 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+      >
+        ×
+      </motion.button>
+      
       <motion.div
         ref={modalRef}
         style={styles.modal}
@@ -422,7 +453,6 @@ const AboutMeModal = ({ onClose }) => {
           damping: 30
         }}
       >
-        <button style={styles.closeButton} onClick={onClose}>×</button>
         <div style={styles.content}>
           <motion.div style={styles.profileContainer}>
             <motion.img 
