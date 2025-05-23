@@ -233,7 +233,7 @@
     "Title": "Communitree",
     "Embed link": "",
     "Website": "",
-    "Screenshot": "..assets/Communitree.avif",
+    "Screenshot": "../assets/Communitree.avif",
     "ScreenshotDimensions": {"width": 1200, "height": 800},
     "ScreenshotFormat": "avif",
     "useScreenshot": false,
