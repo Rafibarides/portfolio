@@ -8,6 +8,7 @@ import { useModal } from '../context/ModalContext';
 import { useIntersectionObserver } from '../utils/useIntersectionObserver';
 import OptimizedImage from '../components/OptimizedImage';
 import { checkImageAvailability } from '../utils/imageChecker';
+import { testR2Paths } from '../utils/r2Debug';
 
 const PhotographySection = () => {
   const [photos, setPhotos] = useState([]);
@@ -24,6 +25,14 @@ const PhotographySection = () => {
 
   useEffect(() => {
     setPhotos(memoizedPhotos);
+    
+    // Test R2 paths to find the correct structure
+    testR2Paths().then(workingPath => {
+      if (workingPath) {
+        console.log(`🎉 Working path found: ${workingPath}`);
+        console.log(`Use this pattern: https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev${workingPath}`);
+      }
+    });
     
     // Test image availability
     if (memoizedPhotos.length > 0) {
@@ -274,16 +283,6 @@ const PhotographySection = () => {
       textAlign: 'center',
       padding: '20px',
     },
-  };
-
-  const getGridColumn = (index, isMobile) => {
-    if (isMobile) return 'span 1';
-    return index % 2 === 0 ? 'span 1' : 'span 2';
-  };
-
-  const getGridRow = (index, isMobile) => {
-    if (isMobile) return 'span 1';
-    return index < 2 ? 'span 1' : 'span 2';
   };
 
   return (
