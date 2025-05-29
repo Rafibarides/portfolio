@@ -7,12 +7,14 @@ import Title from '../components/Title';
 import { useModal } from '../context/ModalContext';
 import { useIntersectionObserver } from '../utils/useIntersectionObserver';
 import OptimizedImage from '../components/OptimizedImage';
+import { checkImageAvailability } from '../utils/imageChecker';
 
 const PhotographySection = () => {
   const [photos, setPhotos] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [imageErrors, setImageErrors] = useState(new Set());
   const { openModal, closeModal } = useModal();
 
   // Memoize the photos data to prevent unnecessary rerenders
@@ -23,6 +25,20 @@ const PhotographySection = () => {
   useEffect(() => {
     setPhotos(memoizedPhotos);
     
+    // Test image availability
+    if (memoizedPhotos.length > 0) {
+      checkImageAvailability(memoizedPhotos.slice(0, 5)).then(results => {
+        console.log('Image availability check:', results);
+        results.forEach(result => {
+          if (!result.accessible) {
+            console.log(`❌ Failed: ${result.url} - Status: ${result.status}`);
+          } else {
+            console.log(`✅ Success: ${result.url}`);
+          }
+        });
+      });
+    }
+    
     // Handle responsive layout
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
@@ -31,6 +47,17 @@ const PhotographySection = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [memoizedPhotos]);
+
+  // Handle image loading errors
+  const handleImageError = useCallback((photoUrl, index) => {
+    console.error(`Failed to load image ${index}:`, photoUrl);
+    setImageErrors(prev => new Set(prev).add(index));
+  }, []);
+
+  // Check if image has error
+  const hasImageError = useCallback((index) => {
+    return imageErrors.has(index);
+  }, [imageErrors]);
 
   const openPhotoModal = (photoUrl, index) => {
     setSelectedPhoto(photoUrl);
@@ -234,6 +261,19 @@ const PhotographySection = () => {
       transition: 'transform 0.3s ease',
       border: '1px solid rgba(255, 255, 255, 0.1)',
     },
+    errorPlaceholder: {
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(40, 40, 40, 0.8)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      color: 'rgba(255, 255, 255, 0.6)',
+      fontSize: '14px',
+      textAlign: 'center',
+      padding: '20px',
+    },
   };
 
   const getGridColumn = (index, isMobile) => {
@@ -255,33 +295,45 @@ const PhotographySection = () => {
           <motion.div 
             key={index}
             style={styles.photoContainer}
-            onClick={() => openPhotoModal(photo, index)}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            onClick={() => !hasImageError(index) && openPhotoModal(photo, index)}
+            onMouseEnter={!hasImageError(index) ? handleMouseEnter : undefined}
+            onMouseLeave={!hasImageError(index) ? handleMouseLeave : undefined}
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
           >
-            {index === 0 ? (
-              // First image loads eagerly and is marked as potential LCP element
-              <OptimizedImage
-                src={photo}
-                alt={`Photography ${index + 1}`}
-                style={styles.photo}
-                priority={true}
-                isLCP={true}  // Mark as LCP candidate
-              />
+            {hasImageError(index) ? (
+              <div style={styles.errorPlaceholder}>
+                <span>⚠️</span>
+                <span>Image failed to load</span>
+                <small>{`Photo ${index + 1}`}</small>
+              </div>
             ) : (
-              // Other images load lazily based on viewport
-              <OptimizedImage
-                src={photo}
-                alt={`Photography ${index + 1}`}
-                style={styles.photo}
-                priority={false}
-              />
+              <>
+                {index === 0 ? (
+                  // First image loads eagerly and is marked as potential LCP element
+                  <OptimizedImage
+                    src={photo}
+                    alt={`Photography ${index + 1}`}
+                    style={styles.photo}
+                    priority={true}
+                    isLCP={true}
+                    onError={() => handleImageError(photo, index)}
+                  />
+                ) : (
+                  // Other images load lazily based on viewport
+                  <OptimizedImage
+                    src={photo}
+                    alt={`Photography ${index + 1}`}
+                    style={styles.photo}
+                    priority={false}
+                    onError={() => handleImageError(photo, index)}
+                  />
+                )}
+                <div className="photo-overlay" style={styles.photoOverlay}></div>
+              </>
             )}
-            <div className="photo-overlay" style={styles.photoOverlay}></div>
           </motion.div>
         ))}
       </div>
