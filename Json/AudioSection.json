@@ -1,63 +1,62 @@
 [
-    {
-      "title": "Counting The Minutes",
-      "url": "https://res.cloudinary.com/ddrd3glat/video/upload/v1747332211/Music/Rafi_Barides_Music_Production_1_-_Counting_The_Minutes_lskpzr.wav",
-      "format": "wav",
-      "skills": ["Songwriting", "Vocals", "Music Production", "Audio Engineering", "Mixing"]
-    },
-    {
-      "title": "Stand Up For You",
-      "url": "https://res.cloudinary.com/ddrd3glat/video/upload/v1747332226/Music/Rafi_Barides_Music_Production_2_-_Stand_Up_For_You_uvs2te.wav",
-      "format": "wav",
-      "skills": ["Songwriting", "Vocal Arrangement", "Music Production", "Audio Engineering"]
-    },
-    {
-      "title": "I Don't Want To Love You Anymore",
-      "url": "https://res.cloudinary.com/ddrd3glat/video/upload/v1747332190/Music/Rafi_Barides_Music_Production_3_-_I_Don_t_Want_To_Love_You_Anymore_r0knh6.mp3",
-      "format": "mp3",
-      "skills": ["Songwriting", "Music Production", "Audio Engineering", "Mixing"]
-    },
-    {
-      "title": "Gen Z",
-      "url": "https://res.cloudinary.com/ddrd3glat/video/upload/v1747332207/Music/Rafi_Barides_Music_Production_4_-_Gen_Z_opz0nr.wav",
-      "format": "wav",
-      "skills": ["Music Production", "Audio Engineering"]
-    },
-    {
-      "title": "Easy Way Out",
-      "url": "https://res.cloudinary.com/ddrd3glat/video/upload/v1747332225/Music/Rafi_Barides_Music_Production_5_-_Easy_Way_Out_v6z2f6.wav",
-      "format": "wav",
-      "skills": ["Music Production", "Audio Engineering", "Arrangement"]
-    },
-    {
-      "title": "Friends In Private",
-      "url": "https://res.cloudinary.com/ddrd3glat/video/upload/v1747332224/Music/Rafi_Barides_Music_Production_6_-_Friends_In_Private_rfhku7.wav",
-      "format": "wav",
-      "skills": ["Songwriting", "Vocals", "Music Production", "Audio Engineering", "Mixing", "Arrangement"]
-    },
-    {
-      "title": "Oh My",
-      "url": "https://res.cloudinary.com/ddrd3glat/video/upload/v1747332213/Music/Rafi_Barides_Music_Production_7_-_Oh_My_gj8xi5.wav",
-      "format": "wav",
-      "skills": ["Songwriting", "Vocals", "Music Production", "Audio Engineering","Arrangement"]
-    },
-    {
-      "title": "Something To Do",
-      "url": "https://res.cloudinary.com/ddrd3glat/video/upload/v1747332192/Music/Rafi_Barides_Music_Production_8_-_Something_To_Do_romspj.mp3",
-      "format": "mp3",
-      "skills": ["Songwriting", "Music Production", "Audio Engineering", "Arrangement"]
-    },
-    {
-      "title": "Down To One",
-      "url": "https://res.cloudinary.com/ddrd3glat/video/upload/v1747332220/Music/Rafi_Barides_Music_Production_9_-_Down_To_One_qh9bmp.wav",
-      "format": "wav",
-      "skills": ["Songwriting", "Music Production", "Audio Engineering"]
-    },
-    {
-      "title": "Worth It",
-      "url": "https://res.cloudinary.com/ddrd3glat/video/upload/v1747332219/Music/Rafi_Barides_Music_Production_10_-_Worth_It_m7p1sj.wav",
-      "format": "wav",
-      "skills": ["Songwriting", "Vocals", "Music Production", "Audio Engineering", "Mixing", "Arrangement"]
-    }
-  ]
-  
+  {
+    "title": "Counting The Minutes",
+    "url": "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Music/Rafi%20Barides%20Music%20Production%201%20-%20Counting%20The%20Minutes.wav",
+    "format": "wav",
+    "skills": ["Songwriting", "Vocals", "Music Production", "Audio Engineering", "Mixing"]
+  },
+  {
+    "title": "Stand Up For You",
+    "url": "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Music/Rafi%20Barides%20Music%20Production%202%20-%20Stand%20Up%20For%20You.wav",
+    "format": "wav",
+    "skills": ["Songwriting", "Vocal Arrangement", "Music Production", "Audio Engineering"]
+  },
+  {
+    "title": "I Don't Want To Love You Anymore",
+    "url": "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Music/Rafi%20Barides%20Music%20Production%203%20-%20I%20Don't%20Want%20To%20Love%20You%20Anymore.mp3",
+    "format": "mp3",
+    "skills": ["Songwriting", "Music Production", "Audio Engineering", "Mixing"]
+  },
+  {
+    "title": "Gen Z",
+    "url": "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Music/Rafi%20Barides%20Music%20Production%204%20-%20Gen%20Z.wav",
+    "format": "wav",
+    "skills": ["Music Production", "Audio Engineering"]
+  },
+  {
+    "title": "Easy Way Out",
+    "url": "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Music/Rafi%20Barides%20Music%20Production%205%20-%20Easy%20Way%20Out.wav",
+    "format": "wav",
+    "skills": ["Music Production", "Audio Engineering", "Arrangement"]
+  },
+  {
+    "title": "Friends In Private",
+    "url": "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Music/Rafi%20Barides%20Music%20Production%206%20-%20Friends%20In%20Private.wav",
+    "format": "wav",
+    "skills": ["Songwriting", "Vocals", "Music Production", "Audio Engineering", "Mixing", "Arrangement"]
+  },
+  {
+    "title": "Oh My",
+    "url": "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Music/Rafi%20Barides%20Music%20Production%207%20-%20Oh%20My.wav",
+    "format": "wav",
+    "skills": ["Songwriting", "Vocals", "Music Production", "Audio Engineering","Arrangement"]
+  },
+  {
+    "title": "Something To Do",
+    "url": "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Music/Rafi%20Barides%20Music%20Production%208%20-%20Something%20To%20Do.mp3",
+    "format": "mp3",
+    "skills": ["Songwriting", "Music Production", "Audio Engineering", "Arrangement"]
+  },
+  {
+    "title": "Down To One",
+    "url": "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Music/Rafi%20Barides%20Music%20Production%209%20-%20Down%20To%20One.wav",
+    "format": "wav",
+    "skills": ["Songwriting", "Music Production", "Audio Engineering"]
+  },
+  {
+    "title": "Worth It",
+    "url": "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Music/Rafi%20Barides%20Music%20Production%2010%20-%20Worth%20It.wav",
+    "format": "wav",
+    "skills": ["Songwriting", "Vocals", "Music Production", "Audio Engineering", "Mixing", "Arrangement"]
+  }
+]

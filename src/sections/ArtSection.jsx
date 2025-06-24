@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, useAnimation, useScroll, useTransform } from 'framer-motion';
 import { palette } from '../utils/colors';
 import ScrollFontTransition from '../components/ScrollFontTransition';
 import RetroTextEffect from '../components/RetroTextEffect';
@@ -77,8 +76,7 @@ const ArtSection = () => {
   const featuredArtworks = artworks.filter(art => art.text);
   const regularArtworks = artworks.filter(art => !art.text);
 
-  // Create a combined array for navigation
-  const allArtworksInOrder = [...regularArtworks, ...featuredArtworks];
+
 
   const styles = {
     section: {
@@ -274,325 +272,76 @@ const ArtSection = () => {
     },
   };
 
-  // Animation variants for the gradient background
-  const gradientAnimation = {
-    animate: {
-      backgroundPosition: ['0% 0%', '100% 100%'],
-      transition: {
-        duration: 15,
-        ease: "easeInOut",
-        repeat: Infinity,
-        repeatType: "reverse"
-      }
-    }
-  };
 
-  // Word animation variants
-  const wordAnimationVariants = {
-    hidden: {
-      opacity: 0,
-      y: 10,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.2,
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: 5,
-      transition: {
-        duration: 0.2,
-      },
-    }
-  };
 
-  // Function to animate text by words with proper sequencing
-  const AnimatedParagraphs = ({ paragraphs }) => {
+
+
+  // Simple looping text animation component
+  const SimpleLoopingText = ({ paragraphs }) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [containerHeight, setContainerHeight] = useState(0);
-    const paragraphRefs = useRef([]);
-    const containerRef = useRef(null);
-    const [isInView, setIsInView] = useState(false);
     
-    // Initialize paragraph refs
+    // Simple timer-based loop - no intersection observer, no complex state
     useEffect(() => {
-      paragraphRefs.current = paragraphs.map((_, i) => 
-        paragraphRefs.current[i] || React.createRef()
-      );
-    }, [paragraphs]);
-    
-    // Calculate container height based on the tallest paragraph
-    useEffect(() => {
-      const calculateHeight = () => {
-        let maxHeight = 0;
-        paragraphRefs.current.forEach(ref => {
-          if (ref.current) {
-            const height = ref.current.offsetHeight;
-            maxHeight = Math.max(maxHeight, height);
-          }
-        });
-        setContainerHeight(maxHeight > 0 ? maxHeight : 200); // Fallback height
-      };
+      const timer = setInterval(() => {
+        setActiveIndex(prev => (prev + 1) % paragraphs.length);
+      }, 4000); // Change paragraph every 4 seconds
       
-      // Initial calculation
-      calculateHeight();
-      
-      // Recalculate on window resize
-      window.addEventListener('resize', calculateHeight);
-      return () => window.removeEventListener('resize', calculateHeight);
-    }, [paragraphs]);
-    
-    // Handle intersection with viewport
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsInView(true);
-          } else {
-            setIsInView(false);
-            setActiveIndex(0); // Reset to first paragraph when out of view
-          }
-        },
-        { threshold: 0.2 }
-      );
-      
-      if (containerRef.current) {
-        observer.observe(containerRef.current);
-      }
-      
-      return () => {
-        if (containerRef.current) {
-          observer.unobserve(containerRef.current);
-        }
-      };
-    }, []);
+      return () => clearInterval(timer);
+    }, [paragraphs.length]);
     
     return (
-      <div 
-        ref={containerRef} 
-        style={{ 
-          position: 'relative', 
-          height: containerHeight,
-          transition: 'height 0.3s ease'
-        }}
-      >
+      <div style={{ minHeight: '200px', position: 'relative' }}>
         {paragraphs.map((paragraph, i) => (
-          <AnimatedParagraph 
+          <div
             key={i}
-            ref={paragraphRefs.current[i]}
-            text={paragraph}
-            index={i}
-            isActive={i === activeIndex && isInView}
-            onComplete={() => {
-              if (i < paragraphs.length - 1) {
-                setActiveIndex(i + 1);
-              }
-            }}
             style={{ 
               position: 'absolute',
               top: 0,
               left: 0,
               right: 0,
+              opacity: i === activeIndex ? 1 : 0,
+              transition: 'opacity 0.5s ease',
               fontWeight: i === paragraphs.length - 1 ? 600 : (i === 0 ? 200 : 400),
-              opacity: i === activeIndex && isInView ? 1 : 0,
-              pointerEvents: i === activeIndex ? 'auto' : 'none',
+              pointerEvents: 'none', // Completely disable pointer events
             }}
-          />
+          >
+            {paragraph}
+          </div>
         ))}
       </div>
     );
   };
 
-  // Component for a single animated paragraph
-  const AnimatedParagraph = React.forwardRef(({ 
-    text, 
-    index, 
-    isActive, 
-    onComplete, 
-    style 
-  }, ref) => {
-    const controls = useAnimation();
-    const [hasAnimated, setHasAnimated] = useState(false);
-    
-    // Process text into words, ensuring proper handling of spaces
-    const processText = (text) => {
-      // Split by spaces but keep track of spaces
-      const parts = [];
-      const words = text.split(' ');
-      
-      words.forEach((word, i) => {
-        if (word) {
-          parts.push(word);
-        }
-        // Add space after each word except the last one
-        if (i < words.length - 1) {
-          parts.push(' ');
-        }
-      });
-      
-      return parts;
-    };
-    
-    const words = processText(text);
-    
-    // Start or reset animation when active state changes
-    useEffect(() => {
-      if (isActive) {
-        setHasAnimated(false);
-        controls.start("visible").then(() => {
-          if (onComplete && !hasAnimated) {
-            setHasAnimated(true);
-            setTimeout(() => {
-              onComplete();
-            }, 1000); // Delay before starting next paragraph
-          }
-        });
-      } else {
-        controls.start("hidden");
-      }
-    }, [isActive, controls, onComplete, hasAnimated]);
-    
-    return (
-      <motion.p
-        ref={ref}
-        style={style}
-        initial="hidden"
-        animate={controls}
-        variants={{
-          hidden: {
-            opacity: 0,
-            transition: {
-              duration: 0.3,
-            }
-          },
-          visible: {
-            opacity: 1,
-            transition: {
-              staggerChildren: 0.02,
-              delayChildren: 0.05,
-              when: "beforeChildren",
-            }
-          }
-        }}
-      >
-        {words.map((word, index) => (
-          <motion.span
-            key={index}
-            variants={wordAnimationVariants}
-            style={{ 
-              display: 'inline-block',
-              whiteSpace: word === ' ' ? 'pre' : 'normal',
-            }}
-          >
-            {word}
-          </motion.span>
-        ))}
-      </motion.p>
-    );
-  });
 
-  // Update the FadeInOutImage component to fix the animation control issue
-  const FadeInOutImage = ({ src, alt, style, onClick }) => {
-    const controls = useAnimation();
-    const imageRef = useRef(null);
-    const [isVisible, setIsVisible] = useState(false);
-    
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          // Update state instead of directly controlling animation
-          setIsVisible(entry.isIntersecting);
-        },
-        { threshold: 0.2 }
-      );
-      
-      if (imageRef.current) {
-        observer.observe(imageRef.current);
-      }
-      
-      return () => {
-        if (imageRef.current) {
-          observer.unobserve(imageRef.current);
-        }
-      };
-    }, []);
-    
-    // Control animation based on visibility state
-    useEffect(() => {
-      if (isVisible) {
-        controls.start("visible");
-      } else {
-        controls.start("hidden");
-      }
-    }, [isVisible, controls]);
-    
+
+  // Simple static image component
+  const StaticImage = ({ src, alt, style, onClick }) => {
     return (
-      <motion.img
-        ref={imageRef}
+      <img
         src={src}
         alt={alt}
         style={style}
         onClick={onClick}
-        initial="hidden"
-        animate={controls}
-        variants={{
-          hidden: { opacity: 0, scale: 0.98 },
-          visible: { 
-            opacity: 1, 
-            scale: 1,
-            transition: { duration: 0.7 }
-          }
-        }}
       />
     );
   };
 
-  // Component for featured artwork with scroll-based growth animation
-  const GrowOnScrollSection = ({ artwork, index }) => {
-    const sectionRef = useRef(null);
-    
-    // Use useScroll to track scroll progress within the viewport
-    const { scrollYProgress } = useScroll({
-      target: sectionRef,
-      offset: ["start end", "end start"]
-    });
-    
-    // Transform scroll progress to scale value
-    // Scale starts at 0.95, grows to 1.05 as it enters viewport, then back to 0.95 as it leaves
-    const scale = useTransform(
-      scrollYProgress,
-      [0, 0.4, 0.6, 1],    // Scroll progress points
-      [0.95, 1.05, 1.05, 0.95]  // Corresponding scale values
-    );
-    
+  // Component for featured artwork - static version
+  const StaticFeaturedSection = ({ artwork, index }) => {
     return (
-      <motion.div 
-        ref={sectionRef}
-        style={{
-          ...styles.featuredSection,
-          scale,
-          transformOrigin: 'center',
-        }}
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: false, margin: "-100px" }}
-        transition={{ opacity: { duration: 0.8 } }}
-      >
-        <FadeInOutImage
+      <div style={styles.featuredSection}>
+        <StaticImage
           src={artwork.url} 
           alt={`Featured Artwork ${index + 1}`} 
           style={styles.featuredArt}
           onClick={() => openArtModal(artwork, regularArtworks.length + index)}
         />
         <RetroTextEffect style={styles.featuredText} opacity={0.5}>
-          <AnimatedParagraphs 
+          <SimpleLoopingText 
             paragraphs={artwork.text.split('\n\n')} 
           />
         </RetroTextEffect>
-      </motion.div>
+      </div>
     );
   };
 
@@ -600,11 +349,7 @@ const ArtSection = () => {
     <section id="art" style={styles.section} ref={sectionRef}>
       <Title text="Art" />
       
-      <motion.div 
-        style={styles.gradientBackground}
-        animate="animate"
-        variants={gradientAnimation}
-      />
+      <div style={styles.gradientBackground} />
       
       {/* Regular Artworks Grid - Moved to appear first */}
       {regularArtworks.length > 0 && (
@@ -649,7 +394,7 @@ const ArtSection = () => {
       {featuredArtworks.length > 0 && (
         <>
           {featuredArtworks.map((artwork, index) => (
-            <GrowOnScrollSection 
+            <StaticFeaturedSection 
               key={index}
               artwork={artwork}
               index={index}

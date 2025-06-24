@@ -6,6 +6,7 @@ import Visualizer from '../components/Visualizer';
 import audioData from '../../Json/AudioSection.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import { faApple, faSpotify, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import Title from '../components/Title';
 import OptimizedImage from '../components/OptimizedImage';
 
@@ -281,9 +282,9 @@ const AudioSection = () => {
       transition: 'all 0.3s ease',
     },
     streamingLogo: {
-      width: '60px',
-      height: '60px',
+      fontSize: '60px',
       marginBottom: '15px',
+      color: palette.text,
     },
     streamingText: {
       color: palette.text,
@@ -425,7 +426,7 @@ const AudioSection = () => {
         <h2 style={styles.playlistTitle}>Produced by Rafi Barides Playlist</h2>
         <div style={styles.streamingContainer}>
           <motion.a
-            href="https://music.apple.com/us/artist/rafi-barides-music/1646336887"
+            href="https://music.apple.com/us/playlist/produced-by-rafi-barides/pl.u-PDb44ZBtLk3JWbP"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.streamingCard}
@@ -435,18 +436,15 @@ const AudioSection = () => {
             transition={{ duration: 0.5 }}
             whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(0, 0, 0, 0.3)' }}
           >
-            <OptimizedImage
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Apple_Music_icon.svg/1024px-Apple_Music_icon.svg.png"
-              alt="Apple Music"
+            <FontAwesomeIcon 
+              icon={faApple} 
               style={styles.streamingLogo}
-              width={50}
-              height={50}
             />
             <p style={styles.streamingText}>Apple Music</p>
           </motion.a>
           
           <motion.a
-            href="https://open.spotify.com/artist/2CvGhSqdSQQ05RYoBwYrcs?si=_9bIL0-NRXGr6-vwCJtXMA"
+            href="https://open.spotify.com/playlist/3hZcLNraAEURVVy8Wu1cZl"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.streamingCard}
@@ -456,18 +454,15 @@ const AudioSection = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(0, 0, 0, 0.3)' }}
           >
-            <OptimizedImage
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/2048px-Spotify_logo_without_text.svg.png"
-              alt="Spotify" 
+            <FontAwesomeIcon 
+              icon={faSpotify} 
               style={styles.streamingLogo}
-              width={50}
-              height={50}
             />
             <p style={styles.streamingText}>Spotify</p>
           </motion.a>
           
           <motion.a
-            href="https://music.youtube.com/channel/UCoLdoHRJl2uXI6dqiO8MVwA?si=mMnhCBKbhCGMkXV7"
+            href="https://www.youtube.com/playlist?list=PL-hlJHqy1BFptzGhVzXRtvg_KluTamG3p"
             target="_blank"
             rel="noopener noreferrer"
             style={styles.streamingCard}
@@ -477,12 +472,9 @@ const AudioSection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             whileHover={{ y: -5, boxShadow: '0 15px 30px rgba(0, 0, 0, 0.3)' }}
           >
-            <OptimizedImage
-              src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Youtube_Music_icon.svg"
-              alt="YouTube Music"
+            <FontAwesomeIcon 
+              icon={faYoutube} 
               style={styles.streamingLogo}
-              width={50}
-              height={50}
             />
             <p style={styles.streamingText}>YouTube Music</p>
           </motion.a>

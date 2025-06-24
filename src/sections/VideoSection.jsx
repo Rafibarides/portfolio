@@ -14,6 +14,8 @@ const VideoSection = () => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [loadedVideos, setLoadedVideos] = useState({});
+  const [videoErrors, setVideoErrors] = useState(new Set());
+  const [videoLoadingStates, setVideoLoadingStates] = useState({});
 
   useEffect(() => {
     // Use Promise.all to load data in parallel
@@ -31,6 +33,13 @@ const VideoSection = () => {
       }));
       
       setVideos(processedData);
+
+      // Initialize loading states for short videos
+      const initialLoadingStates = {};
+      shortData.forEach((_, index) => {
+        initialLoadingStates[index] = true;
+      });
+      setVideoLoadingStates(initialLoadingStates);
     });
     
     // Handle responsive layout
@@ -41,6 +50,29 @@ const VideoSection = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Handle video loading success
+  const handleVideoLoad = (index) => {
+    setVideoLoadingStates(prev => ({
+      ...prev,
+      [index]: false
+    }));
+  };
+
+  // Handle video loading errors
+  const handleVideoError = (index, error) => {
+    console.error(`Video ${index} failed to load:`, error);
+    setVideoErrors(prev => new Set(prev).add(index));
+    setVideoLoadingStates(prev => ({
+      ...prev,
+      [index]: false
+    }));
+  };
+
+  // Check if video has error
+  const hasVideoError = (index) => {
+    return videoErrors.has(index);
+  };
 
   const debounce = (func, delay) => {
     let timeoutId;
@@ -53,8 +85,19 @@ const VideoSection = () => {
   };
 
   const debouncedOpenVideoModal = debounce((video) => {
-    setSelectedVideo(video);
-    setShowModal(true);
+    const videoIndex = shortVideos.indexOf(video);
+    if (!hasVideoError(videoIndex) && !videoLoadingStates[videoIndex]) {
+      setSelectedVideo(video);
+      setShowModal(true);
+    } else if (videoLoadingStates[videoIndex]) {
+      // If video is still loading, try again after a short delay
+      setTimeout(() => {
+        if (!hasVideoError(videoIndex) && !videoLoadingStates[videoIndex]) {
+          setSelectedVideo(video);
+          setShowModal(true);
+        }
+      }, 500);
+    }
   }, 50);
 
   const closeVideoModal = () => {
@@ -140,6 +183,34 @@ const VideoSection = () => {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
+    },
+    videoLoadingOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(30, 30, 40, 0.9)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 2,
+    },
+    videoErrorOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(40, 20, 20, 0.9)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 2,
+      color: 'rgba(255, 255, 255, 0.7)',
+      textAlign: 'center',
+      padding: '20px',
     },
     // YouTube video styles (exact match with MusicPerformanceSection)
     youtubeVideosContainer: {
@@ -242,7 +313,7 @@ const VideoSection = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: index % 3 * 0.1 }}
             whileHover={{ 
-              scale: 1.03,
+              scale: hasVideoError(index) ? 1 : 1.03,
               transition: { duration: 0.3 }
             }}
             onClick={() => debouncedOpenVideoModal(video)}
@@ -258,10 +329,39 @@ const VideoSection = () => {
               playsInline
               muted
               loop
-              onMouseOver={(e) => e.target.play()}
-              onMouseOut={(e) => e.target.pause()}
-              poster={`${video.url.split('.').slice(0, -1).join('.')}.jpg`}
+              preload="auto"
+              onLoadedData={() => handleVideoLoad(index)}
+              onCanPlayThrough={() => handleVideoLoad(index)}
+              onError={(e) => handleVideoError(index, e)}
+              onMouseOver={(e) => {
+                if (!hasVideoError(index)) {
+                  e.target.play().catch(console.warn);
+                }
+              }}
+              onMouseOut={(e) => {
+                if (!hasVideoError(index)) {
+                  e.target.pause();
+                }
+              }}
             />
+            
+            {/* Loading overlay */}
+            {videoLoadingStates[index] && !hasVideoError(index) && (
+              <div style={styles.videoLoadingOverlay}>
+                <div style={styles.loadingSpinner}></div>
+              </div>
+            )}
+            
+            {/* Error overlay */}
+            {hasVideoError(index) && (
+              <div style={styles.videoErrorOverlay}>
+                <span style={{ fontSize: '24px', marginBottom: '8px' }}>⚠️</span>
+                <span style={{ fontSize: '14px' }}>Video failed to load</span>
+                <small style={{ opacity: 0.6, marginTop: '4px' }}>
+                  {video.name}
+                </small>
+              </div>
+            )}
           </motion.div>
         ))}
       </div>

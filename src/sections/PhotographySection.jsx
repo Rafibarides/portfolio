@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { palette } from '../utils/colors';
-import ScrollFontTransition from '../components/ScrollFontTransition';
 import photographyData from '../../Json/PhotographySection.json';
-import { motion } from 'framer-motion';
 import Title from '../components/Title';
-import { useModal } from '../context/ModalContext';
-import { useIntersectionObserver } from '../utils/useIntersectionObserver';
-import OptimizedImage from '../components/OptimizedImage';
-import { checkImageAvailability } from '../utils/imageChecker';
-import { testR2Paths } from '../utils/r2Debug';
 
 const PhotographySection = () => {
   const [photos, setPhotos] = useState([]);
@@ -16,7 +9,7 @@ const PhotographySection = () => {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [imageErrors, setImageErrors] = useState(new Set());
-  const { openModal, closeModal } = useModal();
+  const [loadedImages, setLoadedImages] = useState(new Set());
 
   // Memoize the photos data to prevent unnecessary rerenders
   const memoizedPhotos = useMemo(() => {
@@ -25,28 +18,6 @@ const PhotographySection = () => {
 
   useEffect(() => {
     setPhotos(memoizedPhotos);
-    
-    // Test R2 paths to find the correct structure
-    testR2Paths().then(workingPath => {
-      if (workingPath) {
-        console.log(`🎉 Working path found: ${workingPath}`);
-        console.log(`Use this pattern: https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev${workingPath}`);
-      }
-    });
-    
-    // Test image availability
-    if (memoizedPhotos.length > 0) {
-      checkImageAvailability(memoizedPhotos.slice(0, 5)).then(results => {
-        console.log('Image availability check:', results);
-        results.forEach(result => {
-          if (!result.accessible) {
-            console.log(`❌ Failed: ${result.url} - Status: ${result.status}`);
-          } else {
-            console.log(`✅ Success: ${result.url}`);
-          }
-        });
-      });
-    }
     
     // Handle responsive layout
     const handleResize = () => {
@@ -58,9 +29,13 @@ const PhotographySection = () => {
   }, [memoizedPhotos]);
 
   // Handle image loading errors
-  const handleImageError = useCallback((photoUrl, index) => {
-    console.error(`Failed to load image ${index}:`, photoUrl);
+  const handleImageError = useCallback((index) => {
     setImageErrors(prev => new Set(prev).add(index));
+  }, []);
+
+  // Handle successful image loads
+  const handleImageLoad = useCallback((index) => {
+    setLoadedImages(prev => new Set(prev).add(index));
   }, []);
 
   // Check if image has error
@@ -68,19 +43,25 @@ const PhotographySection = () => {
     return imageErrors.has(index);
   }, [imageErrors]);
 
-  const openPhotoModal = (photoUrl, index) => {
+  // Check if image is loaded
+  const isImageLoaded = useCallback((index) => {
+    return loadedImages.has(index);
+  }, [loadedImages]);
+
+  // Simple modal functions - no context needed
+  const openPhotoModal = useCallback((photoUrl, index) => {
+    console.log('Opening modal for photo:', index); // Debug log
     setSelectedPhoto(photoUrl);
     setSelectedIndex(index);
     document.body.style.overflow = 'hidden';
-    openModal();
-  };
+  }, []);
 
-  const closePhotoModal = () => {
+  const closePhotoModal = useCallback(() => {
+    console.log('Closing modal'); // Debug log
     setSelectedPhoto(null);
     setSelectedIndex(null);
     document.body.style.overflow = 'auto';
-    closeModal();
-  };
+  }, []);
 
   const navigatePhoto = useCallback((direction) => {
     if (selectedIndex === null) return;
@@ -112,40 +93,7 @@ const PhotographySection = () => {
     
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedPhoto, navigatePhoto]);
-
-  // Fix the hover issue by updating mouse event handlers
-  const handleMouseEnter = (e) => {
-    e.currentTarget.style.transform = 'scale(1.03)';
-    // Find the image container inside OptimizedImage, which has the actual img
-    const imgContainer = e.currentTarget.querySelector('div');
-    if (imgContainer) {
-      const img = imgContainer.querySelector('img');
-      if (img) {
-        img.style.transform = 'scale(1.1)';
-      }
-    }
-    const overlay = e.currentTarget.querySelector('.photo-overlay');
-    if (overlay) {
-      overlay.style.opacity = 1;
-    }
-  };
-
-  const handleMouseLeave = (e) => {
-    e.currentTarget.style.transform = 'scale(1)';
-    // Find the image container inside OptimizedImage
-    const imgContainer = e.currentTarget.querySelector('div');
-    if (imgContainer) {
-      const img = imgContainer.querySelector('img');
-      if (img) {
-        img.style.transform = 'scale(1)';
-      }
-    }
-    const overlay = e.currentTarget.querySelector('.photo-overlay');
-    if (overlay) {
-      overlay.style.opacity = 0;
-    }
-  };
+  }, [selectedPhoto, navigatePhoto, closePhotoModal]);
 
   const styles = {
     section: {
@@ -156,12 +104,6 @@ const PhotographySection = () => {
       fontFamily: "'Poppins', sans-serif",
       background: 'linear-gradient(to right, rgba(30, 30, 30, 0.3) 0%, rgba(0, 0, 0, 1) 30%)',
       borderTop: '2px solid rgba(255, 255, 255, 0.2)',
-    },
-    header: {
-      fontSize: window.innerWidth <= 768 ? '1rem' : '3.5rem',
-      marginBottom: '50px',
-      textAlign: 'center',
-      fontFamily: "'Poppins', sans-serif",
     },
     photoGrid: {
       display: 'grid',
@@ -178,27 +120,38 @@ const PhotographySection = () => {
       cursor: 'pointer',
       aspectRatio: '5/7',
       backgroundColor: 'rgba(20, 20, 20, 0.5)',
-      transition: 'transform 0.3s ease',
       border: '1px solid rgba(255, 255, 255, 0.1)',
+      // Explicitly disable any hover effects
+      pointerEvents: 'auto',
     },
     photo: {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
-      transition: 'transform 0.5s ease',
+      display: 'block',
+      // Prevent any image interactions that could cause flickering
+      userSelect: 'none',
+      draggable: false,
     },
-    photoOverlay: {
+    imageContainer: {
+      position: 'relative',
+      width: '100%',
+      height: '100%',
+      // Prevent hover effects
+      pointerEvents: 'none',
+    },
+    loadingPlaceholder: {
       position: 'absolute',
       top: 0,
       left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.01)',
-      opacity: 0,
-      transition: 'opacity 0.3s ease',
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(30, 30, 30, 0.8)',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      color: 'rgba(255, 255, 255, 0.5)',
+      fontSize: '14px',
     },
     modalOverlay: {
       position: 'fixed',
@@ -206,8 +159,8 @@ const PhotographySection = () => {
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.9)',
-      zIndex: 1000,
+      backgroundColor: 'rgba(0, 0, 0, 0.95)',
+      zIndex: 999999,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -234,12 +187,13 @@ const PhotographySection = () => {
       fontSize: '30px',
       cursor: 'pointer',
       outline: 'none',
+      padding: '5px',
     },
     navButton: {
       position: 'absolute',
       top: '50%',
       transform: 'translateY(-50%)',
-      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
       color: palette.text,
       border: 'none',
       borderRadius: '50%',
@@ -250,25 +204,14 @@ const PhotographySection = () => {
       alignItems: 'center',
       fontSize: '24px',
       cursor: 'pointer',
-      transition: 'background-color 0.3s ease',
       outline: 'none',
-      zIndex: 1001,
+      zIndex: 1000000,
     },
     prevButton: {
       left: '20px',
     },
     nextButton: {
       right: '20px',
-    },
-    photoItem: {
-      position: 'relative',
-      overflow: 'hidden',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      aspectRatio: '5/7',
-      backgroundColor: 'rgba(20, 20, 20, 0.5)',
-      transition: 'transform 0.3s ease',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
     },
     errorPlaceholder: {
       width: '100%',
@@ -285,59 +228,72 @@ const PhotographySection = () => {
     },
   };
 
+  // Ultra-simple image component with no hover effects
+  const SimplePhotoImage = ({ src, alt, index }) => {
+    const isLoaded = isImageLoaded(index);
+    const hasError = hasImageError(index);
+    
+    if (hasError) {
+      return (
+        <div style={styles.errorPlaceholder}>
+          <span>⚠️</span>
+          <span>Image failed to load</span>
+          <small>{`Photo ${index + 1}`}</small>
+        </div>
+      );
+    }
+    
+    return (
+      <div style={styles.imageContainer}>
+        {!isLoaded && (
+          <div style={styles.loadingPlaceholder}>
+            Loading...
+          </div>
+        )}
+        <img
+          src={src}
+          alt={alt}
+          style={{
+            ...styles.photo,
+            visibility: isLoaded ? 'visible' : 'hidden',
+          }}
+          onLoad={() => handleImageLoad(index)}
+          onError={() => handleImageError(index)}
+          loading="lazy"
+        />
+      </div>
+    );
+  };
+
+  // Simple click handler
+  const handlePhotoClick = useCallback((photo, index) => {
+    console.log('Photo clicked:', index, !hasImageError(index)); // Debug log
+    if (!hasImageError(index)) {
+      openPhotoModal(photo, index);
+    }
+  }, [hasImageError, openPhotoModal]);
+
   return (
     <section id="photography" style={styles.section}>
       <Title text="Photography" />
       
       <div style={styles.photoGrid}>
         {photos.map((photo, index) => (
-          <motion.div 
-            key={index}
+          <div 
+            key={`photo-${index}`}
             style={styles.photoContainer}
-            onClick={() => !hasImageError(index) && openPhotoModal(photo, index)}
-            onMouseEnter={!hasImageError(index) ? handleMouseEnter : undefined}
-            onMouseLeave={!hasImageError(index) ? handleMouseLeave : undefined}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5 }}
+            onClick={() => handlePhotoClick(photo, index)}
           >
-            {hasImageError(index) ? (
-              <div style={styles.errorPlaceholder}>
-                <span>⚠️</span>
-                <span>Image failed to load</span>
-                <small>{`Photo ${index + 1}`}</small>
-              </div>
-            ) : (
-              <>
-                {index === 0 ? (
-                  // First image loads eagerly and is marked as potential LCP element
-                  <OptimizedImage
-                    src={photo}
-                    alt={`Photography ${index + 1}`}
-                    style={styles.photo}
-                    priority={true}
-                    isLCP={true}
-                    onError={() => handleImageError(photo, index)}
-                  />
-                ) : (
-                  // Other images load lazily based on viewport
-                  <OptimizedImage
-                    src={photo}
-                    alt={`Photography ${index + 1}`}
-                    style={styles.photo}
-                    priority={false}
-                    onError={() => handleImageError(photo, index)}
-                  />
-                )}
-                <div className="photo-overlay" style={styles.photoOverlay}></div>
-              </>
-            )}
-          </motion.div>
+            <SimplePhotoImage
+              src={photo}
+              alt={`Photography ${index + 1}`}
+              index={index}
+            />
+          </div>
         ))}
       </div>
       
-      {/* Modal content... */}
+      {/* Direct modal rendering - no portal or context */}
       {selectedPhoto && (
         <div 
           style={styles.modalOverlay}
@@ -350,11 +306,13 @@ const PhotographySection = () => {
               navigatePhoto('prev');
             }}
           >
-            &#10094;
+            &#8249;
           </button>
           
           <div style={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <button style={styles.closeButton} onClick={closePhotoModal}>×</button>
+            <button style={styles.closeButton} onClick={closePhotoModal}>
+              ✕
+            </button>
             <img
               src={selectedPhoto} 
               alt={`Photography ${selectedIndex + 1}`} 
@@ -369,7 +327,7 @@ const PhotographySection = () => {
               navigatePhoto('next');
             }}
           >
-            &#10095;
+            &#8250;
           </button>
         </div>
       )}

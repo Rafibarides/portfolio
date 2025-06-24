@@ -13,6 +13,8 @@ const ContentProductionSection = () => {
   const [hoveredVideo, setHoveredVideo] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [videoErrors, setVideoErrors] = useState(new Set());
+  const [videoLoadingStates, setVideoLoadingStates] = useState({});
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -26,6 +28,13 @@ const ContentProductionSection = () => {
     const orderedVideos = zeroBasedIndices.map(index => contentProductionData[index]);
     
     setVideos(orderedVideos);
+
+    // Initialize loading states
+    const initialLoadingStates = {};
+    orderedVideos.forEach((_, index) => {
+      initialLoadingStates[index] = true;
+    });
+    setVideoLoadingStates(initialLoadingStates);
     
     // Handle responsive layout
     const handleResize = () => {
@@ -36,13 +45,58 @@ const ContentProductionSection = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Open modal with selected video
-  const openVideoModal = (video) => {
-    setSelectedVideo(video);
-    setShowModal(true);
-    // Prevent scrolling when modal is open
-    document.body.style.overflow = 'hidden';
+  // Handle video loading success
+  const handleVideoLoad = (index) => {
+    setVideoLoadingStates(prev => ({
+      ...prev,
+      [index]: false
+    }));
   };
+
+  // Handle video loading errors
+  const handleVideoError = (index, error) => {
+    console.error(`Video ${index} failed to load:`, error);
+    setVideoErrors(prev => new Set(prev).add(index));
+    setVideoLoadingStates(prev => ({
+      ...prev,
+      [index]: false
+    }));
+  };
+
+  // Check if video has error
+  const hasVideoError = (index) => {
+    return videoErrors.has(index);
+  };
+
+  // Debounce function to prevent multiple rapid clicks
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+
+  // Open modal with selected video (with debouncing and error checking)
+  const debouncedOpenVideoModal = debounce((video) => {
+    const videoIndex = videos.indexOf(video);
+    if (!hasVideoError(videoIndex) && !videoLoadingStates[videoIndex]) {
+      setSelectedVideo(video);
+      setShowModal(true);
+      document.body.style.overflow = 'hidden';
+    } else if (videoLoadingStates[videoIndex]) {
+      // If video is still loading, try again after a short delay
+      setTimeout(() => {
+        if (!hasVideoError(videoIndex) && !videoLoadingStates[videoIndex]) {
+          setSelectedVideo(video);
+          setShowModal(true);
+          document.body.style.overflow = 'hidden';
+        }
+      }, 500);
+    }
+  }, 50);
 
   // Close modal
   const closeVideoModal = () => {
@@ -200,6 +254,42 @@ const ContentProductionSection = () => {
       fontWeight: 600,
       fontSize: '2.7rem', // Slightly larger for Caveat
     },
+    videoLoadingOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(30, 30, 40, 0.9)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 2,
+    },
+    videoErrorOverlay: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(40, 20, 20, 0.9)',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 2,
+      color: 'rgba(255, 255, 255, 0.7)',
+      textAlign: 'center',
+      padding: '20px',
+    },
+    loadingSpinner: {
+      width: '40px',
+      height: '40px',
+      border: '3px solid rgba(255, 255, 255, 0.3)',
+      borderTop: '3px solid rgba(255, 255, 255, 0.8)',
+      borderRadius: '50%',
+      animation: 'spin 1s linear infinite',
+    },
   };
 
   return (
@@ -217,22 +307,50 @@ const ContentProductionSection = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: index % 3 * 0.1 }}
             whileHover={{ 
-              scale: 1.05,
+              scale: hasVideoError(index) ? 1 : 1.05,
               transition: { duration: 0.3 }
             }}
-            onClick={() => openVideoModal(video)}
-            onHoverStart={() => setHoveredVideo(index)}
-            onHoverEnd={() => setHoveredVideo(null)}
+            onClick={() => debouncedOpenVideoModal(video)}
           >
             <video 
               style={styles.video}
               src={video.url}
               playsInline
-              muted={false} // Enable audio
+              muted
               loop
-              onMouseOver={(e) => e.target.play()}
-              onMouseOut={(e) => e.target.pause()}
+              preload="auto"
+              onLoadedData={() => handleVideoLoad(index)}
+              onCanPlayThrough={() => handleVideoLoad(index)}
+              onError={(e) => handleVideoError(index, e)}
+              onMouseOver={(e) => {
+                if (!hasVideoError(index)) {
+                  e.target.play().catch(console.warn);
+                }
+              }}
+              onMouseOut={(e) => {
+                if (!hasVideoError(index)) {
+                  e.target.pause();
+                }
+              }}
             />
+            
+            {/* Loading overlay */}
+            {videoLoadingStates[index] && !hasVideoError(index) && (
+              <div style={styles.videoLoadingOverlay}>
+                <div style={styles.loadingSpinner}></div>
+              </div>
+            )}
+            
+            {/* Error overlay */}
+            {hasVideoError(index) && (
+              <div style={styles.videoErrorOverlay}>
+                <span style={{ fontSize: '24px', marginBottom: '8px' }}>⚠️</span>
+                <span style={{ fontSize: '14px' }}>Video failed to load</span>
+                <small style={{ opacity: 0.6, marginTop: '4px' }}>
+                  {video.name}
+                </small>
+              </div>
+            )}
           </motion.div>
         ))}
       </div>
@@ -276,6 +394,14 @@ const ContentProductionSection = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      
+      {/* Add CSS for loading animation */}
+      <style>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </section>
   );
 };

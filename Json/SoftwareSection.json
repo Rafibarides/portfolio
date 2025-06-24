@@ -253,5 +253,163 @@
     "GithubRepoURL": "https://github.com/Green-Guild/communiTree",
     "Presentation": "https://docs.google.com/presentation/d/e/2PACX-1vSTGV5VvIgVwZQDzd-1TXW7mZcpT9H95G-Itlj6QiqTk-CpeRSuD-pk52jk05CSNU7PlpgmKjCrKN7q/pubembed?start=true&loop=true&delayms=3000",
     "AppStore": ""
-  }
+  },
+  {
+    "Title": "Navara Behavioral Group",
+    "Embed link": "",
+    "Website": "https://navarabehavioralGroup.com",
+    "Screenshot": "../assets/navara1.avif",
+    "ScreenshotDimensions": { "width": 1200, "height": 800 },
+    "ScreenshotFormat": "avif",
+    "useScreenshot": true,
+    "Technologies": [
+      "React",
+      "Javascript",
+      "Vercel",
+      "HTML",
+      "UI/UX",
+      "Figma",
+      "Adobe CC",
+      "CMS",
+      "Accessibility"
+    ],
+    "Description": "Navarabg is a mental health diagnostics platform designed to empower patients through clear digital access. I built the full web UI, a CMS for clinic staff, and a secure client portal for patient interactions.",
+    "GithubRepoURL": "",
+    "Presentation": "",
+    "AppStore": "",
+    "CaseStudy": {
+      "Navarabg – Mental Health Diagnostics Platform": {
+        "Project Overview": "Navarabg is a mental health diagnostics clinic focused on providing accessible care through modern technology. My goal was to design a clean, intuitive, and comprehensive digital experience that supports patients in managing their mental health needs with dignity and ease."
+      },
+      "Problem": "Patients navigating mental health care often struggle to find centralized, clear information. Refill requests, scheduling, and program access were previously handled through fragmented or outdated systems, leading to confusion and administrative overload.",
+      "My Solution": "I designed a centralized digital hub that allows patients to securely manage their mental health needs. This includes a clean UI, a staff-friendly CMS, and a portal for requests, scheduling, and resources.",
+      "Target Personas": "<ul><li>Patients seeking discreet, efficient mental health services</li><li>Clinic administrators needing a reliable backend for requests and content</li><li>Support groups or educators looking for program visibility and outreach</li></ul>",
+      "Key Features": "<ul><li>Homepage with intuitive navigation to diagnostics, programs, and FAQs</li><li>Client portal with refill request and appointment flows</li><li>Dynamic CMS allowing staff to update site content without code</li><li>Form system with backend logic for referrals and secure submissions</li><li>WCAG-compliant, mobile-first design with dark mode support</li></ul>",
+      "Color Palette": ["#1B3B62", "#1A2A40", "#CBD9C5", "#F2F2F2", "#595959"],
+      "Iterative Design": "I prototyped multiple flows and tested with mock users to ensure clarity and trust. I paid particular attention to visual hierarchy, accessibility for users with cognitive challenges, and intuitive mobile usability.",
+      "Assets": {
+        "Vertical": ["../assets/navara_vert1.avif", "../assets/navara_vert2.avif", "../assets/navara_vert3.avif"],
+        "Horizontal": ["../assets/navara2.avif", "../assets/navara3.avif"]
+      },
+      "Results": "<ul><li>Reduction in email-based refill requests thanks to streamlined portal</li><li>Higher patient satisfaction with digital experience based on informal interviews</li><li>Staff can now post updates and program info without developer support</li><li>Improved appointment booking flow and mobile experience for patients</li></ul>",
+      "Why It Matters": "Mental health care is already daunting—technology shouldn’t add friction. This platform helps patients feel in control while giving administrators a scalable, modern toolkit. By prioritizing clarity and care, we help make healthcare feel human."
+    }
+  },
+  {
+    "Title": "Media Downloader",
+    "Embed link": "",
+    "Website": "",
+    "Screenshot": "../assets/MD1.jpg",
+    "ScreenshotDimensions": { "width": 1200, "height": 800 },
+    "ScreenshotFormat": "avif",
+    "useScreenshot": true,
+    "Technologies": [
+      "Electron",
+      "React",
+      "Javascript",
+      "FFmpeg",
+      "UI/UX",
+      "Adobe CC",
+      "Figma"
+    ],
+    "Description": "Media Downloader is a professional-grade video tool built for editors, creators, and journalists. It supports 4K downloads, MOV wrapping, and safe use with a clean, responsive UI.",
+    "GithubRepoURL": "",
+    "Presentation": "",
+    "AppStore": "",
+    "CaseStudy": {
+      "A Reliable Tool for Video Editors": {
+        "Project Overview": "As a video editor working on documentaries and media-heavy projects, I’ve struggled for years with broken, ad-infested, and technically limited media downloaders. Most fall short—lacking support for professional formats, constantly going down, and exposing users to unsafe content. Media Downloader was built to fix that."
+      },
+      "Problem": "Most downloaders cap resolution at 1080p, struggle with audio/video merges, and bombard users with NSFW ads. YouTube encodes 4K in AV1 or VP9—codecs not natively supported in MP4—leading to separate files or limited quality in many tools.",
+      "My Solution": "I built a fully self-contained Electron app with a gorgeous UI and a clean user experience. It supports 4K MOV output using AV1 or VP9 video codecs, quick preview trimming, and in-app search with smart queueing.",
+      "Target Personas": "<ul><li>Video editors seeking reference footage in full quality</li><li>Creators avoiding sketchy download tools</li><li>Documentary teams needing archival clips and interview cuts</li></ul>",
+      "Key Features": "<ul><li>4K MOV wrapping with QuickTime-compatible containers</li><li>Trim function to extract segments from long videos</li><li>In-app YouTube search and queue management</li><li>Dark and light modes with elegant, contrast-friendly design</li><li>Desktop compatibility for Intel and Apple Silicon Macs</li></ul>",
+      "Color Palette": ["#2F3159", "#515373", "#E9E9F2", "#FFFFFF", "#F25835"],
+      "Iterative Design": "I tested layout versions with creators and edited theme shadows, CTA placements, and iconography. Emphasis was placed on clarity, especially for the trim tool and download status updates.",
+      "Assets": {
+        "Vertical": [],
+        "Horizontal": ["../assets/MD1.avif", "../assets/MD2.avif", "../assets/MD3.avif", "../assets/MD4.avif", "../assets/MD5.avif", "../assets/MD6.avif", "../assets/MD7.avif"]
+      },
+      "Results": "<ul><li>Became my personal go-to downloader for 4K reference clips</li><li>Adopted by several other editors and film students</li><li>Zero dependency on external installs or risky web tools</li><li>Consistent successful downloads with clean playback in QuickTime</li></ul>",
+      "Why It Matters": "Professionals need tools that respect their time, security, and quality standards. This app removes friction, supports creative workflows, and avoids the chaos of the current media download landscape."
+    }
+  },
+  {
+    "Title": "Arcade",
+    "Embed link": "",
+    "Website": "",
+    "Screenshot": "../assets/arcade1.avif",
+    "ScreenshotDimensions": { "width": 1200, "height": 800 },
+    "ScreenshotFormat": "avif",
+    "useScreenshot": true,
+    "Technologies": [
+      "JUCE",
+      "C++",
+      "DSP",
+      "VST",
+      "UI/UX",
+      "Adobe CC",
+      "Figma"
+    ],
+    "Description": "Arcade is a JUCE-based audio plugin that enables independent saturation of left and right stereo channels for spatially immersive sound. Designed with a custom UI and optimized DSP, it's built for modern producers who want depth and grit in their mixes.",
+    "GithubRepoURL": "",
+    "Presentation": "",
+    "AppStore": "",
+    "CaseStudy": {
+      "Arcade – A Spatial Saturation Plugin for Modern Producers": {
+        "Project Overview": "Arcade is a C++ audio plugin built with the JUCE framework, designed to push spatial sound design into bold, creative territory. Built for compatibility across all major DAWs as a VST, Arcade lets users saturate the left and right ears independently—opening up a whole new dimension of mix depth and spatial artistry."
+      },
+      "Problem": "Most saturation plugins process the stereo field as a single unified signal. But audio design is increasingly spatial and immersive. Traditional tools lacked the flexibility to sculpt sound independently across left and right channels—especially without introducing phasing or CPU load.",
+      "My Solution": "I built Arcade: a spatial saturation plugin with dual-ear control. Designed for subtle stereo texture and bold distortion alike, it gives music creators the power to bend space, not just sound.",
+      "Target Personas": "<ul><li>Electronic producers looking for psychoacoustic width</li><li>Vocalists seeking character and clarity across the stereo field</li><li>Sound designers experimenting with ear-bending FX</li></ul>",
+      "Key Features": "<ul><li><strong>Dual-Channel Saturation</strong>: Independently process left and right stereo channels</li><li><strong>Spatial FX Engine</strong>: Adds stereo movement and dynamic phase shifts</li><li><strong>Custom UI</strong>: Circular glowing knobs and animated feedback built in JUCE</li><li><strong>Optimized DSP Core</strong>: Low latency, real-time automation, and CPU efficiency</li></ul>",
+      "Color Palette": ["#090126", "#834BF1", "#08C8BA", "#F26513", "#14B6FF"],
+      "Iterative Design": "Using JUCE’s OpenGL-backed rendering and custom knob components, I refined UI polish through multiple iterations, adjusting saturation curves, phase behavior, and visual dynamics for clarity and feel. Feedback from beta testers guided improvements in control mapping and output monitoring.",
+      "Assets": {
+        "Vertical": [],
+        "Horizontal": ["../assets/arcade2.avif"]
+      },
+      "Results": "<ul><li>Now used by multiple producers for vocals, synths, and buses</li><li>Universally compatible across DAWs and platforms</li><li>Offers spatial width without needing complex stereo chains</li><li>Replaces several plugins in a typical mix chain with one unit</li></ul>",
+      "Why It Matters": "Arcade empowers audio creators with tactile spatial control over saturation. In a world moving toward immersive audio, this plugin gives you spatial analog-style color that lives and breathes across the mix field."
+    }
+  },
+  {
+    "Title": "RevSat",
+    "Embed link": "",
+    "Website": "",
+    "Screenshot": "../assets/Render 1.avif",
+    "ScreenshotDimensions": { "width": 1200, "height": 800 },
+    "ScreenshotFormat": "avif",
+    "useScreenshot": true,
+    "Technologies": [
+      "JUCE",
+      "C++",
+      "DSP",
+      "VST",
+      "UI/UX",
+      "Adobe CC",
+      "Figma"
+    ],
+    "Description": "RevSat is a JUCE-built reverb plugin that merges analog-modeled warmth with smooth, saturated ambience. Ideal for producers who want texture-rich tails without needing a second plugin.",
+    "GithubRepoURL": "",
+    "Presentation": "",
+    "AppStore": "",
+    "CaseStudy": {
+      "RevSat – Vintage Warm Reverb with Saturated Character": {
+        "Project Overview": "RevSat is a reverb plugin built in C++ using the JUCE framework, designed to deliver vintage character and analog-style warmth. Unlike sterile digital verbs, RevSat blends reverb and saturation in a single, silky signal path, ideal for those chasing texture, presence, and nostalgic bloom in their mixes."
+      },
+      "Problem": "As a producer, I often layered tape-style saturation over verbs to get warmth. RevSat fuses those two workflows, giving lush tails and sweetened harmonics all in one.",
+      "My Solution": "A custom C++ VST plugin with modeled early reflections, built-in saturation, and a dead-simple UI. RevSat focuses on feel: analog-style warmth, easy settings, and emotional tone.",
+      "Target Personas": "<ul><li>Vocal producers seeking reverb with warmth and attitude</li><li>Guitarists and keys players chasing vintage plate or spring vibes</li><li>Electronic artists wanting analog coloration without CPU-heavy chains</li></ul>",
+      "Key Features": "<ul><li><strong>Vintage-Modeled Reverb Tail</strong>: Modeled on early analog/digital units</li><li><strong>Built-in Saturation</strong>: Adds soft harmonic drive to reverb tail</li><li><strong>One-Knob Simplicity</strong>: Quick results, minimal distraction</li><li><strong>Soft UI Aesthetic</strong>: Analog-inspired visual feel with creamy UI tones</li></ul>",
+      "Color Palette": ["#BFAC95", "#F2EAE4", "#F26F63", "#D96F66", "#F2A29B"],
+      "Iterative Design": "From initial DSP prototyping to final UI polish, I focused on reducing decision fatigue. I tuned saturation curves by ear, tested across multiple DAWs, and iterated on the visual identity to evoke warmth without clutter.",
+      "Assets": {
+        "Vertical": [],
+        "Horizontal": ["../assets/Render 1.avif"]
+      },
+      "Results": "<ul><li>Praised by users for sounding “like reverb recorded to tape”</li><li>Became a staple for warming up vocals and synths</li><li>Replaces the need to chain saturation after reverb in many mixes</li></ul>",
+      "Why It Matters": "RevSat makes reverb feel emotional. It leans into vibe, delivering nostalgia, texture, and warmth with every tail."
+    }
+  }   
 ]

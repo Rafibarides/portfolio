@@ -336,6 +336,8 @@ const SoftwareSection = ({ hasScrolled = false }) => {
       flexDirection: 'column',
       height: '100%',
       marginBottom: '40px',
+      transition: 'box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      willChange: 'transform, box-shadow',
     },
     previewContainer: {
       width: '100%',
@@ -741,14 +743,16 @@ const SoftwareSection = ({ hasScrolled = false }) => {
           <motion.div
             key={index}
             style={styles.card}
-            initial={index < 2 ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-            whileInView={index < 2 ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-            viewport={{ once: index < 2 ? true : false, margin: "-100px" }}
-            exit={index < 2 ? {} : { opacity: 0, y: 50 }}
-            transition={index < 2 ? {} : { duration: 0.5 }}
-            whileHover={index < 2 ? {} : { 
+            className="software-card"
+            whileHover={{ 
               scale: 1.02,
-              boxShadow: '0 20px 30px rgba(0, 0, 0, 0.3)'
+              y: -8
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 25,
+              mass: 0.5
             }}
             onClick={(e) => handleCardClick(e, project)}
           >
@@ -1070,6 +1074,18 @@ const SoftwareSection = ({ hasScrolled = false }) => {
           </motion.div>
         </motion.div>
       )}
+      
+      {/* Enhanced CSS for smooth hover effects */}
+      <style>{`
+        .software-card:hover {
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
+        }
+        
+        .software-card {
+          backface-visibility: hidden;
+          transform-style: preserve-3d;
+        }
+      `}</style>
     </section>
   );
 };
