@@ -1,15 +1,49 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { palette } from '../utils/colors';
 import photographyData from '../../Json/PhotographySection.json';
 import Title from '../components/Title';
+
+// Memoized photo component to prevent unnecessary re-renders
+const PhotoItem = memo(({ src, alt, index, onPhotoClick, styles }) => {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+
+  return (
+    <div 
+      style={styles.photoContainer}
+      onClick={() => onPhotoClick(src, index)}
+    >
+      {/* Always render image - let browser handle loading */}
+      <img
+        src={src}
+        alt={alt}
+        style={{
+          ...styles.image,
+          opacity: loaded && !error ? 1 : 0,
+        }}
+        onLoad={() => setLoaded(true)}
+        onError={() => setError(true)}
+        loading="eager"
+        decoding="auto"
+      />
+      
+      {/* Show placeholder until loaded */}
+      {(!loaded || error) && (
+        <div style={styles.placeholder}>
+          {error ? '⚠️ Failed to load' : 'Loading...'}
+        </div>
+      )}
+    </div>
+  );
+});
+
+PhotoItem.displayName = 'PhotoItem';
 
 const PhotographySection = () => {
   const [photos, setPhotos] = useState([]);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [imageErrors, setImageErrors] = useState(new Set());
-  const [loadedImages, setLoadedImages] = useState(new Set());
 
   // Memoize the photos data to prevent unnecessary rerenders
   const memoizedPhotos = useMemo(() => {
@@ -28,36 +62,14 @@ const PhotographySection = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [memoizedPhotos]);
 
-  // Handle image loading errors
-  const handleImageError = useCallback((index) => {
-    setImageErrors(prev => new Set(prev).add(index));
-  }, []);
-
-  // Handle successful image loads
-  const handleImageLoad = useCallback((index) => {
-    setLoadedImages(prev => new Set(prev).add(index));
-  }, []);
-
-  // Check if image has error
-  const hasImageError = useCallback((index) => {
-    return imageErrors.has(index);
-  }, [imageErrors]);
-
-  // Check if image is loaded
-  const isImageLoaded = useCallback((index) => {
-    return loadedImages.has(index);
-  }, [loadedImages]);
-
-  // Simple modal functions - no context needed
+  // Simple modal functions
   const openPhotoModal = useCallback((photoUrl, index) => {
-    console.log('Opening modal for photo:', index); // Debug log
     setSelectedPhoto(photoUrl);
     setSelectedIndex(index);
     document.body.style.overflow = 'hidden';
   }, []);
 
   const closePhotoModal = useCallback(() => {
-    console.log('Closing modal'); // Debug log
     setSelectedPhoto(null);
     setSelectedIndex(null);
     document.body.style.overflow = 'auto';
@@ -121,26 +133,30 @@ const PhotographySection = () => {
       aspectRatio: '5/7',
       backgroundColor: 'rgba(20, 20, 20, 0.5)',
       border: '1px solid rgba(255, 255, 255, 0.1)',
-      // Explicitly disable any hover effects
-      pointerEvents: 'auto',
+      WebkitTapHighlightColor: 'transparent',
+      // Hardware acceleration for smooth rendering
+      WebkitTransform: 'translate3d(0,0,0)',
+      transform: 'translate3d(0,0,0)',
+      WebkitBackfaceVisibility: 'hidden',
+      backfaceVisibility: 'hidden',
     },
-    photo: {
+    image: {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
-      display: 'block',
-      // Prevent any image interactions that could cause flickering
+      position: 'absolute',
+      top: 0,
+      left: 0,
       userSelect: 'none',
-      draggable: false,
+      WebkitUserSelect: 'none',
+      WebkitTouchCallout: 'none',
+      // Hardware acceleration to prevent flicker
+      WebkitTransform: 'translate3d(0,0,0)',
+      transform: 'translate3d(0,0,0)',
+      WebkitBackfaceVisibility: 'hidden',
+      backfaceVisibility: 'hidden',
     },
-    imageContainer: {
-      position: 'relative',
-      width: '100%',
-      height: '100%',
-      // Prevent hover effects
-      pointerEvents: 'none',
-    },
-    loadingPlaceholder: {
+    placeholder: {
       position: 'absolute',
       top: 0,
       left: 0,
@@ -152,6 +168,9 @@ const PhotographySection = () => {
       alignItems: 'center',
       color: 'rgba(255, 255, 255, 0.5)',
       fontSize: '14px',
+      // Ensure smooth transitions
+      WebkitTransform: 'translate3d(0,0,0)',
+      transform: 'translate3d(0,0,0)',
     },
     modalOverlay: {
       position: 'fixed',
@@ -165,6 +184,8 @@ const PhotographySection = () => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: '20px',
+      WebkitTransform: 'translateZ(0)',
+      transform: 'translateZ(0)',
     },
     modalContent: {
       position: 'relative',
@@ -176,6 +197,8 @@ const PhotographySection = () => {
       maxHeight: '90vh',
       objectFit: 'contain',
       borderRadius: '4px',
+      WebkitBackfaceVisibility: 'hidden',
+      backfaceVisibility: 'hidden',
     },
     closeButton: {
       position: 'absolute',
@@ -188,6 +211,7 @@ const PhotographySection = () => {
       cursor: 'pointer',
       outline: 'none',
       padding: '5px',
+      WebkitTapHighlightColor: 'transparent',
     },
     navButton: {
       position: 'absolute',
@@ -206,6 +230,7 @@ const PhotographySection = () => {
       cursor: 'pointer',
       outline: 'none',
       zIndex: 1000000,
+      WebkitTapHighlightColor: 'transparent',
     },
     prevButton: {
       left: '20px',
@@ -213,65 +238,7 @@ const PhotographySection = () => {
     nextButton: {
       right: '20px',
     },
-    errorPlaceholder: {
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(40, 40, 40, 0.8)',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      color: 'rgba(255, 255, 255, 0.6)',
-      fontSize: '14px',
-      textAlign: 'center',
-      padding: '20px',
-    },
   };
-
-  // Ultra-simple image component with no hover effects
-  const SimplePhotoImage = ({ src, alt, index }) => {
-    const isLoaded = isImageLoaded(index);
-    const hasError = hasImageError(index);
-    
-    if (hasError) {
-      return (
-        <div style={styles.errorPlaceholder}>
-          <span>⚠️</span>
-          <span>Image failed to load</span>
-          <small>{`Photo ${index + 1}`}</small>
-        </div>
-      );
-    }
-    
-    return (
-      <div style={styles.imageContainer}>
-        {!isLoaded && (
-          <div style={styles.loadingPlaceholder}>
-            Loading...
-          </div>
-        )}
-        <img
-          src={src}
-          alt={alt}
-          style={{
-            ...styles.photo,
-            visibility: isLoaded ? 'visible' : 'hidden',
-          }}
-          onLoad={() => handleImageLoad(index)}
-          onError={() => handleImageError(index)}
-          loading="lazy"
-        />
-      </div>
-    );
-  };
-
-  // Simple click handler
-  const handlePhotoClick = useCallback((photo, index) => {
-    console.log('Photo clicked:', index, !hasImageError(index)); // Debug log
-    if (!hasImageError(index)) {
-      openPhotoModal(photo, index);
-    }
-  }, [hasImageError, openPhotoModal]);
 
   return (
     <section id="photography" style={styles.section}>
@@ -279,21 +246,18 @@ const PhotographySection = () => {
       
       <div style={styles.photoGrid}>
         {photos.map((photo, index) => (
-          <div 
+          <PhotoItem
             key={`photo-${index}`}
-            style={styles.photoContainer}
-            onClick={() => handlePhotoClick(photo, index)}
-          >
-            <SimplePhotoImage
-              src={photo}
-              alt={`Photography ${index + 1}`}
-              index={index}
-            />
-          </div>
+            src={photo}
+            alt={`Photography ${index + 1}`}
+            index={index}
+            onPhotoClick={openPhotoModal}
+            styles={styles}
+          />
         ))}
       </div>
       
-      {/* Direct modal rendering - no portal or context */}
+      {/* Modal */}
       {selectedPhoto && (
         <div 
           style={styles.modalOverlay}

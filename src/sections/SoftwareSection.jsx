@@ -1,12 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useAnimation, useInView, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { palette } from '../utils/colors';
 import softwareData from '../../Json/SoftwareSection.json';
 import SoftwareDisplayPage from '../SoftwareDisplayPage';
-import TextClipMask from '../components/TextClipMask';
-import texture2Gif from '../assets/texture2.gif';
 import Title from '../components/Title';
-import { useIntersectionObserver } from '../utils/useIntersectionObserver';
 
 const SoftwareSection = ({ hasScrolled = false }) => {
   const [projects, setProjects] = useState([]);
@@ -81,7 +78,7 @@ const SoftwareSection = ({ hasScrolled = false }) => {
   };
 
   // Function to handle mouse movement over pill
-  const handlePillMouseMove = (e) => {
+  const handlePillMouseMove = () => {
     // We're keeping this function for the mousemove tracking
     // but not applying any visual effects
   };
@@ -248,8 +245,9 @@ const SoftwareSection = ({ hasScrolled = false }) => {
       return;
     }
     
-    // PREVENT MODAL ON MOBILE - Desktop only feature
+    // MOBILE - Show popup to visit desktop
     if (shouldPreventModalOnMobile()) {
+      setShowMobilePopup(true);
       return;
     }
     
@@ -299,13 +297,18 @@ const SoftwareSection = ({ hasScrolled = false }) => {
       borderRadius: '20px',
       cursor: 'pointer',
       fontSize: '0.8rem',
-      backgroundColor: 'rgba(15, 15, 15, 0.7)',
+      backgroundColor: 'rgba(15, 15, 15, 0.85)',
       backdropFilter: 'blur(12px)',
       WebkitBackdropFilter: 'blur(12px)',
       border: '1px solid rgba(255, 255, 255, 0.08)',
       display: 'inline-block',
       lineHeight: '1.2',
-      transition: 'transform 0.3s ease-out, background-color 0.3s ease',
+      transition: 'all 0.3s ease',
+      WebkitTransition: 'all 0.3s ease',
+      backfaceVisibility: 'hidden',
+      WebkitBackfaceVisibility: 'hidden',
+      transform: 'translateZ(0)',
+      WebkitTransform: 'translateZ(0)',
     },
     activePill: {
       backgroundColor: 'rgba(80, 80, 80, 0.7)',
@@ -325,7 +328,7 @@ const SoftwareSection = ({ hasScrolled = false }) => {
       padding: '30px',
     },
     card: {
-      background: 'rgba(20, 20, 20, 0.45)',
+      background: 'rgba(20, 20, 20, 0.7)',
       backdropFilter: 'blur(15px)',
       WebkitBackdropFilter: 'blur(15px)',
       borderRadius: '12px',
@@ -337,7 +340,12 @@ const SoftwareSection = ({ hasScrolled = false }) => {
       height: '100%',
       marginBottom: '40px',
       transition: 'box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      WebkitTransition: 'box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       willChange: 'transform, box-shadow',
+      backfaceVisibility: 'hidden',
+      WebkitBackfaceVisibility: 'hidden',
+      transform: 'translateZ(0)',
+      WebkitTransform: 'translateZ(0)',
     },
     previewContainer: {
       width: '100%',
@@ -704,7 +712,7 @@ const SoftwareSection = ({ hasScrolled = false }) => {
         variants={titleAnimation}
         style={{ width: '100%', textAlign: 'center' }}
       >
-        <Title text="Software Projects" useClipMask={true} />
+        <Title text="Software Projects" useClipMask={false} />
       </motion.div>
       
       {/* Filter Pills also use the combined condition */}
@@ -989,10 +997,9 @@ const SoftwareSection = ({ hasScrolled = false }) => {
                 )}
                 
                 {/* For other projects with websites, don't show Demo button since title is clickable */}
-                {project.Title !== "Weather Now" && 
+                {false && project.Title !== "Weather Now" && 
                  project.Title !== "Communitree" && 
-                 project.Website && 
-                 false && ( // This will never render due to the false condition
+                 project.Website && ( // This will never render due to the false condition
                   <a 
                     href={project.Website} 
                     target="_blank" 
@@ -1075,15 +1082,27 @@ const SoftwareSection = ({ hasScrolled = false }) => {
         </motion.div>
       )}
       
-      {/* Enhanced CSS for smooth hover effects */}
+      {/* Enhanced CSS for smooth hover effects - Safari compatible */}
       <style>{`
-        .software-card:hover {
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
+        .software-card {
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+          -webkit-transform: translateZ(0);
+          transform: translateZ(0);
         }
         
-        .software-card {
-          backface-visibility: hidden;
-          transform-style: preserve-3d;
+        .software-card:hover {
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
+          -webkit-box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
+        }
+        
+        /* Safari-specific optimizations */
+        @supports (-webkit-appearance: none) {
+          .software-card {
+            will-change: transform, box-shadow;
+          }
         }
       `}</style>
     </section>
