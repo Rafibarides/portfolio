@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { palette } from './utils/colors';
 import profilePic from '../public/assets/prof.avif';
 import profileBlinkPic from '../public/assets/prof-blink.avif';
@@ -19,6 +20,7 @@ const AboutMeModal = ({ onClose }) => {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
   const blinkTimeoutRef = useRef(null);
+  const navigate = useNavigate();
 
   // Generate random particles for background
   const generateParticles = (count) => {
@@ -167,6 +169,12 @@ const AboutMeModal = ({ onClose }) => {
         contactSection.scrollIntoView({ behavior: 'smooth' });
       }
     }, 300);
+  };
+
+  // Add a function to handle navigation to the full website
+  const handleFullWebsiteClick = () => {
+    onClose(); // Close the modal first
+    navigate('/'); // Navigate to the main portfolio page
   };
 
   const styles = {
@@ -354,29 +362,6 @@ const AboutMeModal = ({ onClose }) => {
       transition: {
         duration: 0.8,
         ease: "easeOut"
-      }
-    }
-  };
-  
-  // Staggered children animation for the title
-  const titleContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3
-      }
-    }
-  };
-  
-  const titleItemVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.5
       }
     }
   };
@@ -568,6 +553,37 @@ const AboutMeModal = ({ onClose }) => {
             >
               <FontAwesomeIcon icon={faEnvelope} />
             </motion.button>
+          </motion.div>
+
+          {/* Full website link */}
+          <motion.div
+            style={{
+              marginTop: '30px',
+              textAlign: 'center',
+              opacity: 0.8,
+              fontSize: '0.9rem',
+              lineHeight: '1.5',
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+          >
+            <p style={{ margin: 0 }}>
+              If you are interested in viewing my creative work outside of code, you can{' '}
+              <motion.span
+                style={{
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                  color: palette.text,
+                }}
+                onClick={handleFullWebsiteClick}
+                whileHover={{ opacity: 0.7 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                view full website
+              </motion.span>
+              .
+            </p>
           </motion.div>
         </div>
       </motion.div>

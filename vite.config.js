@@ -15,5 +15,13 @@ export default defineConfig({
       }
     },
     chunkSizeWarningLimit: 800 // Increased from default 500
+  },
+  server: {
+    // Configure dev server for SPA routing
+    historyApiFallback: true
+  },
+  preview: {
+    // Configure preview server for SPA routing
+    historyApiFallback: true
   }
 })

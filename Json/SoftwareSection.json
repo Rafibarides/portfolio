@@ -4,7 +4,10 @@
     "Embed link": "https://www.playworldly.com",
     "Website": "https://www.playworldly.com",
     "Screenshot": "../assets/worldly.avif",
-    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": false,
     "Technologies": [
@@ -31,22 +34,36 @@
       "My Solution": "I built a game.<br /><br /><strong>Worldly</strong> is a mobile app that gamifies geography education using real-time multiplayer challenges and module based learning. It was designed to make global learning accessible, competitive, and fun.",
       "Target Personas": "Worldly was designed for:<br /><ul><li><strong>Curious learners</strong> of all ages who enjoy geography and visual games</li><li><strong>Parents and educators</strong> looking for alternatives to bland memorization methods</li><li><strong>Casual gamers</strong> who prefer low-friction mobile experiences with some educational value</li></ul>",
       "Key Features": "<ul><li><strong>Multiplayer</strong>: Face off with others in real-time map challenges</li><li><strong>Learning Modules</strong>: Unlock structured continent-based lessons</li><li><strong>Mascot Design</strong>: <em>Yoram</em> is a child-friendly guide who walks players through each challenge</li><li><strong>Audio Feedback</strong>: Reinforces right/wrong answers for better memory and engagement</li><li><strong>Color Psychology</strong>: The green interface was chosen deliberately. Green is linked to nature, peace, and balance. Research shows it improves focus, reduces stress, and enhances creative thinking, perfect for a geography themed learning environment.</li></ul>",
-      "Color Palette": ["#74A651", "#97BF7A", "#F2B05E", "#FCC257", "#DEDEDE"],
+      "Color Palette": [
+        "#74A651",
+        "#97BF7A",
+        "#F2B05E",
+        "#FCC257",
+        "#DEDEDE"
+      ],
       "Iterative Design": "After the initial beta release, I shared a Google Form with early users and gathered detailed feedback from over 30 testers. Common themes included:<br /><ul><li>A desire for more guided and structured learning</li><li>Requests for sound effects and clearer visual cues</li><li>Confusion about game flow in early rounds</li></ul><br />This led to several improvements:<br /><ul><li>Added <strong>audio cues</strong> for interaction and feedback</li><li>Improved onboarding and UI flow</li><li>Introduced <strong>progress tracking</strong> and <strong>unlockable learning paths</strong></li><li>Balanced the challenge system across skill levels</li></ul>",
       "Assets": {
-        "Vertical": ["../assets/w1.avif", "../assets/w2.avif", "../assets/w3.avif"],
+        "Vertical": [
+          "../assets/w1.avif",
+          "../assets/w2.avif",
+          "../assets/w3.avif"
+        ],
         "Horizontal": []
       },
-      "Results": "<ul><li>300+ games played in the first month post-beta</li><li>4.7 average rating across user feedback forms</li><li>Positive reception from both children and adults:</li></ul><blockquote>“My kid begged to play again after dinner—and he learned where Laos is.”<br />“I have never had more fun losing a game. I am learning countries I didn not even know existed.”</blockquote>",
+      "Results": "<ul><li>300+ games played in the first month post-beta</li><li>4.7 average rating across user feedback forms</li><li>Positive reception from both children and adults:</li></ul><blockquote>\u201cMy kid begged to play again after dinner\u2014and he learned where Laos is.\u201d<br />\u201cI have never had more fun losing a game. I am learning countries I didn not even know existed.\u201d</blockquote>",
       "Why It Matters": "Geography is the foundation of understanding our world. From migration patterns to international relations, learning about the planet we live on fosters empathy and global consciousness.<br /><br />With Worldly, players are connecting the dots between knowledge and curiosity."
-    }
+    },
+    "isProduct": true
   },
   {
     "Title": "Weather Now",
     "Embed link": "",
     "Website": "",
     "Screenshot": "../assets/WeatherNow.avif",
-    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": false,
     "Technologies": [
@@ -71,18 +88,28 @@
       "My Solution": "We built a minimalistic, responsive React app that fetches real-time local weather and astronomical data. By using glassmorphism and tropical color themes, the interface becomes not only useful but also visually captivating. Sunset and lunar cycle info were added for deeper daily planning and spiritual awareness.",
       "Target Personas": "<ul><li>Observant individuals needing clear sunset/Shkia times for religious practices.</li><li>Designers and creatives who want a beautiful desktop experience.</li><li>Photographers or event planners needing quick access to weather and light info.</li><li>Casual users looking for ambient displays with real-time utility.</li></ul>",
       "Key Features": "<ul><li>Real-time weather data via API</li><li>Automatic theme switching (light/dark) based on local time</li><li>Shkia (sunset) and lunar phase data for planning and religious observance</li><li>Full-screen UI optimized for TV and desktop screensavers</li><li>Glassmorphism UI with vibrant tropical colors</li><li>Built with React and local JSON fallback support</li></ul>",
-      "Color Palette": ["#355770", "#F27507", "#F2935C", "#F27A5E", "#F25E5E"],
+      "Color Palette": [
+        "#355770",
+        "#F27507",
+        "#F2935C",
+        "#F27A5E",
+        "#F25E5E"
+      ],
       "Iterative Design": "The project began with a basic layout in Figma and went through multiple feedback cycles focused on simplifying visual noise, enhancing readability from a distance, and optimizing data placement. We fine-tuned contrast for both light and dark modes, adjusted spacing, and added lunar cycle support based on user suggestions.",
-      "Results": "We successfully built and published this aesthetic, weather-at-a-glance display—and I use it on my TV all the time. Friends have shared that they love how the UI slowly fades into dark mode in the evening, creating a calm and ambient vibe.",
+      "Results": "We successfully built and published this aesthetic, weather-at-a-glance display\u2014and I use it on my TV all the time. Friends have shared that they love how the UI slowly fades into dark mode in the evening, creating a calm and ambient vibe.",
       "Why It Matters": "Weather Now bridges utility and aestetic, something sometimes overlooked in productivity tools. By respecting both functional and spiritual needs (like Shkia times), it demonstrates how UX can serve deeply personal contexts while still being elegant and modern. It reflects our belief that design should be both beautiful and meaningful."
-    }
+    },
+    "isProduct": true
   },
   {
     "Title": "Shabbat Zman",
     "Embed link": "https://shabbatzman.com/",
     "Website": "https://shabbatzman.com/",
     "Screenshot": "../assets/ShabbatZman.avif",
-    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": true,
     "Technologies": [
@@ -107,18 +134,28 @@
       "My Solution": "I created a clean, one-pager mobile and web app with original digital art and a focus on simplicity. The app uses real-time geolocation and several APIs to give users accurate, beautifully presented zmanim and moon phase data. I also built a Hebrew-to-Gregorian calendar algorithm to handle lunar-solar conversions in JavaScript.",
       "Target Personas": "<ul><li>Observant individuals needing clear sunset/Shkia times for religious practices</li><li>Designers and creatives who want a beautiful, ambient screen experience</li><li>People exploring Jewish identity and looking for spiritual tech tools</li><li>Casual users curious about moon phases and celestial rhythms</li></ul>",
       "Key Features": "<ul><li>Real-time zmanim based on user geolocation</li><li>Beautiful, Shabbat-themed color palette inspired by royalty and calm</li><li>Original digital art and sprites created in Adobe Illustrator</li><li>One-page fullscreen UI, optimized for both phones and TV screens</li><li>Custom-built algorithm to convert Gregorian dates into Hebrew calendar equivalents</li></ul>",
-      "Color Palette": ["#1E0A26", "#741B8C", "#9704BF", "#F2D8F2", "#FBF9F0"],
+      "Color Palette": [
+        "#1E0A26",
+        "#741B8C",
+        "#9704BF",
+        "#F2D8F2",
+        "#FBF9F0"
+      ],
       "Iterative Design": "While building the lunar-solar calendar algorithm, I encountered several complexities around leap years, intercalated months, and fixed date anchors between the Hebrew and Gregorian systems. This led to many revisions and testing cycles. I also iterated on the UI after testing it on different screen types (TV, mobile, tablet) to make sure it felt peaceful and legible in all environments.",
       "Results": "I successfully built and shipped this aesthetic utility tool. It's Jewish tech that feels deeply personal to me, helping mark sacred time in a way that feels modern, clear, and intentional. Friends have shared that they appreciate how simple and beautiful it is.",
       "Why It Matters": "This project is a personal expression of Jewish identity through tech. It bridges ancient tradition and modern design, offering users a mindful way to track sacred time. By creating something beautiful and useful, it encourages spiritual curiosity and makes observance easier and more accessible."
-    }
+    },
+    "isProduct": true
   },
   {
     "Title": "RBM Sounds",
     "Embed link": "http://rbmsounds.com/",
     "Website": "http://rbmsounds.com/",
     "Screenshot": "../assets/RBMSounds.avif",
-    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": true,
     "Technologies": [
@@ -134,36 +171,40 @@
     "GithubRepoURL": "",
     "Presentation": "",
     "AppStore": "",
-      "CaseStudy": {
-        "RBM Sounds": {
-          "Project Overview": "RBM Sounds is an e-commerce platform I designed and developed to sell original sample packs and music production resources. Born from a desire to have full control over sales, branding, and customer interaction, this site provides music producers with a seamless experience to discover, preview, and purchase high-quality sound kits crafted in my Brooklyn studio."
-        },
-        "Problem": "I needed a dedicated platform to sell my sample packs directly to music producers without relying on third-party marketplaces like Splice, which take a large cut and control the traffic. I could not find a focused or flexible enough solution online, and I wanted my digital products to have a home that truly reflected my brand and mission.",
-        "My Solution": "I built RBM Sounds, a sleek, minimalist, fully branded website with clean UX and a smooth purchasing flow. The site was developed to highlight the care and professionalism behind each kit, featuring embedded audio previews, detailed descriptions, and aesthetic continuity from page to page.",
-        "Target Personas": "<ul><li>Music producers looking to preview and buy high-quality sounds to spark creativity</li><li>Professional musicians seeking curated and versatile samples</li><li>Content creators or beatmakers who need ready-to-use loops and hits</li></ul>",
-        "Key Features": "<ul><li>Embedded sample previews with waveform visualization</li><li>Fully functional e-commerce site with seamless payment processing</li><li>Responsive design optimized for mobile and desktop</li></ul>",
-        "Color Palette": [
-          "#999999",
-          "#595959",
-          "#E6E6E6",
-          "#000000",
-          "#D9D9D9"
-        ],
-        "Iterative Design": "I tested multiple iterations of product layout and checkout flow using user feedback from early site visitors and collaborators. I refined the typography, improved loading times, and shifted to a monochrome palette to keep the focus on the sounds. A/B testing of cover art sizes and CTA placement helped boost clarity and user interaction.",
-        "Assets": {
-          "Vertical": [],
-          "Horizontal": []
-        },
-        "Results": "<ul><li>RBM Sounds has become the central hub for all my sound kit distribution</li><li>Users reported a smooth and intuitive shopping experience</li><li>Multiple collaborations and shoutouts from music creators came directly through the site</li><li>Built a growing list of newsletter subscribers and direct customers</li></ul>",
-        "Why It Matters": "RBM Sounds embodies the intersection of independence and intentionality. Rather than waiting for a platform to meet my needs, I built one. This project reflects a broader mindset, where creators can take control of their vision, brand, and livelihood with thoughtful design and user-centered thinking."
-    }
+    "CaseStudy": {
+      "RBM Sounds": {
+        "Project Overview": "RBM Sounds is an e-commerce platform I designed and developed to sell original sample packs and music production resources. Born from a desire to have full control over sales, branding, and customer interaction, this site provides music producers with a seamless experience to discover, preview, and purchase high-quality sound kits crafted in my Brooklyn studio."
+      },
+      "Problem": "I needed a dedicated platform to sell my sample packs directly to music producers without relying on third-party marketplaces like Splice, which take a large cut and control the traffic. I could not find a focused or flexible enough solution online, and I wanted my digital products to have a home that truly reflected my brand and mission.",
+      "My Solution": "I built RBM Sounds, a sleek, minimalist, fully branded website with clean UX and a smooth purchasing flow. The site was developed to highlight the care and professionalism behind each kit, featuring embedded audio previews, detailed descriptions, and aesthetic continuity from page to page.",
+      "Target Personas": "<ul><li>Music producers looking to preview and buy high-quality sounds to spark creativity</li><li>Professional musicians seeking curated and versatile samples</li><li>Content creators or beatmakers who need ready-to-use loops and hits</li></ul>",
+      "Key Features": "<ul><li>Embedded sample previews with waveform visualization</li><li>Fully functional e-commerce site with seamless payment processing</li><li>Responsive design optimized for mobile and desktop</li></ul>",
+      "Color Palette": [
+        "#999999",
+        "#595959",
+        "#E6E6E6",
+        "#000000",
+        "#D9D9D9"
+      ],
+      "Iterative Design": "I tested multiple iterations of product layout and checkout flow using user feedback from early site visitors and collaborators. I refined the typography, improved loading times, and shifted to a monochrome palette to keep the focus on the sounds. A/B testing of cover art sizes and CTA placement helped boost clarity and user interaction.",
+      "Assets": {
+        "Vertical": [],
+        "Horizontal": []
+      },
+      "Results": "<ul><li>RBM Sounds has become the central hub for all my sound kit distribution</li><li>Users reported a smooth and intuitive shopping experience</li><li>Multiple collaborations and shoutouts from music creators came directly through the site</li><li>Built a growing list of newsletter subscribers and direct customers</li></ul>",
+      "Why It Matters": "RBM Sounds embodies the intersection of independence and intentionality. Rather than waiting for a platform to meet my needs, I built one. This project reflects a broader mindset, where creators can take control of their vision, brand, and livelihood with thoughtful design and user-centered thinking."
+    },
+    "isProduct": false
   },
   {
     "Title": "Riff Rabbit",
     "Embed link": "",
     "Website": "",
     "Screenshot": "../assets/RiffRabbit.avif",
-    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": false,
     "Technologies": [
@@ -182,14 +223,18 @@
     "Description": "Riff Rabbit is a full-stack multiplayer interval training game designed for musicians to sharpen their ear training skills in a fun, interactive way. Built with React for the frontend and Node.js with Express for the backend, the game features a structured interval training system and includes user authentication with OAuth. The backend is powered by PostgreSQL, with TablePlus for database management. Custom graphics and user interface designs were created using Figma and Adobe Illustrator.",
     "GithubRepoURL": "",
     "Presentation": "https://docs.google.com/presentation/d/e/2PACX-1vRn_xtcRU7Qs6_fx6J0JswMwCprxiKS5Vn0UQ9HtOCNGa-n-bokIq5hBjUEwyW7n7BmUElvKyoKK8nf/pubembed?start=true&loop=true&delayms=5000",
-    "AppStore": ""
+    "AppStore": "",
+    "isProduct": false
   },
   {
     "Title": "Marcy Run",
     "Embed link": "https://marcyrun.top/",
     "Website": "https://marcyrun.top/",
     "Screenshot": "../assets/marcy-run.avif",
-    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": false,
     "Technologies": [
@@ -205,14 +250,18 @@
     "Description": "Click the screen and hit Space to start! Marcy Run is an endless-runner front end game. The tech stack for Marcy Run includes React for the user interface, Howler.js for implementing dynamic audio playback, and Framer Motion for smooth animations and transitions. I illustrated the characters assets using Adobe Creative Suite, and composed and produced the original theme music using Logic Pro X.",
     "GithubRepoURL": "https://github.com/Rafibarides/marcy-run-2025",
     "Presentation": "",
-    "AppStore": ""
+    "AppStore": "",
+    "isProduct": false
   },
   {
     "Title": "Gelt Capital",
     "Embed link": "http://geltcapitalusa.com/",
     "Website": "http://geltcapitalusa.com/",
     "Screenshot": "../assets/GeltCapital.avif",
-    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": true,
     "Technologies": [
@@ -227,14 +276,18 @@
     "Description": "Developed with React, this website is for Gelt Capital, a leading fintech firm in the funding space, delivering seamless, high-performance tools for investors and businesses alike. The site blends modern UI design with robust infrastructure to streamline capital management, optimize deal flow, and provide real-time insights\u2014all while maintaining enterprise-grade security and scalability",
     "GithubRepoURL": "https://github.com/capital-firm-rbm/gelt-equity",
     "Presentation": "",
-    "AppStore": ""
+    "AppStore": "",
+    "isProduct": false
   },
   {
     "Title": "Communitree",
     "Embed link": "",
     "Website": "",
     "Screenshot": "../assets/Communitree.avif",
-    "ScreenshotDimensions": {"width": 1200, "height": 800},
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": false,
     "Technologies": [
@@ -252,14 +305,18 @@
     "Description": "Communitree is a platform working to foster real-life interactions, building community through sustainability. We began by designing an Entity-Relationship Diagram (ERD) and creating PostgreSQL tables to support the full stack application. A React-based community forum was built to efficiently collect and store user and post data in SQL. The project involved interacting with third-party APIs and libraries to display location data, ensure accessibility, and apply dynamic styling. Consistent visual elements and designs were crafted using Figma, Adobe Creative Suite, and Linearity. Additionally, a Content Delivery Network (CDN) was implemented with Cloudflare to enhance site performance and reduce load times.",
     "GithubRepoURL": "https://github.com/Green-Guild/communiTree",
     "Presentation": "https://docs.google.com/presentation/d/e/2PACX-1vSTGV5VvIgVwZQDzd-1TXW7mZcpT9H95G-Itlj6QiqTk-CpeRSuD-pk52jk05CSNU7PlpgmKjCrKN7q/pubembed?start=true&loop=true&delayms=3000",
-    "AppStore": ""
+    "AppStore": "",
+    "isProduct": false
   },
   {
     "Title": "Navara Behavioral Group",
     "Embed link": "",
     "Website": "https://navarabehavioralGroup.com",
     "Screenshot": "../assets/navara1.avif",
-    "ScreenshotDimensions": { "width": 1200, "height": 800 },
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": true,
     "Technologies": [
@@ -270,44 +327,59 @@
       "UI/UX",
       "Figma",
       "Adobe CC",
-      "CMS",
-      "Accessibility"
+      "CMS"
     ],
     "Description": "Navarabg is a mental health diagnostics platform designed to empower patients through clear digital access. I built the full web UI, a CMS for clinic staff, and a secure client portal for patient interactions.",
     "GithubRepoURL": "",
     "Presentation": "",
     "AppStore": "",
     "CaseStudy": {
-      "Navarabg – Mental Health Diagnostics Platform": {
+      "Navarabg \u2013 Mental Health Diagnostics Platform": {
         "Project Overview": "Navarabg is a mental health diagnostics clinic focused on providing accessible care through modern technology. My goal was to design a clean, intuitive, and comprehensive digital experience that supports patients in managing their mental health needs with dignity and ease."
       },
       "Problem": "Patients navigating mental health care often struggle to find centralized, clear information. Refill requests, scheduling, and program access were previously handled through fragmented or outdated systems, leading to confusion and administrative overload.",
       "My Solution": "I designed a centralized digital hub that allows patients to securely manage their mental health needs. This includes a clean UI, a staff-friendly CMS, and a portal for requests, scheduling, and resources.",
       "Target Personas": "<ul><li>Patients seeking discreet, efficient mental health services</li><li>Clinic administrators needing a reliable backend for requests and content</li><li>Support groups or educators looking for program visibility and outreach</li></ul>",
       "Key Features": "<ul><li>Homepage with intuitive navigation to diagnostics, programs, and FAQs</li><li>Client portal with refill request and appointment flows</li><li>Dynamic CMS allowing staff to update site content without code</li><li>Form system with backend logic for referrals and secure submissions</li><li>WCAG-compliant, mobile-first design with dark mode support</li></ul>",
-      "Color Palette": ["#1B3B62", "#1A2A40", "#CBD9C5", "#F2F2F2", "#595959"],
+      "Color Palette": [
+        "#1B3B62",
+        "#1A2A40",
+        "#CBD9C5",
+        "#F2F2F2",
+        "#595959"
+      ],
       "Iterative Design": "I prototyped multiple flows and tested with mock users to ensure clarity and trust. I paid particular attention to visual hierarchy, accessibility for users with cognitive challenges, and intuitive mobile usability.",
       "Assets": {
-        "Vertical": ["../assets/navara_vert1.avif", "../assets/navara_vert2.avif", "../assets/navara_vert3.avif"],
-        "Horizontal": ["../assets/navara2.avif", "../assets/navara3.avif"]
+        "Vertical": [
+          "../assets/navara_vert1.avif",
+          "../assets/navara_vert2.avif",
+          "../assets/navara_vert3.avif"
+        ],
+        "Horizontal": [
+          "../assets/navara2.avif",
+          "../assets/navara3.avif"
+        ]
       },
       "Results": "<ul><li>Reduction in email-based refill requests thanks to streamlined portal</li><li>Higher patient satisfaction with digital experience based on informal interviews</li><li>Staff can now post updates and program info without developer support</li><li>Improved appointment booking flow and mobile experience for patients</li></ul>",
-      "Why It Matters": "Mental health care is already daunting—technology shouldn’t add friction. This platform helps patients feel in control while giving administrators a scalable, modern toolkit. By prioritizing clarity and care, we help make healthcare feel human."
-    }
+      "Why It Matters": "Mental health care is already daunting\u2014technology shouldn\u2019t add friction. This platform helps patients feel in control while giving administrators a scalable, modern toolkit. By prioritizing clarity and care, we help make healthcare feel human."
+    },
+    "isProduct": false
   },
   {
     "Title": "Media Downloader",
     "Embed link": "",
     "Website": "",
     "Screenshot": "../assets/MD1.jpg",
-    "ScreenshotDimensions": { "width": 1200, "height": 800 },
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": true,
     "Technologies": [
       "Electron",
       "React",
       "Javascript",
-      "FFmpeg",
       "UI/UX",
       "Adobe CC",
       "Figma"
@@ -318,35 +390,52 @@
     "AppStore": "",
     "CaseStudy": {
       "A Reliable Tool for Video Editors": {
-        "Project Overview": "As a video editor working on documentaries and media-heavy projects, I’ve struggled for years with broken, ad-infested, and technically limited media downloaders. Most fall short—lacking support for professional formats, constantly going down, and exposing users to unsafe content. Media Downloader was built to fix that."
+        "Project Overview": "As a video editor working on documentaries and media-heavy projects, I\u2019ve struggled for years with broken, ad-infested, and technically limited media downloaders. Most fall short\u2014lacking support for professional formats, constantly going down, and exposing users to unsafe content. Media Downloader was built to fix that."
       },
-      "Problem": "Most downloaders cap resolution at 1080p, struggle with audio/video merges, and bombard users with NSFW ads. YouTube encodes 4K in AV1 or VP9—codecs not natively supported in MP4—leading to separate files or limited quality in many tools.",
+      "Problem": "Most downloaders cap resolution at 1080p, struggle with audio/video merges, and bombard users with NSFW ads. YouTube encodes 4K in AV1 or VP9\u2014codecs not natively supported in MP4\u2014leading to separate files or limited quality in many tools.",
       "My Solution": "I built a fully self-contained Electron app with a gorgeous UI and a clean user experience. It supports 4K MOV output using AV1 or VP9 video codecs, quick preview trimming, and in-app search with smart queueing.",
       "Target Personas": "<ul><li>Video editors seeking reference footage in full quality</li><li>Creators avoiding sketchy download tools</li><li>Documentary teams needing archival clips and interview cuts</li></ul>",
       "Key Features": "<ul><li>4K MOV wrapping with QuickTime-compatible containers</li><li>Trim function to extract segments from long videos</li><li>In-app YouTube search and queue management</li><li>Dark and light modes with elegant, contrast-friendly design</li><li>Desktop compatibility for Intel and Apple Silicon Macs</li></ul>",
-      "Color Palette": ["#2F3159", "#515373", "#E9E9F2", "#FFFFFF", "#F25835"],
+      "Color Palette": [
+        "#2F3159",
+        "#515373",
+        "#E9E9F2",
+        "#FFFFFF",
+        "#F25835"
+      ],
       "Iterative Design": "I tested layout versions with creators and edited theme shadows, CTA placements, and iconography. Emphasis was placed on clarity, especially for the trim tool and download status updates.",
       "Assets": {
         "Vertical": [],
-        "Horizontal": ["../assets/MD1.avif", "../assets/MD2.avif", "../assets/MD3.avif", "../assets/MD4.avif", "../assets/MD5.avif", "../assets/MD6.avif", "../assets/MD7.avif"]
+        "Horizontal": [
+          "../assets/MD1.avif",
+          "../assets/MD2.avif",
+          "../assets/MD3.avif",
+          "../assets/MD4.avif",
+          "../assets/MD5.avif",
+          "../assets/MD6.avif",
+          "../assets/MD7.avif"
+        ]
       },
       "Results": "<ul><li>Became my personal go-to downloader for 4K reference clips</li><li>Adopted by several other editors and film students</li><li>Zero dependency on external installs or risky web tools</li><li>Consistent successful downloads with clean playback in QuickTime</li></ul>",
       "Why It Matters": "Professionals need tools that respect their time, security, and quality standards. This app removes friction, supports creative workflows, and avoids the chaos of the current media download landscape."
-    }
+    },
+    "isProduct": true
   },
   {
     "Title": "Arcade",
     "Embed link": "",
     "Website": "",
     "Screenshot": "../assets/arcade1.avif",
-    "ScreenshotDimensions": { "width": 1200, "height": 800 },
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": true,
     "Technologies": [
       "JUCE",
       "C++",
       "DSP",
-      "VST",
       "UI/UX",
       "Adobe CC",
       "Figma"
@@ -356,36 +445,47 @@
     "Presentation": "",
     "AppStore": "",
     "CaseStudy": {
-      "Arcade – A Spatial Saturation Plugin for Modern Producers": {
-        "Project Overview": "Arcade is a C++ audio plugin built with the JUCE framework, designed to push spatial sound design into bold, creative territory. Built for compatibility across all major DAWs as a VST, Arcade lets users saturate the left and right ears independently—opening up a whole new dimension of mix depth and spatial artistry."
+      "Arcade \u2013 A Spatial Saturation Plugin for Modern Producers": {
+        "Project Overview": "Arcade is a C++ audio plugin built with the JUCE framework, designed to push spatial sound design into bold, creative territory. Built for compatibility across all major DAWs as a VST, Arcade lets users saturate the left and right ears independently\u2014opening up a whole new dimension of mix depth and spatial artistry."
       },
-      "Problem": "Most saturation plugins process the stereo field as a single unified signal. But audio design is increasingly spatial and immersive. Traditional tools lacked the flexibility to sculpt sound independently across left and right channels—especially without introducing phasing or CPU load.",
+      "Problem": "Most saturation plugins process the stereo field as a single unified signal. But audio design is increasingly spatial and immersive. Traditional tools lacked the flexibility to sculpt sound independently across left and right channels\u2014especially without introducing phasing or CPU load.",
       "My Solution": "I built Arcade: a spatial saturation plugin with dual-ear control. Designed for subtle stereo texture and bold distortion alike, it gives music creators the power to bend space, not just sound.",
       "Target Personas": "<ul><li>Electronic producers looking for psychoacoustic width</li><li>Vocalists seeking character and clarity across the stereo field</li><li>Sound designers experimenting with ear-bending FX</li></ul>",
       "Key Features": "<ul><li><strong>Dual-Channel Saturation</strong>: Independently process left and right stereo channels</li><li><strong>Spatial FX Engine</strong>: Adds stereo movement and dynamic phase shifts</li><li><strong>Custom UI</strong>: Circular glowing knobs and animated feedback built in JUCE</li><li><strong>Optimized DSP Core</strong>: Low latency, real-time automation, and CPU efficiency</li></ul>",
-      "Color Palette": ["#090126", "#834BF1", "#08C8BA", "#F26513", "#14B6FF"],
-      "Iterative Design": "Using JUCE’s OpenGL-backed rendering and custom knob components, I refined UI polish through multiple iterations, adjusting saturation curves, phase behavior, and visual dynamics for clarity and feel. Feedback from beta testers guided improvements in control mapping and output monitoring.",
+      "Color Palette": [
+        "#090126",
+        "#834BF1",
+        "#08C8BA",
+        "#F26513",
+        "#14B6FF"
+      ],
+      "Iterative Design": "Using JUCE\u2019s OpenGL-backed rendering and custom knob components, I refined UI polish through multiple iterations, adjusting saturation curves, phase behavior, and visual dynamics for clarity and feel. Feedback from beta testers guided improvements in control mapping and output monitoring.",
       "Assets": {
         "Vertical": [],
-        "Horizontal": ["../assets/arcade2.avif"]
+        "Horizontal": [
+          "../assets/arcade2.avif"
+        ]
       },
       "Results": "<ul><li>Now used by multiple producers for vocals, synths, and buses</li><li>Universally compatible across DAWs and platforms</li><li>Offers spatial width without needing complex stereo chains</li><li>Replaces several plugins in a typical mix chain with one unit</li></ul>",
       "Why It Matters": "Arcade empowers audio creators with tactile spatial control over saturation. In a world moving toward immersive audio, this plugin gives you spatial analog-style color that lives and breathes across the mix field."
-    }
+    },
+    "isProduct": true
   },
   {
     "Title": "RevSat",
     "Embed link": "",
     "Website": "",
     "Screenshot": "../assets/Render 1.avif",
-    "ScreenshotDimensions": { "width": 1200, "height": 800 },
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
     "ScreenshotFormat": "avif",
     "useScreenshot": true,
     "Technologies": [
       "JUCE",
       "C++",
       "DSP",
-      "VST",
       "UI/UX",
       "Adobe CC",
       "Figma"
@@ -395,21 +495,30 @@
     "Presentation": "",
     "AppStore": "",
     "CaseStudy": {
-      "RevSat – Vintage Warm Reverb with Saturated Character": {
+      "RevSat \u2013 Vintage Warm Reverb with Saturated Character": {
         "Project Overview": "RevSat is a reverb plugin built in C++ using the JUCE framework, designed to deliver vintage character and analog-style warmth. Unlike sterile digital verbs, RevSat blends reverb and saturation in a single, silky signal path, ideal for those chasing texture, presence, and nostalgic bloom in their mixes."
       },
       "Problem": "As a producer, I often layered tape-style saturation over verbs to get warmth. RevSat fuses those two workflows, giving lush tails and sweetened harmonics all in one.",
       "My Solution": "A custom C++ VST plugin with modeled early reflections, built-in saturation, and a dead-simple UI. RevSat focuses on feel: analog-style warmth, easy settings, and emotional tone.",
       "Target Personas": "<ul><li>Vocal producers seeking reverb with warmth and attitude</li><li>Guitarists and keys players chasing vintage plate or spring vibes</li><li>Electronic artists wanting analog coloration without CPU-heavy chains</li></ul>",
       "Key Features": "<ul><li><strong>Vintage-Modeled Reverb Tail</strong>: Modeled on early analog/digital units</li><li><strong>Built-in Saturation</strong>: Adds soft harmonic drive to reverb tail</li><li><strong>One-Knob Simplicity</strong>: Quick results, minimal distraction</li><li><strong>Soft UI Aesthetic</strong>: Analog-inspired visual feel with creamy UI tones</li></ul>",
-      "Color Palette": ["#BFAC95", "#F2EAE4", "#F26F63", "#D96F66", "#F2A29B"],
+      "Color Palette": [
+        "#BFAC95",
+        "#F2EAE4",
+        "#F26F63",
+        "#D96F66",
+        "#F2A29B"
+      ],
       "Iterative Design": "From initial DSP prototyping to final UI polish, I focused on reducing decision fatigue. I tuned saturation curves by ear, tested across multiple DAWs, and iterated on the visual identity to evoke warmth without clutter.",
       "Assets": {
         "Vertical": [],
-        "Horizontal": ["../assets/Render 1.avif"]
+        "Horizontal": [
+          "../assets/Render 1.avif"
+        ]
       },
-      "Results": "<ul><li>Praised by users for sounding “like reverb recorded to tape”</li><li>Became a staple for warming up vocals and synths</li><li>Replaces the need to chain saturation after reverb in many mixes</li></ul>",
+      "Results": "<ul><li>Praised by users for sounding \u201clike reverb recorded to tape\u201d</li><li>Became a staple for warming up vocals and synths</li><li>Replaces the need to chain saturation after reverb in many mixes</li></ul>",
       "Why It Matters": "RevSat makes reverb feel emotional. It leans into vibe, delivering nostalgia, texture, and warmth with every tail."
-    }
-  }   
+    },
+    "isProduct": true
+  }
 ]
