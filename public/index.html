@@ -5,6 +5,27 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio</title>
+    <script type="text/javascript">
+      // Check if we have a redirect from 404.html
+      (function(l) {
+        if (l.search && l.search[1] === '/' ) {
+          var decoded = decodeURIComponent(l.search.slice(1));
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded.substring(1) + l.hash
+          );
+        }
+        
+        // Handle sessionStorage redirect
+        if (sessionStorage.redirect) {
+          var redirect = sessionStorage.redirect;
+          delete sessionStorage.redirect;
+          var url = new URL(redirect);
+          if (url.pathname !== '/') {
+            window.history.replaceState(null, null, url.pathname + url.search + url.hash);
+          }
+        }
+      }(window.location))
+    </script>
   </head>
   <body>
     <div id="root"></div>

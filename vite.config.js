@@ -1,20 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { copyFileSync } from 'fs'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    {
-      name: 'copy-404',
-      writeBundle() {
-        // Copy 404.html to dist after build for GitHub Pages SPA routing
-        copyFileSync('public/404.html', 'dist/404.html')
-      }
-    }
-  ],
+  plugins: [react()],
+  base: '/',
   build: {
+    outDir: 'dist',
     rollupOptions: {
       output: {
         manualChunks: {
@@ -24,7 +16,10 @@ export default defineConfig({
         }
       }
     },
-    chunkSizeWarningLimit: 800 // Increased from default 500
+    chunkSizeWarningLimit: 800, // Increased from default 500
+    assetsDir: 'assets',
+    // Copy CNAME file to dist
+    copyPublicDir: true
   },
   server: {
     // Configure dev server for SPA routing
@@ -33,5 +28,6 @@ export default defineConfig({
   preview: {
     // Configure preview server for SPA routing
     historyApiFallback: true
-  }
+  },
+  publicDir: 'public'
 })
