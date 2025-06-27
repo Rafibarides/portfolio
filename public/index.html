@@ -23,8 +23,14 @@
           var decoded = l.search.slice(1).split('&').map(function(s) { 
             return s.replace(/~and~/g, '&')
           }).join('?');
+          
+          // Extract the path part (everything before the first '&' or the whole string if no '&')
+          var pathAndQuery = decoded.split('?');
+          var path = pathAndQuery[0]; // This is our route like "/software"
+          var query = pathAndQuery[1] ? '?' + pathAndQuery[1] : ''; // Preserve any actual query params
+          
           window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
+              l.pathname.slice(0, -1) + path + query + l.hash
           );
         }
       }(window.location))
