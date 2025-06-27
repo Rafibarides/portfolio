@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/', // Ensure proper base path for GitHub Pages with custom domain
   build: {
     rollupOptions: {
       output: {
@@ -15,8 +14,7 @@ export default defineConfig({
         }
       }
     },
-    chunkSizeWarningLimit: 800, // Increased from default 500
-    outDir: 'dist', // Ensure output directory is correctly set
+    chunkSizeWarningLimit: 800 // Increased from default 500
   },
   server: {
     // Configure dev server for SPA routing
