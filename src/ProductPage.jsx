@@ -163,19 +163,8 @@ const ProductCard = ({ product, index, onOpenCaseStudy }) => {
         position: 'relative',
         backgroundColor: 'rgba(40, 40, 40, 0.5)',
       }}>
-        {/* Render embedded content or screenshot based on project settings */}
-        {product["Embed link"] && !product.useScreenshot ? (
-          <iframe
-            src={product["Embed link"]}
-            title={product.Title}
-            style={{
-              width: '100%',
-              height: '100%',
-              border: 'none',
-              objectFit: 'cover',
-            }}
-          />
-        ) : product.Screenshot ? (
+        {/* Always use screenshots for consistent card layout */}
+        {product.Screenshot ? (
           <motion.img
             src={product.Screenshot}
             alt={product.Title}
