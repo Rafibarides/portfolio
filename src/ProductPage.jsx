@@ -1300,7 +1300,7 @@ const ProductPage = () => {
                     fontSize: '1rem',
                     margin: 0,
                   }}>
-                    My first collaborative project during The Marcy Lab School, where I learned the fundamentals of team development and React.
+                    First cross-functional application built on a team during my time at Marcy Lab. I worked defining user stories and roadmap priorities. Learned to balance user needs with technical constraints in an agile environment.
                   </p>
                 </div>
               </motion.div>
@@ -1402,7 +1402,7 @@ const ProductPage = () => {
                     fontSize: '1rem',
                     margin: 0,
                   }}>
-                    My first iOS app built with React Native, teaching me mobile development and the intricacies of cross-platform design.
+                    Scaled to mobile-first product strategy. Conducted user research to define target personas, prioritized accessibility features, and shipped responsive design systems for iOS.
                   </p>
                 </motion.div>
               </motion.div>
@@ -1504,7 +1504,7 @@ const ProductPage = () => {
                     fontSize: '1rem',
                     margin: 0,
                   }}>
-                    My first cross-platform application that shipped to the App Store, marking my transition into full-stack product development.
+                    Developed go-to-market strategy for App Store launch. Owned product roadmap from wireframes to high-fidelity prototypes, tracking KPIs and iterating based on user feedback metrics.
                   </p>
                 </motion.div>
               </motion.div>
@@ -1606,7 +1606,7 @@ const ProductPage = () => {
                     fontSize: '1rem',
                     margin: 0,
                   }}>
-                    Explored C++ and JUCE framework to create professional audio plugins, expanding into lower-level programming and DSP.
+                    Identified market gap through user research and analysis. Designed interaction patterns for professional audio workflows, balancing user-centered design with technical feasibility.
                   </p>
                 </motion.div>
               </motion.div>
@@ -1708,7 +1708,7 @@ const ProductPage = () => {
                     fontSize: '1rem',
                     margin: 0,
                   }}>
-                    My latest desktop application built with Electron, combining web technologies with native functionality for content creators.
+                    Led end-to-end product strategy for professional creators. Conducted journey mapping and usability testing, prioritizing feature roadmap based on market research.
                   </p>
                 </motion.div>
               </motion.div>
