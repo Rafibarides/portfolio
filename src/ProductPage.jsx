@@ -163,19 +163,46 @@ const ProductCard = ({ product, index, onOpenCaseStudy }) => {
         position: 'relative',
         backgroundColor: 'rgba(40, 40, 40, 0.5)',
       }}>
-        <motion.img
-          src={product.Screenshot}
-          alt={product.Title}
-          style={{
+        {/* Render embedded content or screenshot based on project settings */}
+        {product["Embed link"] && !product.useScreenshot ? (
+          <iframe
+            src={product["Embed link"]}
+            title={product.Title}
+            style={{
+              width: '100%',
+              height: '100%',
+              border: 'none',
+              objectFit: 'cover',
+            }}
+          />
+        ) : product.Screenshot ? (
+          <motion.img
+            src={product.Screenshot}
+            alt={product.Title}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+            animate={{
+              scale: isHovered ? 1.1 : 1,
+            }}
+            transition={{ duration: 0.3 }}
+          />
+        ) : (
+          <div style={{
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
-          }}
-          animate={{
-            scale: isHovered ? 1.1 : 1,
-          }}
-          transition={{ duration: 0.3 }}
-        />
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+            color: 'rgba(255, 255, 255, 0.7)',
+            fontSize: '0.9rem',
+          }}>
+            No preview available
+          </div>
+        )}
         
         {/* Overlay with app store badges */}
         <div style={{
