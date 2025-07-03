@@ -460,7 +460,7 @@ const Portfolio = () => {
           }}
           transition={{ duration: 0.3 }}
           onClick={toggleMobileMenu}
-          whileHover={{ scale: 1.1 }}
+          // Remove hover effects to prevent double-tap on mobile
           whileTap={{ scale: 0.9 }}
         >
           <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} size="lg" />
@@ -489,10 +489,13 @@ const Portfolio = () => {
           {navItems.map((item, index) => (
             <motion.div
               key={index}
-              whileHover={{ 
-                backgroundColor: 'rgba(255, 255, 255, 0.1)', 
-                opacity: 1 
-              }}
+              // Remove whileHover on mobile to fix double-tap issue
+              {...(!isMobile && {
+                whileHover: { 
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+                  opacity: 1 
+                }
+              })}
               style={styles.navLink}
               onClick={() => {
                 handleNavItemClick(item, index);

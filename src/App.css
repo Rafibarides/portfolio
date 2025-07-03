@@ -57,3 +57,43 @@ body {
   width: 0;
   height: 0;
 }
+
+/* Prevent double-tap issues on mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  /* Disable hover effects on touch devices */
+  *:hover {
+    /* Reset any hover styles that might interfere with touch */
+    background-color: inherit !important;
+    transform: none !important;
+    opacity: inherit !important;
+    box-shadow: inherit !important;
+  }
+  
+  /* Improve touch targets */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Prevent text selection on interactive elements */
+  button, a, [role="button"], .clickable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
+
+/* General improvements for mobile touch */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Fast click handling */
+a, button, [role="button"], .clickable {
+  touch-action: manipulation;
+}

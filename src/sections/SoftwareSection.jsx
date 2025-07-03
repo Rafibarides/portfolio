@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { palette } from '../utils/colors';
 import softwareData from '../../Json/SoftwareSection.json';
 import SoftwareDisplayPage from '../SoftwareDisplayPage';
@@ -15,7 +15,7 @@ const SoftwareSection = ({ hasScrolled = false }) => {
   const pillsRef = useRef(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const titleRef = useRef(null);
-  const isPillsInView = useInView(pillsRef, { once: false, amount: 0.3 });
+  const isPillsInView = useInView(pillsRef, { once: true, amount: 0.3 });
   const isTitleInView = useInView(titleRef, { once: false, amount: 0.3 });
   const [hoveredPill, setHoveredPill] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -29,16 +29,10 @@ const SoftwareSection = ({ hasScrolled = false }) => {
       opacity: 1,
       y: 0,
       transition: {
-        staggerChildren: 0.1,
-        duration: 0.5,
+        duration: 0.6,
         ease: "easeOut"
       }
     }
-  };
-
-  const pillItemAnimation = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
   };
 
   const titleAnimation = {
@@ -667,7 +661,7 @@ const SoftwareSection = ({ hasScrolled = false }) => {
 
   // Combine scroll state with in-view detection
   const shouldShowTitle = hasScrolled && isTitleInView;
-  const shouldShowPills = hasScrolled && isPillsInView;
+  const shouldShowPills = isPillsInView; // Pills fade in once when first viewed
 
   return (
     <section 
@@ -725,9 +719,8 @@ const SoftwareSection = ({ hasScrolled = false }) => {
           variants={pillsAnimation}
         >
           {allTechnologies.map((tech, index) => (
-            <motion.div
+            <div
               key={index}
-              variants={pillItemAnimation}
               style={{
                 ...styles.filterPill,
                 ...(selectedTechnologies.includes(tech) ? styles.activePill : styles.inactivePill),
@@ -736,11 +729,9 @@ const SoftwareSection = ({ hasScrolled = false }) => {
               onClick={() => filterProjects(tech)}
               onMouseEnter={() => setHoveredPill(tech)}
               onMouseLeave={() => setHoveredPill(null)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
             >
               {tech}
-            </motion.div>
+            </div>
           ))}
         </motion.div>
       )}
@@ -752,10 +743,12 @@ const SoftwareSection = ({ hasScrolled = false }) => {
             key={index}
             style={styles.card}
             className="software-card"
-            whileHover={{ 
-              scale: 1.02,
-              y: -8
-            }}
+            {...(!isMobile && {
+              whileHover: { 
+                scale: 1.02,
+                y: -8
+              }
+            })}
             transition={{
               type: "spring",
               stiffness: 400,
@@ -996,27 +989,7 @@ const SoftwareSection = ({ hasScrolled = false }) => {
                   </a>
                 )}
                 
-                {/* For other projects with websites, don't show Demo button since title is clickable */}
-                {false && project.Title !== "Weather Now" && 
-                 project.Title !== "Communitree" && 
-                 project.Website && ( // This will never render due to the false condition
-                  <a 
-                    href={project.Website} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    style={styles.linkButton}
-                    onMouseEnter={(e) => {
-                      e.target.style.backgroundColor = '#1e554c';
-                      e.target.style.transform = 'scale(1.05)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.backgroundColor = palette.accent;
-                      e.target.style.transform = 'scale(1)';
-                    }}
-                  >
-                    Demo
-                  </a>
-                )}
+                {/* Demo button is handled above for specific projects, title is clickable for others */}
                 
                 {project.Presentation && (
                   <a 
@@ -1072,7 +1045,6 @@ const SoftwareSection = ({ hasScrolled = false }) => {
             </p>
             <motion.button
               style={mobilePopupStyles.button}
-              whileHover={{ scale: 1.05, backgroundColor: '#1e554c' }}
               whileTap={{ scale: 0.98 }}
               onClick={() => setShowMobilePopup(false)}
             >
@@ -1102,6 +1074,33 @@ const SoftwareSection = ({ hasScrolled = false }) => {
         @supports (-webkit-appearance: none) {
           .software-card {
             will-change: transform, box-shadow;
+          }
+        }
+        
+        /* Prevent hover effects on touch devices */
+        @media (hover: none) and (pointer: coarse) {
+          .software-card:hover {
+            box-shadow: none !important;
+            transform: none !important;
+          }
+          
+          * {
+            /* Disable all hover effects on touch devices */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+          
+          /* Re-enable text selection for necessary elements */
+          input, textarea, [contenteditable] {
+            -webkit-user-select: text;
+            -khtml-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
           }
         }
       `}</style>
