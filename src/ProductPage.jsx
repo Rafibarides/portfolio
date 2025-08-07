@@ -2,12 +2,58 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faApple, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faHeadphones, faGlobe, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { faHeadphones, faGlobe, faChevronDown, faChevronUp, faTimes } from '@fortawesome/free-solid-svg-icons';
 import ContactSection from './sections/ContactSection';
 import AboutMeModal from './AboutMeModal';
 import { ModalProvider } from './context/ModalContext';
 import { palette } from './utils/colors';
 import softwareData from '../Json/SoftwareSection.json';
+
+// Typewriter effect component
+const TypewriterText = ({ text, delay = 50, startDelay = 0 }) => {
+  const [displayText, setDisplayText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const startTimeout = setTimeout(() => {
+      setStarted(true);
+    }, startDelay);
+
+    return () => clearTimeout(startTimeout);
+  }, [startDelay]);
+
+  useEffect(() => {
+    if (!started) return;
+
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, delay);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text, delay, started]);
+
+  return (
+    <span>
+      {displayText}
+      {currentIndex < text.length && (
+        <motion.span
+          style={{
+            borderRight: '2px solid rgba(255, 255, 255, 0.7)',
+            marginLeft: '2px',
+          }}
+          animate={{ opacity: [1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+        >
+          
+        </motion.span>
+      )}
+    </span>
+  );
+};
 
 // Modified WelcomeSection for product page
 const ProductWelcomeSection = () => {
@@ -111,6 +157,7 @@ const ProductWelcomeSection = () => {
 // Product Card Component
 const ProductCard = ({ product, index, onOpenCaseStudy }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getTags = (product) => {
     const tags = [];
@@ -153,7 +200,13 @@ const ProductCard = ({ product, index, onOpenCaseStudy }) => {
       }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      onClick={() => onOpenCaseStudy(product)}
+      onClick={() => {
+        setIsLoading(true);
+        setTimeout(() => {
+          onOpenCaseStudy(product);
+          setIsLoading(false);
+        }, 300);
+      }}
     >
       {/* Thumbnail */}
       <div style={{
@@ -274,26 +327,64 @@ const ProductCard = ({ product, index, onOpenCaseStudy }) => {
           ))}
         </div>
 
-        {/* CTA Button */}
+        {        /* CTA Button */}
         <motion.button
           style={{
             width: '100%',
-            padding: '10px',
+            padding: '12px',
             backgroundColor: palette.accent,
             color: '#fff',
             border: 'none',
-            borderRadius: '6px',
+            borderRadius: '8px',
             fontWeight: 600,
             fontSize: '0.9rem',
             cursor: 'pointer',
+            background: `linear-gradient(135deg, ${palette.accent}, #029688)`,
+            position: 'relative',
+            overflow: 'hidden',
           }}
           whileHover={{ 
-            backgroundColor: '#029688',
             scale: 1.02,
+            boxShadow: '0 8px 25px rgba(3, 166, 150, 0.3)',
           }}
           whileTap={{ scale: 0.98 }}
+          transition={{ duration: 0.2 }}
         >
-          View Case Study →
+          <motion.div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '-100%',
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+            }}
+            animate={isHovered ? { left: '100%' } : { left: '-100%' }}
+            transition={{ duration: 0.5 }}
+          />
+          <span style={{ position: 'relative', zIndex: 1 }}>
+            {isLoading ? (
+              <motion.div
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                <div
+                  style={{
+                    width: '16px',
+                    height: '16px',
+                    border: '2px solid rgba(255,255,255,0.3)',
+                    borderTop: '2px solid #fff',
+                    borderRadius: '50%',
+                    animation: 'spin 1s linear infinite',
+                  }}
+                />
+                Loading...
+              </motion.div>
+            ) : (
+              'View Case Study →'
+            )}
+          </span>
         </motion.button>
       </div>
     </motion.div>
@@ -306,7 +397,26 @@ const ProductCard = ({ product, index, onOpenCaseStudy }) => {
 const CaseStudyModal = ({ product, onClose }) => {
   const [isCaseStudyExpanded, setIsCaseStudyExpanded] = useState(false);
   const [visibleSections, setVisibleSections] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRefs = useRef({});
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   if (!product || !product.CaseStudy) return null;
 
@@ -445,11 +555,11 @@ const CaseStudyModal = ({ product, onClose }) => {
               {value.Vertical && value.Vertical.length > 0 && (
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '20px',
+                  gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+                  gap: isMobile ? '15px' : '20px',
                   marginTop: '20px',
                   position: 'relative',
-                  padding: '20px',
+                  padding: isMobile ? '15px' : '20px',
                   borderRadius: '12px',
                   background: 'radial-gradient(circle at center, rgba(30, 30, 30, 0.5) 0%, rgba(30, 30, 30, 0.2) 60%, rgba(30, 30, 30, 0) 100%)',
                 }}>
@@ -476,8 +586,9 @@ const CaseStudyModal = ({ product, onClose }) => {
                           width: '100%',
                           height: 'auto',
                           display: 'block',
-                          objectFit: 'cover',
+                          objectFit: 'contain',
                           transition: 'transform 0.5s ease',
+                          backgroundColor: 'rgba(255, 255, 255, 0.02)',
                         }}
                         loading="lazy"
                       />
@@ -490,11 +601,11 @@ const CaseStudyModal = ({ product, onClose }) => {
               {value.Horizontal && value.Horizontal.length > 0 && (
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: '20px',
+                  gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+                  gap: isMobile ? '15px' : '20px',
                   marginTop: '20px',
                   position: 'relative',
-                  padding: '20px',
+                  padding: isMobile ? '15px' : '20px',
                   borderRadius: '12px',
                   background: 'radial-gradient(circle at center, rgba(30, 30, 30, 0.5) 0%, rgba(30, 30, 30, 0.2) 60%, rgba(30, 30, 30, 0) 100%)',
                 }}>
@@ -521,8 +632,9 @@ const CaseStudyModal = ({ product, onClose }) => {
                           width: '100%',
                           height: 'auto',
                           display: 'block',
-                          objectFit: 'cover',
+                          objectFit: 'contain',
                           transition: 'transform 0.5s ease',
+                          backgroundColor: 'rgba(255, 255, 255, 0.02)',
                         }}
                         loading="lazy"
                       />
@@ -576,40 +688,51 @@ const CaseStudyModal = ({ product, onClose }) => {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.85)',
-        backdropFilter: 'blur(8px)',
+        backgroundColor: isMobile ? '#000000' : 'rgba(0, 0, 0, 0.85)',
+        backdropFilter: isMobile ? 'none' : 'blur(8px)',
         zIndex: 999999,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-        padding: '20px',
+        alignItems: isMobile ? 'flex-start' : 'center',
+        padding: isMobile ? '0' : '20px',
         isolation: 'isolate',
+        overflowY: 'auto',
       }}
-      initial={{ opacity: 0 }}
+      initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      exit={isMobile ? { opacity: 1 } : { opacity: 0 }}
       onClick={onClose}
     >
       <motion.div
+        className={isMobile ? 'mobile-modal-content' : ''}
         style={{
-          backgroundColor: 'rgba(15, 15, 15, 0.95)',
-          borderRadius: '12px',
-          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
-          width: '90%',
-          maxWidth: '1000px',
-          maxHeight: '90vh',
+          backgroundColor: isMobile ? '#000000' : 'rgba(15, 15, 15, 0.95)',
+          background: isMobile ? '#000000' : 'rgba(15, 15, 15, 0.95)',
+          borderRadius: isMobile ? '0' : '12px',
+          boxShadow: isMobile ? 'none' : '0 10px 30px rgba(0, 0, 0, 0.5)',
+          width: isMobile ? '100vw' : '90%',
+          maxWidth: isMobile ? 'none' : '1000px',
+          minHeight: isMobile ? 'auto' : 'auto',
+          maxHeight: isMobile ? 'auto' : '90vh',
           overflow: 'auto',
-          position: 'relative',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          position: isMobile ? 'fixed' : 'relative',
+          top: isMobile ? '0' : 'auto',
+          left: isMobile ? '0' : 'auto',
+          border: isMobile ? 'none' : '1px solid rgba(255, 255, 255, 0.1)',
           fontFamily: "'Poppins', sans-serif",
           display: 'flex',
           flexDirection: 'column',
           zIndex: 1000000,
         }}
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        transition={{ type: "spring", damping: 20 }}
+        initial={isMobile ? { opacity: 1, y: 0 } : { scale: 0.8, opacity: 0, y: 50 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={isMobile ? { opacity: 1, y: 0 } : { scale: 0.8, opacity: 0, y: 50 }}
+        transition={isMobile ? { duration: 0 } : { 
+          type: "spring", 
+          damping: 25,
+          stiffness: 300,
+          duration: 0.4
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -617,27 +740,35 @@ const CaseStudyModal = ({ product, onClose }) => {
           onClick={onClose}
           style={{
             position: 'absolute',
-            top: '15px',
-            right: '15px',
-            background: 'none',
+            top: isMobile ? '20px' : '15px',
+            right: isMobile ? '20px' : '15px',
+            background: isMobile ? 'rgba(0, 0, 0, 0.8)' : 'none',
             border: 'none',
             color: '#fff',
-            fontSize: '24px',
+            fontSize: isMobile ? '28px' : '24px',
             cursor: 'pointer',
-            zIndex: 1,
+            zIndex: 10,
+            width: isMobile ? '44px' : 'auto',
+            height: isMobile ? '44px' : 'auto',
+            borderRadius: isMobile ? '50%' : '0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backdropFilter: isMobile ? 'blur(10px)' : 'none',
           }}
         >
-          ×
+          <FontAwesomeIcon icon={faTimes} />
         </button>
 
         {/* Header */}
         <div style={{
-          padding: '40px 40px 30px',
+          padding: isMobile ? '60px 20px 30px' : '40px 40px 30px',
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-          background: `linear-gradient(135deg, rgba(3, 166, 150, 0.1), rgba(3, 166, 150, 0.05))`,
+          background: isMobile ? '#000000' : `linear-gradient(135deg, rgba(3, 166, 150, 0.1), rgba(3, 166, 150, 0.05))`,
+          backgroundColor: isMobile ? '#000000' : 'transparent',
         }}>
           <h1 style={{
-            fontSize: '3rem',
+            fontSize: isMobile ? '2rem' : '3rem',
             margin: '0 0 15px 0',
             color: palette.text,
             fontFamily: "'Poppins', sans-serif",
@@ -645,15 +776,6 @@ const CaseStudyModal = ({ product, onClose }) => {
           }}>
             {product.Title}
           </h1>
-          
-          <p style={{
-            color: 'rgba(255, 255, 255, 0.8)',
-            fontSize: '1.1rem',
-            margin: '0 0 20px 0',
-            maxWidth: '600px',
-          }}>
-            {product.Description}
-          </p>
 
           {/* Technology Tags */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
@@ -675,31 +797,39 @@ const CaseStudyModal = ({ product, onClose }) => {
           </div>
           
           {/* Links */}
-          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+          <div style={{ 
+            display: 'flex', 
+            gap: '15px', 
+            flexWrap: 'wrap',
+            justifyContent: isMobile ? 'center' : 'flex-start',
+          }}>
             {product.AppStore && (
-              <a
+              <motion.a
                 href={product.AppStore}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  padding: '10px 20px',
+                  padding: isMobile ? '12px 24px' : '10px 20px',
                   backgroundColor: palette.accent,
                   color: '#fff',
                   textDecoration: 'none',
                   borderRadius: '8px',
-                  fontSize: '0.9rem',
+                  fontSize: isMobile ? '1rem' : '0.9rem',
                   fontWeight: 600,
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
+                  minHeight: '44px',
                 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <FontAwesomeIcon icon={faApple} />
-                App Store
-              </a>
+                Download on App Store
+              </motion.a>
             )}
-            {product.Website && (
-              <a
+            {!isMobile && product.Website && (
+              <motion.a
                 href={product.Website}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -715,13 +845,15 @@ const CaseStudyModal = ({ product, onClose }) => {
                   alignItems: 'center',
                   gap: '8px',
                 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <FontAwesomeIcon icon={faGlobe} />
                 Website
-              </a>
+              </motion.a>
             )}
-            {product.GithubRepoURL && (
-              <a
+            {!isMobile && product.GithubRepoURL && (
+              <motion.a
                 href={product.GithubRepoURL}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -737,37 +869,30 @@ const CaseStudyModal = ({ product, onClose }) => {
                   alignItems: 'center',
                   gap: '8px',
                 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <FontAwesomeIcon icon={faGithub} />
                 GitHub
-              </a>
+              </motion.a>
             )}
           </div>
         </div>
 
         {/* Content */}
         <div style={{ 
-          padding: '40px 80px',
+          padding: isMobile ? '20px' : '40px 80px',
           color: palette.text,
           overflow: 'visible',
           width: '100%',
           boxSizing: 'border-box',
+          backgroundColor: isMobile ? '#000000' : 'transparent',
         }}>
-          <h1 style={{
-            fontSize: '2.5rem',
-            marginBottom: '40px',
-            textAlign: 'center',
-            color: palette.text,
-            fontFamily: "'Poppins', sans-serif",
-          }}>
-            {product.Title}
-          </h1>
-          
           {/* Preview (Screenshot) */}
           <div style={{
             width: '100%',
-            height: '500px',
-            marginBottom: '50px',
+            height: isMobile ? '250px' : '500px',
+            marginBottom: isMobile ? '30px' : '50px',
             overflow: 'hidden',
             borderRadius: '8px',
             border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -779,7 +904,8 @@ const CaseStudyModal = ({ product, onClose }) => {
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
+                objectFit: 'contain',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
               }}
             />
           </div>
@@ -896,102 +1022,102 @@ const CaseStudyModal = ({ product, onClose }) => {
             display: 'flex',
             gap: '15px',
             flexWrap: 'wrap',
-            marginTop: '50px',
+            marginTop: isMobile ? '30px' : '50px',
+            justifyContent: isMobile ? 'center' : 'flex-start',
           }}>
-            {product.GithubRepoURL && (
-              <a 
+            {product.AppStore && (
+              <motion.a 
+                href={product.AppStore} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{
+                  padding: isMobile ? '12px 24px' : '10px 20px',
+                  borderRadius: '8px',
+                  backgroundColor: palette.accent,
+                  color: palette.text,
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: isMobile ? '1rem' : '0.9rem',
+                  fontWeight: 600,
+                  minHeight: '44px',
+                }}
+                whileHover={{ scale: 1.05, backgroundColor: '#1e554c' }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <FontAwesomeIcon icon={faApple} />
+                Download on App Store
+              </motion.a>
+            )}
+            
+            {!isMobile && product.GithubRepoURL && (
+              <motion.a 
                 href={product.GithubRepoURL} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{
                   padding: '10px 20px',
-                  borderRadius: '5px',
+                  borderRadius: '8px',
                   backgroundColor: palette.accent,
                   color: palette.text,
                   textDecoration: 'none',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',
-                  transition: 'transform 0.3s ease, background-color 0.3s ease',
+                  fontSize: '0.9rem',
+                  fontWeight: 600,
                 }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#1e554c';
-                  e.target.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = palette.accent;
-                  e.target.style.transform = 'scale(1)';
-                }}
+                whileHover={{ scale: 1.05, backgroundColor: '#1e554c' }}
+                whileTap={{ scale: 0.95 }}
               >
                 <FontAwesomeIcon icon={faGithub} />
                 GitHub Repository
-              </a>
+              </motion.a>
             )}
             
-            {product.Website && (
-              <a 
+            {!isMobile && product.Website && (
+              <motion.a 
                 href={product.Website} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{
                   padding: '10px 20px',
-                  borderRadius: '5px',
+                  borderRadius: '8px',
                   backgroundColor: palette.accent,
                   color: palette.text,
                   textDecoration: 'none',
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',
-                  transition: 'transform 0.3s ease, background-color 0.3s ease',
+                  fontSize: '0.9rem',
+                  fontWeight: 600,
                 }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#1e554c';
-                  e.target.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = palette.accent;
-                  e.target.style.transform = 'scale(1)';
-                }}
+                whileHover={{ scale: 1.05, backgroundColor: '#1e554c' }}
+                whileTap={{ scale: 0.95 }}
               >
                 <FontAwesomeIcon icon={faGlobe} />
                 Visit Website
-              </a>
-            )}
-            
-            {product.AppStore && (
-              <a 
-                href={product.AppStore} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{
-                  padding: '10px 20px',
-                  borderRadius: '5px',
-                  backgroundColor: palette.accent,
-                  color: palette.text,
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  transition: 'transform 0.3s ease, background-color 0.3s ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#1e554c';
-                  e.target.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = palette.accent;
-                  e.target.style.transform = 'scale(1)';
-                }}
-              >
-                <FontAwesomeIcon icon={faApple} />
-                App Store
-              </a>
+              </motion.a>
             )}
           </div>
         </div>
         
         {/* Case Study Content Styles */}
         <style>{`
+          .mobile-modal-content {
+            background-color: #000000 !important;
+            background: #000000 !important;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            height: 100vh !important;
+            max-height: 100vh !important;
+          }
+          
+          .mobile-modal-content * {
+            background-color: transparent !important;
+          }
+          
           .case-study-content ul,
           .case-study-content ol {
             list-style-type: none;
@@ -1051,6 +1177,7 @@ const ProductPage = () => {
   const [showAboutModal, setShowAboutModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Add CSS animations for pulse rings
   React.useEffect(() => {
@@ -1077,6 +1204,11 @@ const ProductPage = () => {
           opacity: 0;
         }
       }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
     `;
     document.head.appendChild(style);
 
@@ -1089,6 +1221,18 @@ const ProductPage = () => {
     // Filter only products where isProduct === true
     const productData = softwareData.filter(item => item.isProduct === true);
     setProducts(productData);
+    
+    // Check if mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   const styles = {
@@ -1118,26 +1262,28 @@ const ProductPage = () => {
     },
     productGrid: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-      gap: '30px',
-      padding: '60px 30px',
+      gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
+      gap: isMobile ? '20px' : '30px',
+      padding: isMobile ? '40px 15px' : '60px 20px',
       maxWidth: '1400px',
       margin: '0 auto',
     },
     sectionTitle: {
-      fontSize: '2.5rem',
+      fontSize: isMobile ? '2rem' : '2.5rem',
       textAlign: 'center',
-      margin: '60px 0 30px',
+      margin: isMobile ? '40px 0 20px' : '60px 0 30px',
       color: palette.text,
       fontFamily: "'Poppins', sans-serif",
+      padding: isMobile ? '0 15px' : '0',
     },
     subtitle: {
-      fontSize: '1.2rem',
+      fontSize: isMobile ? '1rem' : '1.2rem',
       textAlign: 'center',
-      margin: '0 auto 60px',
+      margin: isMobile ? '0 auto 40px' : '0 auto 60px',
       color: 'rgba(255, 255, 255, 0.7)',
       maxWidth: '600px',
       lineHeight: 1.5,
+      padding: isMobile ? '0 20px' : '0',
     },
   };
 
@@ -1149,13 +1295,26 @@ const ProductPage = () => {
           
           {/* Intro Section */}
           <div style={{ padding: '60px 20px 0' }}>
-            <h2 style={styles.sectionTitle}>
+            <motion.h2 
+              style={styles.sectionTitle}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
               Product Design & Development
-            </h2>
-            <p style={styles.subtitle}>
-              From user research to shipped products. These projects showcase 
-              end-to-end product thinking, UI/UX design, and technical execution.
-            </p>
+            </motion.h2>
+            <motion.p 
+              style={styles.subtitle}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 1.2 }}
+            >
+              <TypewriterText 
+                text="From user research to shipped products. These projects showcase end-to-end product thinking, UI/UX design, and technical execution."
+                delay={30}
+                startDelay={1500}
+              />
+            </motion.p>
           </div>
 
           {/* Product Grid */}
@@ -1172,12 +1331,12 @@ const ProductPage = () => {
 
           {/* Development Journey Timeline */}
           <div style={{ 
-            padding: '80px 20px 60px',
+            padding: isMobile ? '60px 15px 40px' : '80px 20px 60px',
             maxWidth: '800px',
             margin: '0 auto',
           }}>
                          <h2 style={{
-               fontSize: '2.5rem',
+               fontSize: isMobile ? '2rem' : '2.5rem',
                textAlign: 'center',
                margin: '0 0 20px',
                color: palette.text,
@@ -1186,12 +1345,13 @@ const ProductPage = () => {
                Product Journey
              </h2>
              <p style={{
-               fontSize: '1.1rem',
+               fontSize: isMobile ? '1rem' : '1.1rem',
                textAlign: 'center',
-               margin: '0 auto 60px',
+               margin: isMobile ? '0 auto 40px' : '0 auto 60px',
                color: 'rgba(255, 255, 255, 0.7)',
                maxWidth: '500px',
                lineHeight: 1.5,
+               padding: isMobile ? '0 10px' : '0',
              }}>
                Evolution of my product thinking, from user research to shipped experiences
              </p>
@@ -1205,7 +1365,7 @@ const ProductPage = () => {
               {/* Timeline line */}
               <div style={{
                 position: 'absolute',
-                left: '25px',
+                left: isMobile ? '20px' : '25px',
                 top: '0',
                 bottom: '0',
                 width: '3px',
@@ -1268,11 +1428,11 @@ const ProductPage = () => {
                 
                 <div style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                  padding: '25px',
+                  padding: isMobile ? '20px' : '25px',
                   borderRadius: '12px',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
-                  marginLeft: '50px',
-                  width: 'calc(100% - 50px)',
+                  marginLeft: isMobile ? '45px' : '50px',
+                  width: isMobile ? 'calc(100% - 45px)' : 'calc(100% - 50px)',
                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '10px' }}>
                     <h3 style={{
