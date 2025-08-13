@@ -224,7 +224,8 @@ const ProductCard = ({ product, index, onOpenCaseStudy }) => {
             style={{
               width: '100%',
               height: '100%',
-              objectFit: 'cover',
+              objectFit: 'contain',
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
             }}
             animate={{
               scale: isHovered ? 1.1 : 1,
@@ -1178,6 +1179,7 @@ const ProductPage = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
   // Add CSS animations for pulse rings
   React.useEffect(() => {
@@ -1222,16 +1224,18 @@ const ProductPage = () => {
     const productData = softwareData.filter(item => item.isProduct === true);
     setProducts(productData);
     
-    // Check if mobile
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+    // Check breakpoints
+    const checkBreakpoints = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 768);
+      setIsTablet(width > 768 && width <= 1024);
     };
     
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    checkBreakpoints();
+    window.addEventListener('resize', checkBreakpoints);
     
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('resize', checkBreakpoints);
     };
   }, []);
 
@@ -1262,24 +1266,24 @@ const ProductPage = () => {
     },
     productGrid: {
       display: 'grid',
-      gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
-      gap: isMobile ? '20px' : '30px',
-      padding: isMobile ? '40px 15px' : '60px 20px',
+      gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+      gap: isMobile ? '20px' : isTablet ? '30px' : '40px',
+      padding: isMobile ? '40px 15px' : isTablet ? '60px 30px' : '60px 40px',
       maxWidth: '1400px',
       margin: '0 auto',
     },
     sectionTitle: {
-      fontSize: isMobile ? '2rem' : '2.5rem',
+      fontSize: isMobile ? '2rem' : isTablet ? '2.25rem' : '2.5rem',
       textAlign: 'center',
-      margin: isMobile ? '40px 0 20px' : '60px 0 30px',
+      margin: isMobile ? '40px 0 20px' : isTablet ? '50px 0 25px' : '60px 0 30px',
       color: palette.text,
       fontFamily: "'Poppins', sans-serif",
       padding: isMobile ? '0 15px' : '0',
     },
     subtitle: {
-      fontSize: isMobile ? '1rem' : '1.2rem',
+      fontSize: isMobile ? '1rem' : isTablet ? '1.1rem' : '1.2rem',
       textAlign: 'center',
-      margin: isMobile ? '0 auto 40px' : '0 auto 60px',
+      margin: isMobile ? '0 auto 40px' : isTablet ? '0 auto 50px' : '0 auto 60px',
       color: 'rgba(255, 255, 255, 0.7)',
       maxWidth: '600px',
       lineHeight: 1.5,
@@ -1331,7 +1335,7 @@ const ProductPage = () => {
 
           {/* Development Journey Timeline */}
           <div style={{ 
-            padding: isMobile ? '60px 15px 40px' : '80px 20px 60px',
+            padding: isMobile ? '60px 15px 40px' : isTablet ? '70px 25px 50px' : '80px 20px 60px',
             maxWidth: '800px',
             margin: '0 auto',
           }}>

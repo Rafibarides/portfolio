@@ -1,5 +1,57 @@
 [
   {
+    "Title": "Arbiem",
+    "Embed link": "https://arbiem.com/",
+    "Website": "https://arbiem.com/",
+    "Screenshot": "../assets/Arbiem/main.avif",
+    "ScreenshotDimensions": {
+      "width": 1200,
+      "height": 800
+    },
+    "ScreenshotFormat": "avif",
+    "useScreenshot": true,
+    "Technologies": [
+      "React",
+      "React Native",
+      "Javascript",
+      "Framer",
+      "UI/UX",
+      "Adobe CC",
+      "Figma",
+      "Cloudflare"
+    ],
+    "Description": "Arbiem is a free, community-driven streaming platform designed to empower indie artists and give listeners a high-fidelity, ad-free way to discover local music. The app preserves full-quality audio and artwork, collects no user data, and introduces innovative caching and lyric sync features for a seamless and immersive listening experience.",
+    "GithubRepoURL": "https://github.com/Rafibarides/RBMMusicStreaming",
+    "Presentation": "",
+    "AppStore": "https://apps.apple.com/us/app/arbiem/id6748650787",
+    "CaseStudy": {
+      "Arbiem: Discover Local Music": {
+        "Project Overview": "Arbiem was born out of frustration with exploitative streaming economics. As both a developer and an artist gearing up to release my album, I envisioned a platform that let indie voices shine without compression, ads, or surveillance. Every decision was guided by one principle: give power back to the artist."
+      },
+      "Problem": "The streaming industry has drifted far from its original promise.<br /><br /><ul><li>Spotify and other giants raise prices while cutting payouts.</li><li>Ghost artists and AI bands flood playlists, displacing real musicians.</li><li>Indie artists make up 50% of all streams, yet the bottom 95% together earn less than 5% of total revenue.</li><li>Most tracks earn nothing at all due to the 1,000-stream rule (The Wash, 2024; Music Business Worldwide, 2024).</li></ul><br />For listeners, these platforms harvest vast amounts of personal data, trading privacy for profit.",
+      "My Solution": "I built Arbiem — a streaming app that preserves uncompressed audio and artwork while refusing to collect user data. No signup is required. Listeners can create playlists locally, and artists can share music freely while connecting directly with their audience through built-in support tabs and crowdfunding tools.<br /><br />To make high-quality media load instantly, I designed a custom caching system:<br /><ul><li><strong>O(1) lookup</strong>: Preloads assets into a HashMap in memory at startup for constant-time retrieval.</li><li>Eliminates filesystem searches and broken asset calls before they hit the UI.</li><li>Handles race conditions, memory limits, and cache corruption gracefully.</li></ul><br />The result: cached files load instantly, reducing wait times from 200ms to zero.<br /><br />Additional innovations include:<br /><ul><li>A JSON + timestamp lyric sync system for real-time lyric display</li><li>A companion support site where fans can back projects and follow progress updates</li></ul>",
+      "Target Personas": "<ul><li>Independent musicians seeking direct audience connection without platform cuts</li><li>Music fans who value quality, privacy, and discovery</li><li>Supporters wanting to crowdfund and engage with the creative process</li></ul>",
+      "Key Features": "<ul><li>Uncompressed audio and artwork</li><li>No account creation, no ads, no data harvesting</li><li>Local playlist creation</li><li>Built-in artist support tabs and crowdfunding</li><li>Innovative O(1) caching for instant playback</li><li>JSON-based lyric sync for immersive listening</li><li>Responsive support site for artist–fan interaction</li></ul>",
+      "Color Palette": ["#1B3B62", "#1A2A40", "#CBD9C5", "#F2F2F2", "#595959"],
+      "Iterative Design": "Initial prototypes struggled with latency due to large uncompressed files. Through iterative profiling, I implemented in-memory caching and conditional preloading. I tested on varied network conditions to ensure consistent experience. Feedback from early artist testers shaped the addition of lyric sync and support site integration, while listener feedback pushed for fully offline playlist support.",
+      "Assets": {
+        "Vertical": [
+          "../assets/Arbiem/arbiem2.avif",
+          "../assets/Arbiem/arbiem3.avif",
+          "../assets/Arbiem/arbiem4.avif",
+          "../assets/Arbiem/arbiem5.avif"
+        ],
+        "Horizontal": [
+          "../assets/Arbiem/arbiem6hor.avif",
+          "../assets/Arbiem/arbiem8hor.avif"
+        ]
+      },
+      "Results": "<ul><li>Beta users reported a perceived load time of zero for cached files</li><li>Artists cited Arbiem as the first platform that felt truly theirs</li><li>Early listener adoption driven by privacy and discovery features</li></ul><blockquote>“This is what streaming should have been all along — honest, fast, and artist-first.”</blockquote>",
+      "Why It Matters": "Arbiem challenges the exploitative status quo of music streaming by centering artists and listeners over algorithms and shareholders. It’s proof that technology can be fast, fair, and free of surveillance — a platform where music lives exactly as it was created."
+    },
+    "isProduct": true
+  },
+  {
     "Title": "Worldly",
     "Embed link": "https://www.playworldly.com",
     "Website": "https://www.playworldly.com",
@@ -34,13 +86,7 @@
       "My Solution": "I built a game.<br /><br /><strong>Worldly</strong> is a mobile app that gamifies geography education using real-time multiplayer challenges and module based learning. It was designed to make global learning accessible, competitive, and fun.",
       "Target Personas": "Worldly was designed for:<br /><ul><li><strong>Curious learners</strong> of all ages who enjoy geography and visual games</li><li><strong>Parents and educators</strong> looking for alternatives to bland memorization methods</li><li><strong>Casual gamers</strong> who prefer low-friction mobile experiences with some educational value</li></ul>",
       "Key Features": "<ul><li><strong>Multiplayer</strong>: Face off with others in real-time map challenges</li><li><strong>Learning Modules</strong>: Unlock structured continent-based lessons</li><li><strong>Mascot Design</strong>: <em>Yoram</em> is a child-friendly guide who walks players through each challenge</li><li><strong>Audio Feedback</strong>: Reinforces right/wrong answers for better memory and engagement</li><li><strong>Color Psychology</strong>: The green interface was chosen deliberately. Green is linked to nature, peace, and balance. Research shows it improves focus, reduces stress, and enhances creative thinking, perfect for a geography themed learning environment.</li></ul>",
-      "Color Palette": [
-        "#74A651",
-        "#97BF7A",
-        "#F2B05E",
-        "#FCC257",
-        "#DEDEDE"
-      ],
+      "Color Palette": ["#74A651", "#97BF7A", "#F2B05E", "#FCC257", "#DEDEDE"],
       "Iterative Design": "After the initial beta release, I shared a Google Form with early users and gathered detailed feedback from over 30 testers. Common themes included:<br /><ul><li>A desire for more guided and structured learning</li><li>Requests for sound effects and clearer visual cues</li><li>Confusion about game flow in early rounds</li></ul><br />This led to several improvements:<br /><ul><li>Added <strong>audio cues</strong> for interaction and feedback</li><li>Improved onboarding and UI flow</li><li>Introduced <strong>progress tracking</strong> and <strong>unlockable learning paths</strong></li><li>Balanced the challenge system across skill levels</li></ul>",
       "Assets": {
         "Vertical": [
@@ -88,13 +134,7 @@
       "My Solution": "We built a minimalistic, responsive React app that fetches real-time local weather and astronomical data. By using glassmorphism and tropical color themes, the interface becomes not only useful but also visually captivating. Sunset and lunar cycle info were added for deeper daily planning and spiritual awareness.",
       "Target Personas": "<ul><li>Observant individuals needing clear sunset/Shkia times for religious practices.</li><li>Designers and creatives who want a beautiful desktop experience.</li><li>Photographers or event planners needing quick access to weather and light info.</li><li>Casual users looking for ambient displays with real-time utility.</li></ul>",
       "Key Features": "<ul><li>Real-time weather data via API</li><li>Automatic theme switching (light/dark) based on local time</li><li>Shkia (sunset) and lunar phase data for planning and religious observance</li><li>Full-screen UI optimized for TV and desktop screensavers</li><li>Glassmorphism UI with vibrant tropical colors</li><li>Built with React and local JSON fallback support</li></ul>",
-      "Color Palette": [
-        "#355770",
-        "#F27507",
-        "#F2935C",
-        "#F27A5E",
-        "#F25E5E"
-      ],
+      "Color Palette": ["#355770", "#F27507", "#F2935C", "#F27A5E", "#F25E5E"],
       "Iterative Design": "The project began with a basic layout in Figma and went through multiple feedback cycles focused on simplifying visual noise, enhancing readability from a distance, and optimizing data placement. We fine-tuned contrast for both light and dark modes, adjusted spacing, and added lunar cycle support based on user suggestions.",
       "Results": "We successfully built and published this aesthetic, weather-at-a-glance display\u2014and I use it on my TV all the time. Friends have shared that they love how the UI slowly fades into dark mode in the evening, creating a calm and ambient vibe.",
       "Why It Matters": "Weather Now bridges utility and aestetic, something sometimes overlooked in productivity tools. By respecting both functional and spiritual needs (like Shkia times), it demonstrates how UX can serve deeply personal contexts while still being elegant and modern. It reflects our belief that design should be both beautiful and meaningful."
@@ -134,13 +174,7 @@
       "My Solution": "I created a clean, one-pager mobile and web app with original digital art and a focus on simplicity. The app uses real-time geolocation and several APIs to give users accurate, beautifully presented zmanim and moon phase data. I also built a Hebrew-to-Gregorian calendar algorithm to handle lunar-solar conversions in JavaScript.",
       "Target Personas": "<ul><li>Observant individuals needing clear sunset/Shkia times for religious practices</li><li>Designers and creatives who want a beautiful, ambient screen experience</li><li>People exploring Jewish identity and looking for spiritual tech tools</li><li>Casual users curious about moon phases and celestial rhythms</li></ul>",
       "Key Features": "<ul><li>Real-time zmanim based on user geolocation</li><li>Beautiful, Shabbat-themed color palette inspired by royalty and calm</li><li>Original digital art and sprites created in Adobe Illustrator</li><li>One-page fullscreen UI, optimized for both phones and TV screens</li><li>Custom-built algorithm to convert Gregorian dates into Hebrew calendar equivalents</li></ul>",
-      "Color Palette": [
-        "#1E0A26",
-        "#741B8C",
-        "#9704BF",
-        "#F2D8F2",
-        "#FBF9F0"
-      ],
+      "Color Palette": ["#1E0A26", "#741B8C", "#9704BF", "#F2D8F2", "#FBF9F0"],
       "Iterative Design": "While building the lunar-solar calendar algorithm, I encountered several complexities around leap years, intercalated months, and fixed date anchors between the Hebrew and Gregorian systems. This led to many revisions and testing cycles. I also iterated on the UI after testing it on different screen types (TV, mobile, tablet) to make sure it felt peaceful and legible in all environments.",
       "Results": "I successfully built and shipped this aesthetic utility tool. It's Jewish tech that feels deeply personal to me, helping mark sacred time in a way that feels modern, clear, and intentional. Friends have shared that they appreciate how simple and beautiful it is.",
       "Why It Matters": "This project is a personal expression of Jewish identity through tech. It bridges ancient tradition and modern design, offering users a mindful way to track sacred time. By creating something beautiful and useful, it encourages spiritual curiosity and makes observance easier and more accessible."
@@ -179,13 +213,7 @@
       "My Solution": "I built RBM Sounds, a sleek, minimalist, fully branded website with clean UX and a smooth purchasing flow. The site was developed to highlight the care and professionalism behind each kit, featuring embedded audio previews, detailed descriptions, and aesthetic continuity from page to page.",
       "Target Personas": "<ul><li>Music producers looking to preview and buy high-quality sounds to spark creativity</li><li>Professional musicians seeking curated and versatile samples</li><li>Content creators or beatmakers who need ready-to-use loops and hits</li></ul>",
       "Key Features": "<ul><li>Embedded sample previews with waveform visualization</li><li>Fully functional e-commerce site with seamless payment processing</li><li>Responsive design optimized for mobile and desktop</li></ul>",
-      "Color Palette": [
-        "#999999",
-        "#595959",
-        "#E6E6E6",
-        "#000000",
-        "#D9D9D9"
-      ],
+      "Color Palette": ["#999999", "#595959", "#E6E6E6", "#000000", "#D9D9D9"],
       "Iterative Design": "I tested multiple iterations of product layout and checkout flow using user feedback from early site visitors and collaborators. I refined the typography, improved loading times, and shifted to a monochrome palette to keep the focus on the sounds. A/B testing of cover art sizes and CTA placement helped boost clarity and user interaction.",
       "Assets": {
         "Vertical": [],
@@ -341,13 +369,7 @@
       "My Solution": "I designed a centralized digital hub that allows patients to securely manage their mental health needs. This includes a clean UI, a staff-friendly CMS, and a portal for requests, scheduling, and resources.",
       "Target Personas": "<ul><li>Patients seeking discreet, efficient mental health services</li><li>Clinic administrators needing a reliable backend for requests and content</li><li>Support groups or educators looking for program visibility and outreach</li></ul>",
       "Key Features": "<ul><li>Homepage with intuitive navigation to diagnostics, programs, and FAQs</li><li>Client portal with refill request and appointment flows</li><li>Dynamic CMS allowing staff to update site content without code</li><li>Form system with backend logic for referrals and secure submissions</li><li>WCAG-compliant, mobile-first design with dark mode support</li></ul>",
-      "Color Palette": [
-        "#1B3B62",
-        "#1A2A40",
-        "#CBD9C5",
-        "#F2F2F2",
-        "#595959"
-      ],
+      "Color Palette": ["#1B3B62", "#1A2A40", "#CBD9C5", "#F2F2F2", "#595959"],
       "Iterative Design": "I prototyped multiple flows and tested with mock users to ensure clarity and trust. I paid particular attention to visual hierarchy, accessibility for users with cognitive challenges, and intuitive mobile usability.",
       "Assets": {
         "Vertical": [
@@ -355,10 +377,7 @@
           "../assets/navara_vert2.avif",
           "../assets/navara_vert3.avif"
         ],
-        "Horizontal": [
-          "../assets/navara2.avif",
-          "../assets/navara3.avif"
-        ]
+        "Horizontal": ["../assets/navara2.avif", "../assets/navara3.avif"]
       },
       "Results": "<ul><li>Reduction in email-based refill requests thanks to streamlined portal</li><li>Higher patient satisfaction with digital experience based on informal interviews</li><li>Staff can now post updates and program info without developer support</li><li>Improved appointment booking flow and mobile experience for patients</li></ul>",
       "Why It Matters": "Mental health care is already daunting\u2014technology shouldn\u2019t add friction. This platform helps patients feel in control while giving administrators a scalable, modern toolkit. By prioritizing clarity and care, we help make healthcare feel human."
@@ -396,13 +415,7 @@
       "My Solution": "I built a fully self-contained Electron app with a gorgeous UI and a clean user experience. It supports 4K MOV output using AV1 or VP9 video codecs, quick preview trimming, and in-app search with smart queueing.",
       "Target Personas": "<ul><li>Video editors seeking reference footage in full quality</li><li>Creators avoiding sketchy download tools</li><li>Documentary teams needing archival clips and interview cuts</li></ul>",
       "Key Features": "<ul><li>4K MOV wrapping with QuickTime-compatible containers</li><li>Trim function to extract segments from long videos</li><li>In-app YouTube search and queue management</li><li>Dark and light modes with elegant, contrast-friendly design</li><li>Desktop compatibility for Intel and Apple Silicon Macs</li></ul>",
-      "Color Palette": [
-        "#2F3159",
-        "#515373",
-        "#E9E9F2",
-        "#FFFFFF",
-        "#F25835"
-      ],
+      "Color Palette": ["#2F3159", "#515373", "#E9E9F2", "#FFFFFF", "#F25835"],
       "Iterative Design": "I tested layout versions with creators and edited theme shadows, CTA placements, and iconography. Emphasis was placed on clarity, especially for the trim tool and download status updates.",
       "Assets": {
         "Vertical": [],
@@ -432,14 +445,7 @@
     },
     "ScreenshotFormat": "avif",
     "useScreenshot": true,
-    "Technologies": [
-      "JUCE",
-      "C++",
-      "DSP",
-      "UI/UX",
-      "Adobe CC",
-      "Figma"
-    ],
+    "Technologies": ["JUCE", "C++", "DSP", "UI/UX", "Adobe CC", "Figma"],
     "Description": "Arcade is a JUCE-based audio plugin that enables independent saturation of left and right stereo channels for spatially immersive sound. Designed with a custom UI and optimized DSP, it's built for modern producers who want depth and grit in their mixes.",
     "GithubRepoURL": "",
     "Presentation": "",
@@ -452,19 +458,11 @@
       "My Solution": "I built Arcade: a spatial saturation plugin with dual-ear control. Designed for subtle stereo texture and bold distortion alike, it gives music creators the power to bend space, not just sound.",
       "Target Personas": "<ul><li>Electronic producers looking for psychoacoustic width</li><li>Vocalists seeking character and clarity across the stereo field</li><li>Sound designers experimenting with ear-bending FX</li></ul>",
       "Key Features": "<ul><li><strong>Dual-Channel Saturation</strong>: Independently process left and right stereo channels</li><li><strong>Spatial FX Engine</strong>: Adds stereo movement and dynamic phase shifts</li><li><strong>Custom UI</strong>: Circular glowing knobs and animated feedback built in JUCE</li><li><strong>Optimized DSP Core</strong>: Low latency, real-time automation, and CPU efficiency</li></ul>",
-      "Color Palette": [
-        "#090126",
-        "#834BF1",
-        "#08C8BA",
-        "#F26513",
-        "#14B6FF"
-      ],
+      "Color Palette": ["#090126", "#834BF1", "#08C8BA", "#F26513", "#14B6FF"],
       "Iterative Design": "Using JUCE\u2019s OpenGL-backed rendering and custom knob components, I refined UI polish through multiple iterations, adjusting saturation curves, phase behavior, and visual dynamics for clarity and feel. Feedback from beta testers guided improvements in control mapping and output monitoring.",
       "Assets": {
         "Vertical": [],
-        "Horizontal": [
-          "../assets/arcade2.avif"
-        ]
+        "Horizontal": ["../assets/arcade2.avif"]
       },
       "Results": "<ul><li>Now used by multiple producers for vocals, synths, and buses</li><li>Universally compatible across DAWs and platforms</li><li>Offers spatial width without needing complex stereo chains</li><li>Replaces several plugins in a typical mix chain with one unit</li></ul>",
       "Why It Matters": "Arcade empowers audio creators with tactile spatial control over saturation. In a world moving toward immersive audio, this plugin gives you spatial analog-style color that lives and breathes across the mix field."
@@ -482,14 +480,7 @@
     },
     "ScreenshotFormat": "avif",
     "useScreenshot": true,
-    "Technologies": [
-      "JUCE",
-      "C++",
-      "DSP",
-      "UI/UX",
-      "Adobe CC",
-      "Figma"
-    ],
+    "Technologies": ["JUCE", "C++", "DSP", "UI/UX", "Adobe CC", "Figma"],
     "Description": "RevSat is a JUCE-built reverb plugin that merges analog-modeled warmth with smooth, saturated ambience. Ideal for producers who want texture-rich tails without needing a second plugin.",
     "GithubRepoURL": "",
     "Presentation": "",
@@ -502,19 +493,11 @@
       "My Solution": "A custom C++ VST plugin with modeled early reflections, built-in saturation, and a dead-simple UI. RevSat focuses on feel: analog-style warmth, easy settings, and emotional tone.",
       "Target Personas": "<ul><li>Vocal producers seeking reverb with warmth and attitude</li><li>Guitarists and keys players chasing vintage plate or spring vibes</li><li>Electronic artists wanting analog coloration without CPU-heavy chains</li></ul>",
       "Key Features": "<ul><li><strong>Vintage-Modeled Reverb Tail</strong>: Modeled on early analog/digital units</li><li><strong>Built-in Saturation</strong>: Adds soft harmonic drive to reverb tail</li><li><strong>One-Knob Simplicity</strong>: Quick results, minimal distraction</li><li><strong>Soft UI Aesthetic</strong>: Analog-inspired visual feel with creamy UI tones</li></ul>",
-      "Color Palette": [
-        "#BFAC95",
-        "#F2EAE4",
-        "#F26F63",
-        "#D96F66",
-        "#F2A29B"
-      ],
+      "Color Palette": ["#BFAC95", "#F2EAE4", "#F26F63", "#D96F66", "#F2A29B"],
       "Iterative Design": "From initial DSP prototyping to final UI polish, I focused on reducing decision fatigue. I tuned saturation curves by ear, tested across multiple DAWs, and iterated on the visual identity to evoke warmth without clutter.",
       "Assets": {
         "Vertical": [],
-        "Horizontal": [
-          "../assets/Render 1.avif"
-        ]
+        "Horizontal": ["../assets/Render 1.avif"]
       },
       "Results": "<ul><li>Praised by users for sounding \u201clike reverb recorded to tape\u201d</li><li>Became a staple for warming up vocals and synths</li><li>Replaces the need to chain saturation after reverb in many mixes</li></ul>",
       "Why It Matters": "RevSat makes reverb feel emotional. It leans into vibe, delivering nostalgia, texture, and warmth with every tail."
