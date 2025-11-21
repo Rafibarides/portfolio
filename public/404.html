@@ -7,7 +7,12 @@
       // Store the current path in sessionStorage and redirect to index
       var redirect = sessionStorage.getItem('redirect');
       if (!redirect) {
-        sessionStorage.setItem('redirect', location.pathname + location.search + location.hash);
+        // Remove trailing slash from pathname (except for root)
+        var pathname = location.pathname;
+        if (pathname !== '/' && pathname.endsWith('/')) {
+          pathname = pathname.slice(0, -1);
+        }
+        sessionStorage.setItem('redirect', pathname + location.search + location.hash);
         window.location.replace('/');
       }
     </script>
