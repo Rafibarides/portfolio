@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog - Rafi Barides</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Personal blog by Rafi Barides covering music, singing, technology, personal growth, and creative journey. Read about vocal transformation, music production, and life experiences.">
+  <meta name="keywords" content="Rafi Barides blog, music blog, vocal training blog, personal growth, music production">
+  <link rel="canonical" href="https://rafi-barides.com/blog">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rafi-barides.com/blog">
+  <meta property="og:title" content="Blog - Rafi Barides">
+  <meta property="og:description" content="Personal blog by Rafi Barides covering music, technology, and life experiences">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary">
+  <meta property="twitter:url" content="https://rafi-barides.com/blog">
+  <meta property="twitter:title" content="Blog - Rafi Barides">
+  <meta property="twitter:description" content="Personal blog by Rafi Barides covering music, technology, and life experiences">
+  
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Rafi Barides Blog",
+  "description": "Personal blog by Rafi Barides covering music, technology, life experiences, and creative journey",
+  "url": "https://rafi-barides.com/blog",
+  "author": {
+    "@type": "Person",
+    "name": "Rafi Barides",
+    "url": "https://rafi-barides.com",
+    "sameAs": [
+      "https://github.com/rafibarides",
+      "https://www.linkedin.com/in/rafibarides"
+    ]
+  },
+  "blogPost": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Why I Sing Even Though I Was Told I Never Should",
+      "url": "https://rafi-barides.com/blog/why-i-sing-even-though-i-was-told-i-never-should",
+      "datePublished": "2025-11-21",
+      "author": {
+        "@type": "Person",
+        "name": "Rafi Barides"
+      },
+      "image": "https://dn710201.ca.archive.org/0/items/rafi_barides_portrait/RAFI.jpg"
+    }
+  ]
+}
+  </script>
+  
+  <!-- Styles -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      color: #ffffff;
+      padding: 2rem 1rem 8rem 1rem;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 2rem 0;
+    }
+    
+    .back-link {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 0.875rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .back-link:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin: 1rem 0;
+      color: #ffffff;
+      font-family: 'Poppins', sans-serif;
+      letter-spacing: 0.02em;
+    }
+    
+    .subtitle {
+      font-size: 1.25rem;
+      color: #a0a0a0;
+      margin-top: 0.5rem;
+    }
+    
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
+      padding: 1rem 0;
+    }
+    
+    .blog-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: block;
+    }
+    
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .blog-card-image {
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    .blog-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .blog-card:hover .blog-card-image img {
+      transform: scale(1.05);
+    }
+    
+    .blog-card-content {
+      padding: 1.5rem;
+    }
+    
+    .blog-card h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+    
+    .blog-card-subtitle {
+      font-size: 1rem;
+      color: #b0b0b0;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    
+    .blog-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+    
+    .blog-divider {
+      color: #555;
+    }
+    
+    .blog-card-description {
+      font-size: 0.95rem;
+      color: #a0a0a0;
+      line-height: 1.6;
+      margin-top: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem 0.5rem 8rem 0.5rem;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .back-link {
+        bottom: 1rem;
+        left: 1rem;
+        font-size: 0.8rem;
+        padding: 0.6rem 1rem;
+      }
+    }
+    
+    /* React app will load over this */
+    #root {
+      display: none;
+    }
+  </style>
+  
+  <!-- React App will hydrate over this content -->
+  <script type="module" crossorigin src="/assets/index.js"></script>
+  <link rel="stylesheet" href="/assets/index.css">
+</head>
+<body>
+  <a href="/" class="back-link">← Portfolio</a>
+  <div class="container">
+    <header class="header">
+      <h1>Blog</h1>
+      <p class="subtitle">Thoughts on music, technology, and life</p>
+    </header>
+    
+    <div class="blog-grid">
+      
+    <a href="/blog/why-i-sing-even-though-i-was-told-i-never-should" class="blog-card">
+      
+      <div class="blog-card-image">
+        <img src="https://dn710201.ca.archive.org/0/items/rafi_barides_portrait/RAFI.jpg" alt="Why I Sing Even Though I Was Told I Never Should" loading="lazy">
+      </div>
+      
+      <div class="blog-card-content">
+        <h2>Why I Sing Even Though I Was Told I Never Should</h2>
+        <p class="blog-card-subtitle">I Spent My Life Hating My Voice. This Is What Changed.</p>
+        <div class="blog-card-meta">
+          <span class="blog-date">November 20, 2025</span>
+          <span class="blog-divider">•</span>
+          <span class="blog-read-time">12 min read</span>
+        </div>
+        <p class="blog-card-description">After years of being told I'd never be a singer, I share my journey from hating my voice to releasing an album. Learn how I transformed my vocals through persistence, breathing techniques, and embracing my unique sound.</p>
+      </div>
+    </a>
+  
+    </div>
+  </div>
+  
+  <!-- React will mount here -->
+  <div id="root"></div>
+</body>
+</html>
