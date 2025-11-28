@@ -10,6 +10,18 @@
     "keywords": ["singing", "vocal training", "music production", "personal growth", "Rafi Barides music", "vocal journey", "Storm Before the Storm"],
     "markdownFile": "whyISing.MD",
     "readTime": "12 min read"
+  },
+  {
+    "slug": "the-other-half-of-my-music",
+    "title": "The Other Half of My Music",
+    "subtitle": "How Photography Became the Visual Language for My Sound",
+    "author": "Rafi Barides",
+    "date": "2025-11-28",
+    "description": "From borrowing a Nikon D3200 in yeshivah to becoming a Getty Images contributor, photography evolved into the visual companion to my music. Discover how self-portraits and image-making help me translate sound into emotion.",
+    "image": "https://media.gettyimages.com/id/2247325275/photo/rafi-barides-nyc.jpg?s=2048x2048&w=gi&k=20&c=BlpPivV0Ike6F1z-iTE2FVJebMY5viE3TnZIV4s3eqg=",
+    "keywords": ["photography", "music photography", "Getty Images", "self-portraits", "Rafi Barides photographer", "visual storytelling", "Sony A7III", "Danny Diamond"],
+    "markdownFile": "onPhotos.MD",
+    "readTime": "4 min read"
   }
 ]
 
