@@ -34,6 +34,18 @@
     "keywords": ["personal growth", "purpose", "Rafi Barides", "life journey", "Orthodox Jewish", "creative career", "music production", "software engineering", "identity", "Paper Town album"],
     "markdownFile": "howIGotHere.MD",
     "readTime": "6 min read"
+  },
+  {
+    "slug": "something-from-nothing",
+    "title": "My Story of Something From Nothing",
+    "subtitle": "Why Being a Generalist Isn't a Weakness",
+    "author": "Rafi Barides",
+    "date": "2025-12-27",
+    "description": "From directing music videos with millions of views to building VST plugins, iOS apps, and sample packs—this is my case for why range across disciplines isn't scattered. It's leverage.",
+    "image": "https://dn710201.ca.archive.org/0/items/rafi_barides_portrait/RAFI.jpg",
+    "keywords": ["generalist", "creative career", "music video production", "VST plugins", "sample packs", "iOS development", "video editing", "color grading", "David Epstein Range", "Rafi Barides portfolio"],
+    "markdownFile": "somethingFromNothing.MD",
+    "readTime": "5 min read"
   }
 ]
 
