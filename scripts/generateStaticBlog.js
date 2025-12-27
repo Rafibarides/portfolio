@@ -208,16 +208,21 @@ ${JSON.stringify(structuredData, null, 2)}
     
     .article-image {
       width: 100%;
-      height: 400px;
+      max-width: 400px;
+      aspect-ratio: 1 / 1;
       overflow: hidden;
       border-radius: 12px;
-      margin-bottom: 2rem;
+      margin: 0 auto 2rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .article-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center top;
     }
     
     h1 {
@@ -330,7 +335,7 @@ ${JSON.stringify(structuredData, null, 2)}
       }
       
       .article-image {
-        height: 300px;
+        max-width: 300px;
       }
       
       .back-link {
@@ -560,15 +565,19 @@ ${JSON.stringify(structuredData, null, 2)}
     
     .blog-card-image {
       width: 100%;
-      height: 250px;
+      aspect-ratio: 1 / 1;
       overflow: hidden;
       background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .blog-card-image img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center top;
       transition: transform 0.3s ease;
     }
     
