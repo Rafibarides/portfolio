@@ -22,6 +22,18 @@
     "keywords": ["photography", "music photography", "Getty Images", "self-portraits", "Rafi Barides photographer", "visual storytelling", "Sony A7III", "Danny Diamond"],
     "markdownFile": "onPhotos.MD",
     "readTime": "4 min read"
+  },
+  {
+    "slug": "storm-before-the-storm",
+    "title": "Storm Before the Storm",
+    "subtitle": "How I Got Here",
+    "author": "Rafi Barides",
+    "date": "2025-12-27",
+    "description": "A personal reflection on purpose, identity, and the journey from an Orthodox Jewish upbringing to building a creative life. From yeshiva to GED, from releasing an album to learning engineering—this is the story of finding alignment through chaos.",
+    "image": "https://dn710201.ca.archive.org/0/items/rafi_barides_portrait/RAFI.jpg",
+    "keywords": ["personal growth", "purpose", "Rafi Barides", "life journey", "Orthodox Jewish", "creative career", "music production", "software engineering", "identity", "Paper Town album"],
+    "markdownFile": "howIGotHere.MD",
+    "readTime": "6 min read"
   }
 ]
 
