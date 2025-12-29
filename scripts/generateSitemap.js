@@ -11,6 +11,10 @@ const BASE_URL = 'https://rafi-barides.com';
 const blogMetadataPath = path.join(__dirname, '../src/blogs/blogMetadata.json');
 const blogs = JSON.parse(fs.readFileSync(blogMetadataPath, 'utf-8'));
 
+// Read lyrics metadata
+const lyricsMetadataPath = path.join(__dirname, '../src/Lyrics/lyricsMetadata.json');
+const lyrics = JSON.parse(fs.readFileSync(lyricsMetadataPath, 'utf-8'));
+
 // Define all static pages
 const staticPages = [
   { url: '', priority: '1.0', changefreq: 'weekly' }, // homepage
@@ -19,7 +23,8 @@ const staticPages = [
   { url: '/art', priority: '0.8', changefreq: 'monthly' },
   { url: '/product', priority: '0.8', changefreq: 'monthly' },
   { url: '/rafi', priority: '0.8', changefreq: 'monthly' },
-  { url: '/blog', priority: '0.9', changefreq: 'weekly' }
+  { url: '/blog', priority: '0.9', changefreq: 'weekly' },
+  { url: '/lyrics', priority: '0.9', changefreq: 'monthly' }
 ];
 
 // Add blog posts to the sitemap
@@ -30,7 +35,15 @@ const blogPages = blogs.map(blog => ({
   lastmod: blog.date
 }));
 
-const allPages = [...staticPages, ...blogPages];
+// Add lyrics pages to the sitemap
+const lyricsPages = lyrics.map(song => ({
+  url: `/lyrics/${song.slug}`,
+  priority: '0.9',
+  changefreq: 'monthly',
+  lastmod: `${song.year}-01-01`
+}));
+
+const allPages = [...staticPages, ...blogPages, ...lyricsPages];
 
 // Generate sitemap XML
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

@@ -1,0 +1,161 @@
+.lyrics-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  color: #ffffff;
+  padding: 2rem 1rem 8rem 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.lyrics-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.lyrics-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 2rem 0;
+}
+
+.lyrics-header h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 1rem 0;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.lyrics-subtitle {
+  font-size: 1.25rem;
+  color: #a0a0a0;
+  margin-top: 0.5rem;
+  font-weight: 300;
+}
+
+.back-link {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.back-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.lyrics-loading {
+  text-align: center;
+  padding: 4rem 0;
+  font-size: 1.25rem;
+  color: #a0a0a0;
+}
+
+.lyrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.lyrics-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lyrics-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.lyrics-card-content {
+  padding: 1.5rem;
+}
+
+.lyrics-card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.lyrics-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #888;
+  margin-top: 1rem;
+}
+
+.lyrics-divider {
+  color: #555;
+}
+
+.lyrics-writer {
+  color: #a0a0a0;
+}
+
+.lyrics-year {
+  color: #a0a0a0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .lyrics-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .lyrics-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .lyrics-page {
+    padding: 1rem 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lyrics-header h1 {
+    font-size: 2rem;
+  }
+  
+  .lyrics-subtitle {
+    font-size: 1rem;
+  }
+  
+  .back-link {
+    bottom: 1rem;
+    left: 1rem;
+    font-size: 0.8rem;
+    padding: 0.6rem 1rem;
+  }
+  
+  .lyrics-page {
+    padding: 1rem 0.5rem 8rem 0.5rem;
+  }
+}
+

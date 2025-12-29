@@ -7,6 +7,8 @@ import ProductPage from './ProductPage'
 import Rafibarides from './Rafibarides'
 import BlogPage from './BlogPage'
 import BlogPost from './BlogPost'
+import LyricsPage from './LyricsPage'
+import LyricsPost from './LyricsPost'
 import './App.css'
 import { ModalProvider } from './context/ModalContext'
 
@@ -24,6 +26,8 @@ function App() {
             <Route path="/rafi" element={<Rafibarides />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/lyrics" element={<LyricsPage />} />
+            <Route path="/lyrics/:slug" element={<LyricsPost />} />
           </Routes>
         </div>
       </Router>

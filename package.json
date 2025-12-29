@@ -5,10 +5,11 @@
   "type": "module",
   "homepage": "https://rafi-barides.com",
   "scripts": {
-    "dev": "npm run copy:blogs && vite",
-    "build": "npm run copy:blogs && vite build && npm run generate:blog && npm run generate:sitemap",
+    "dev": "npm run copy:blogs && npm run copy:lyrics && vite",
+    "build": "npm run copy:blogs && npm run copy:lyrics && vite build && npm run generate:blog && npm run generate:sitemap",
     "build:vite": "vite build",
     "copy:blogs": "node scripts/copyBlogsToPublic.js",
+    "copy:lyrics": "node scripts/copyLyricsToPublic.js",
     "generate:blog": "node scripts/generateStaticBlog.js",
     "generate:sitemap": "node scripts/generateSitemap.js",
     "lint": "eslint .",
