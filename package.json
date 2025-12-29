@@ -6,11 +6,12 @@
   "homepage": "https://rafi-barides.com",
   "scripts": {
     "dev": "npm run copy:blogs && npm run copy:lyrics && vite",
-    "build": "npm run copy:blogs && npm run copy:lyrics && vite build && npm run generate:blog && npm run generate:sitemap",
+    "build": "npm run copy:blogs && npm run copy:lyrics && vite build && npm run generate:blog && npm run generate:lyrics && npm run generate:sitemap",
     "build:vite": "vite build",
     "copy:blogs": "node scripts/copyBlogsToPublic.js",
     "copy:lyrics": "node scripts/copyLyricsToPublic.js",
     "generate:blog": "node scripts/generateStaticBlog.js",
+    "generate:lyrics": "node scripts/generateStaticLyrics.js",
     "generate:sitemap": "node scripts/generateSitemap.js",
     "lint": "eslint .",
     "preview": "vite preview",
