@@ -8,6 +8,21 @@ const __dirname = path.dirname(__filename);
 // Base URL
 const BASE_URL = 'https://rafi-barides.com';
 
+// Get the actual built asset filenames from dist/assets
+function getBuiltAssets() {
+  const assetsDir = path.join(__dirname, '../dist/assets');
+  const files = fs.readdirSync(assetsDir);
+  
+  // Find the main index.js and index.css files (they have hashes)
+  const jsFile = files.find(f => f.startsWith('index-') && f.endsWith('.js'));
+  const cssFile = files.find(f => f.startsWith('index-') && f.endsWith('.css'));
+  
+  return {
+    js: jsFile ? `/assets/${jsFile}` : '/assets/index.js',
+    css: cssFile ? `/assets/${cssFile}` : '/assets/index.css'
+  };
+}
+
 // Album data (keep in sync with ListenPage.jsx)
 const ALBUM_DATA = {
   title: "Storm Before the Storm",
@@ -169,6 +184,7 @@ function generateListenPageHtml() {
   const canonical = `${BASE_URL}/listen`;
   const structuredData = generateStructuredData();
   const songCards = generateSongCardsHtml();
+  const assets = getBuiltAssets();
   
   const keywords = [
     "Rafi Barides",
@@ -588,8 +604,8 @@ ${JSON.stringify(structuredData, null, 2)}
   </style>
   
   <!-- React App will hydrate over this content -->
-  <script type="module" crossorigin src="/assets/index.js"></script>
-  <link rel="stylesheet" href="/assets/index.css">
+  <script type="module" crossorigin src="${assets.js}"></script>
+  <link rel="stylesheet" href="${assets.css}">
 </head>
 <body>
   <!-- React will mount here and take over when loaded -->
