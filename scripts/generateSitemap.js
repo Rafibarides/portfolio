@@ -24,7 +24,8 @@ const staticPages = [
   { url: '/product', priority: '0.8', changefreq: 'monthly' },
   { url: '/rafi', priority: '0.8', changefreq: 'monthly' },
   { url: '/blog', priority: '0.9', changefreq: 'weekly' },
-  { url: '/lyrics', priority: '0.9', changefreq: 'monthly' }
+  { url: '/lyrics', priority: '0.9', changefreq: 'monthly' },
+  { url: '/listen', priority: '1.0', changefreq: 'monthly' }
 ];
 
 // Add blog posts to the sitemap

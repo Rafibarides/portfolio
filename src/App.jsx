@@ -9,6 +9,7 @@ import BlogPage from './BlogPage'
 import BlogPost from './BlogPost'
 import LyricsPage from './LyricsPage'
 import LyricsPost from './LyricsPost'
+import ListenPage from './ListenPage'
 import './App.css'
 import { ModalProvider } from './context/ModalContext'
 
@@ -28,6 +29,7 @@ function App() {
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/lyrics" element={<LyricsPage />} />
             <Route path="/lyrics/:slug" element={<LyricsPost />} />
+            <Route path="/listen" element={<ListenPage />} />
           </Routes>
         </div>
       </Router>
