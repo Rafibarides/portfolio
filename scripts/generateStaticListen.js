@@ -133,17 +133,33 @@ function generateSongCardsHtml() {
         </div>
       </div>
       
-      <div class="song-essay" itemprop="description">
-        <h3>About this song</h3>
-        <p>${song.essay}</p>
+      <div class="song-expandable-sections">
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>About this song</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-essay" itemprop="description">
+            <p>${song.essay}</p>
+          </div>
+        </details>
+        
+        ${lyrics ? `
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>Lyrics</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-lyrics" itemprop="lyrics">
+            ${lyricsHtml}
+          </div>
+        </details>
+        ` : ''}
       </div>
-      
-      ${lyrics ? `
-      <div class="song-lyrics" itemprop="lyrics">
-        <h3>Lyrics</h3>
-        ${lyricsHtml}
-      </div>
-      ` : ''}
     </article>`;
   }).join('\n');
 }
@@ -410,9 +426,9 @@ ${JSON.stringify(structuredData, null, 2)}
     
     .song-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      padding-top: 0.25rem;
     }
     
     .song-number {
@@ -433,22 +449,70 @@ ${JSON.stringify(structuredData, null, 2)}
       font-weight: 600;
       margin: 0;
       color: #ffffff;
+      line-height: 1.4;
+      padding-bottom: 0.15em;
+    }
+    
+    .song-expandable-sections {
+      margin-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 0.75rem;
+    }
+    
+    .song-details {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    
+    .song-details:last-child {
+      border-bottom: none;
+    }
+    
+    .expand-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      background: transparent;
+      border: none;
+      color: #8a8a95;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      list-style: none;
+    }
+    
+    .expand-btn::-webkit-details-marker {
+      display: none;
+    }
+    
+    .expand-btn:hover {
+      color: #b8b8c0;
+    }
+    
+    .expand-btn .chevron {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
+    }
+    
+    .song-details[open] .expand-btn .chevron {
+      transform: rotate(180deg);
     }
     
     .song-essay {
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1rem 0 1.5rem;
+      color: #a0a0ab;
+      font-size: 0.95rem;
+      line-height: 1.8;
     }
     
-    .song-essay h3,
-    .song-lyrics h3 {
-      font-size: 0.9rem;
-      color: #8a8a95;
-      font-weight: 500;
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .song-essay p {
+      margin-bottom: 1rem;
+    }
+    
+    .song-essay p:last-child {
+      margin-bottom: 0;
     }
     
     .song-essay p {

@@ -357,6 +357,14 @@
   padding-top: 0.75rem;
 }
 
+.song-details {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.song-details:last-child {
+  border-bottom: none;
+}
+
 .expand-btn {
   width: 100%;
   display: flex;
@@ -371,6 +379,16 @@
   cursor: pointer;
   transition: color 0.2s ease;
   font-family: inherit;
+  list-style: none;
+}
+
+.expand-btn::-webkit-details-marker {
+  display: none;
+}
+
+.expand-btn::marker {
+  display: none;
+  content: '';
 }
 
 .expand-btn:hover {
@@ -383,7 +401,7 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.expand-btn.expanded .chevron {
+.song-details[open] .expand-btn .chevron {
   transform: rotate(180deg);
 }
 

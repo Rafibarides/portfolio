@@ -80,27 +80,9 @@ function formatTime(seconds) {
 }
 
 function SongCard({ song, isPlaying, isCurrentSong, onPlay, onPause, currentTime, duration, audioRef }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [lyricsExpanded, setLyricsExpanded] = useState(false);
   const [lyrics, setLyrics] = useState('');
   const [lyricsLoading, setLyricsLoading] = useState(false);
   const progressRef = useRef(null);
-
-  useEffect(() => {
-    if (lyricsExpanded && !lyrics) {
-      setLyricsLoading(true);
-      fetch(`/lyrics/${song.lyricsFile}`)
-        .then(res => res.text())
-        .then(text => {
-          setLyrics(text);
-          setLyricsLoading(false);
-        })
-        .catch(err => {
-          console.error('Error loading lyrics:', err);
-          setLyricsLoading(false);
-        });
-    }
-  }, [lyricsExpanded, lyrics, song.lyricsFile]);
 
   const handleProgressClick = (e) => {
     if (!isCurrentSong || !audioRef.current) return;
@@ -163,37 +145,41 @@ function SongCard({ song, isPlaying, isCurrentSong, onPlay, onPause, currentTime
       )}
 
       <div className="song-expandable-sections">
-        <button 
-          className={`expand-btn ${isExpanded ? 'expanded' : ''}`}
-          onClick={() => setIsExpanded(!isExpanded)}
-          aria-expanded={isExpanded}
-        >
-          <span>About this song</span>
-          <svg viewBox="0 0 24 24" fill="currentColor" className="chevron">
-            <path d="M7 10l5 5 5-5z" />
-          </svg>
-        </button>
-        
-        {isExpanded && (
+        <details className="song-details">
+          <summary className="expand-btn">
+            <span>About this song</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" className="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
           <div className="song-essay" itemProp="description">
             {song.essay.split('\n\n').map((paragraph, i) => (
               <p key={i}>{paragraph}</p>
             ))}
           </div>
-        )}
+        </details>
 
-        <button 
-          className={`expand-btn ${lyricsExpanded ? 'expanded' : ''}`}
-          onClick={() => setLyricsExpanded(!lyricsExpanded)}
-          aria-expanded={lyricsExpanded}
-        >
-          <span>Lyrics</span>
-          <svg viewBox="0 0 24 24" fill="currentColor" className="chevron">
-            <path d="M7 10l5 5 5-5z" />
-          </svg>
-        </button>
-        
-        {lyricsExpanded && (
+        <details className="song-details" onToggle={(e) => {
+          if (e.target.open && !lyrics) {
+            setLyricsLoading(true);
+            fetch(`/lyrics/${song.lyricsFile}`)
+              .then(res => res.text())
+              .then(text => {
+                setLyrics(text);
+                setLyricsLoading(false);
+              })
+              .catch(err => {
+                console.error('Error loading lyrics:', err);
+                setLyricsLoading(false);
+              });
+          }
+        }}>
+          <summary className="expand-btn">
+            <span>Lyrics</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" className="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
           <div className="song-lyrics" itemProp="lyrics">
             {lyricsLoading ? (
               <p className="loading">Loading lyrics...</p>
@@ -201,7 +187,7 @@ function SongCard({ song, isPlaying, isCurrentSong, onPlay, onPause, currentTime
               <pre>{lyrics}</pre>
             )}
           </div>
-        )}
+        </details>
       </div>
     </article>
   );
