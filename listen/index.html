@@ -339,9 +339,9 @@
     
     .song-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      padding-top: 0.25rem;
     }
     
     .song-number {
@@ -362,22 +362,70 @@
       font-weight: 600;
       margin: 0;
       color: #ffffff;
+      line-height: 1.4;
+      padding-bottom: 0.15em;
+    }
+    
+    .song-expandable-sections {
+      margin-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 0.75rem;
+    }
+    
+    .song-details {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    
+    .song-details:last-child {
+      border-bottom: none;
+    }
+    
+    .expand-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      background: transparent;
+      border: none;
+      color: #8a8a95;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      list-style: none;
+    }
+    
+    .expand-btn::-webkit-details-marker {
+      display: none;
+    }
+    
+    .expand-btn:hover {
+      color: #b8b8c0;
+    }
+    
+    .expand-btn .chevron {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
+    }
+    
+    .song-details[open] .expand-btn .chevron {
+      transform: rotate(180deg);
     }
     
     .song-essay {
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1rem 0 1.5rem;
+      color: #a0a0ab;
+      font-size: 0.95rem;
+      line-height: 1.8;
     }
     
-    .song-essay h3,
-    .song-lyrics h3 {
-      font-size: 0.9rem;
-      color: #8a8a95;
-      font-weight: 500;
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    .song-essay p {
+      margin-bottom: 1rem;
+    }
+    
+    .song-essay p:last-child {
+      margin-bottom: 0;
     }
     
     .song-essay p {
@@ -503,15 +551,29 @@
         </div>
       </div>
       
-      <div class="song-essay" itemprop="description">
-        <h3>About this song</h3>
-        <p>I am a serial talker. When it comes to dating and romance, I sometimes run into a problem where it feels like I say too much too soon. In this song, I am expressing how when I am real with my love interest, I am letting them in. But letting them in usually pushes them out.</p>
-      </div>
-      
-      
-      <div class="song-lyrics" itemprop="lyrics">
-        <h3>Lyrics</h3>
-        <pre class="song-lyrics-text">﻿I said too much again
+      <div class="song-expandable-sections">
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>About this song</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-essay" itemprop="description">
+            <p>I am a serial talker. When it comes to dating and romance, I sometimes run into a problem where it feels like I say too much too soon. In this song, I am expressing how when I am real with my love interest, I am letting them in. But letting them in usually pushes them out.</p>
+          </div>
+        </details>
+        
+        
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>Lyrics</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-lyrics" itemprop="lyrics">
+            <pre class="song-lyrics-text">﻿I said too much again
 Words are falling out of my hands
 Looking at me kindly, but
 Truth hurts so much less than lying
@@ -567,8 +629,10 @@ Should have kept it all inside my head
 Gave you honesty, and
 Made myself a liability
 I’m sorry that I let you in again</pre>
+          </div>
+        </details>
+        
       </div>
-      
     </article>
 
     <article class="song-card" itemscope itemtype="https://schema.org/MusicRecording">
@@ -583,15 +647,29 @@ I’m sorry that I let you in again</pre>
         </div>
       </div>
       
-      <div class="song-essay" itemprop="description">
-        <h3>About this song</h3>
-        <p>Earlier this year, I made a decision to end a romantic entanglement. Not because it wasn't great, but because we were misaligned and he didn't want the future that I did.</p>
-      </div>
-      
-      
-      <div class="song-lyrics" itemprop="lyrics">
-        <h3>Lyrics</h3>
-        <pre class="song-lyrics-text">﻿Feelings grow, I know your ride is here
+      <div class="song-expandable-sections">
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>About this song</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-essay" itemprop="description">
+            <p>Earlier this year, I made a decision to end a romantic entanglement. Not because it wasn't great, but because we were misaligned and he didn't want the future that I did.</p>
+          </div>
+        </details>
+        
+        
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>Lyrics</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-lyrics" itemprop="lyrics">
+            <pre class="song-lyrics-text">﻿Feelings grow, I know your ride is here
 Hold them in to say goodbye
 Little do you know
 What you mean to me
@@ -649,8 +727,10 @@ You were talking about somebody else
 But nothings changed for me so
 Now I have to try to love you less
 Somehow</pre>
+          </div>
+        </details>
+        
       </div>
-      
     </article>
 
     <article class="song-card" itemscope itemtype="https://schema.org/MusicRecording">
@@ -665,15 +745,29 @@ Somehow</pre>
         </div>
       </div>
       
-      <div class="song-essay" itemprop="description">
-        <h3>About this song</h3>
-        <p>Growing up in an Orthodox Jewish home, we'd often hear the phrase "gam zeh ya'avor," which translates to "this too shall pass." This has been a really hard year for me.</p>
-      </div>
-      
-      
-      <div class="song-lyrics" itemprop="lyrics">
-        <h3>Lyrics</h3>
-        <pre class="song-lyrics-text">﻿This is the bed you made, I’m sorry that I slept in it
+      <div class="song-expandable-sections">
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>About this song</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-essay" itemprop="description">
+            <p>Growing up in an Orthodox Jewish home, we'd often hear the phrase "gam zeh ya'avor," which translates to "this too shall pass." This has been a really hard year for me.</p>
+          </div>
+        </details>
+        
+        
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>Lyrics</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-lyrics" itemprop="lyrics">
+            <pre class="song-lyrics-text">﻿This is the bed you made, I’m sorry that I slept in it
 You can find me on the ground, staring up at the ceiling
 What happens if you don't give your kids an education?
 Made a bomb and set it, wonder why it has exploded
@@ -700,8 +794,10 @@ This too shall pass
 And its true but I cant
 Stay here so I say
 This too shall pass away</pre>
+          </div>
+        </details>
+        
       </div>
-      
     </article>
 
     <article class="song-card" itemscope itemtype="https://schema.org/MusicRecording">
@@ -716,15 +812,29 @@ This too shall pass away</pre>
         </div>
       </div>
       
-      <div class="song-essay" itemprop="description">
-        <h3>About this song</h3>
-        <p>While journaling, I accepted that I have a pattern of getting into romantic entanglements that consume me because of my purposelessness.</p>
-      </div>
-      
-      
-      <div class="song-lyrics" itemprop="lyrics">
-        <h3>Lyrics</h3>
-        <pre class="song-lyrics-text">﻿Needed meaning and you felt it
+      <div class="song-expandable-sections">
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>About this song</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-essay" itemprop="description">
+            <p>While journaling, I accepted that I have a pattern of getting into romantic entanglements that consume me because of my purposelessness.</p>
+          </div>
+        </details>
+        
+        
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>Lyrics</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-lyrics" itemprop="lyrics">
+            <pre class="song-lyrics-text">﻿Needed meaning and you felt it
 I cant help it I look desperate
 I never wanted to be a burden
 Never thought how much it would hurt there’s a
@@ -790,8 +900,10 @@ Can I be honest? Can I be,
 Can I be honest
 But now all I have is me and the truth 
 And whatever you need</pre>
+          </div>
+        </details>
+        
       </div>
-      
     </article>
 
     <article class="song-card" itemscope itemtype="https://schema.org/MusicRecording">
@@ -806,15 +918,29 @@ And whatever you need</pre>
         </div>
       </div>
       
-      <div class="song-essay" itemprop="description">
-        <h3>About this song</h3>
-        <p>This song is the most unabashed intersection of romance and purpose on the album. It is probably my most honest.</p>
-      </div>
-      
-      
-      <div class="song-lyrics" itemprop="lyrics">
-        <h3>Lyrics</h3>
-        <pre class="song-lyrics-text">﻿What if I've outgrown my life
+      <div class="song-expandable-sections">
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>About this song</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-essay" itemprop="description">
+            <p>This song is the most unabashed intersection of romance and purpose on the album. It is probably my most honest.</p>
+          </div>
+        </details>
+        
+        
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>Lyrics</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-lyrics" itemprop="lyrics">
+            <pre class="song-lyrics-text">﻿What if I've outgrown my life
 While I'm still alive
 I've applied for every job
 But the job is mine
@@ -871,8 +997,10 @@ I could not count on you
 You could not be the proof
 Got nothing left to lose in this life
 All I want is you but you wont be mine</pre>
+          </div>
+        </details>
+        
       </div>
-      
     </article>
 
     <article class="song-card" itemscope itemtype="https://schema.org/MusicRecording">
@@ -887,15 +1015,29 @@ All I want is you but you wont be mine</pre>
         </div>
       </div>
       
-      <div class="song-essay" itemprop="description">
-        <h3>About this song</h3>
-        <p>This is the most lighthearted song musically, but it comes from deep pain and jadedness. It is a bitterly sarcastic song about dating.</p>
-      </div>
-      
-      
-      <div class="song-lyrics" itemprop="lyrics">
-        <h3>Lyrics</h3>
-        <pre class="song-lyrics-text">﻿I wanna let somebody in
+      <div class="song-expandable-sections">
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>About this song</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-essay" itemprop="description">
+            <p>This is the most lighthearted song musically, but it comes from deep pain and jadedness. It is a bitterly sarcastic song about dating.</p>
+          </div>
+        </details>
+        
+        
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>Lyrics</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-lyrics" itemprop="lyrics">
+            <pre class="song-lyrics-text">﻿I wanna let somebody in
 After all i've done 
 I’m between the heaven and the earth 
 Have I forgotten what I’m looking for
@@ -947,8 +1089,10 @@ You, you were cute all
 But you believe that the earth is flat
 And you, hate the truth and I 
 Love you but cannot live with that</pre>
+          </div>
+        </details>
+        
       </div>
-      
     </article>
 
     <article class="song-card" itemscope itemtype="https://schema.org/MusicRecording">
@@ -963,15 +1107,29 @@ Love you but cannot live with that</pre>
         </div>
       </div>
       
-      <div class="song-essay" itemprop="description">
-        <h3>About this song</h3>
-        <p>Growing up, I related deeply to a story about a character who felt inherently not good enough. I later learned this was an inferiority complex.</p>
-      </div>
-      
-      
-      <div class="song-lyrics" itemprop="lyrics">
-        <h3>Lyrics</h3>
-        <pre class="song-lyrics-text">Saying that you love me, saying that you love me the same
+      <div class="song-expandable-sections">
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>About this song</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-essay" itemprop="description">
+            <p>Growing up, I related deeply to a story about a character who felt inherently not good enough. I later learned this was an inferiority complex.</p>
+          </div>
+        </details>
+        
+        
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>Lyrics</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-lyrics" itemprop="lyrics">
+            <pre class="song-lyrics-text">Saying that you love me, saying that you love me the same
 But I'm looking in the mirror, looking in the mirror again
 You could say a hundred words that'll fall right through
 Cracks in my chest
@@ -1012,8 +1170,10 @@ But I won't be good enough, good enough
 Saying that you love me, saying that you love me the same
 But I'm looking in the mirror, looking in the mirror again
 Saying that you love me, saying that you love me the same</pre>
+          </div>
+        </details>
+        
       </div>
-      
     </article>
 
     <article class="song-card" itemscope itemtype="https://schema.org/MusicRecording">
@@ -1028,15 +1188,29 @@ Saying that you love me, saying that you love me the same</pre>
         </div>
       </div>
       
-      <div class="song-essay" itemprop="description">
-        <h3>About this song</h3>
-        <p>This song was written later than the rest of the album. I feel radioactive, like something about me repels people.</p>
-      </div>
-      
-      
-      <div class="song-lyrics" itemprop="lyrics">
-        <h3>Lyrics</h3>
-        <pre class="song-lyrics-text">﻿Leave it be
+      <div class="song-expandable-sections">
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>About this song</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-essay" itemprop="description">
+            <p>This song was written later than the rest of the album. I feel radioactive, like something about me repels people.</p>
+          </div>
+        </details>
+        
+        
+        <details class="song-details">
+          <summary class="expand-btn">
+            <span>Lyrics</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="chevron">
+              <path d="M7 10l5 5 5-5z" />
+            </svg>
+          </summary>
+          <div class="song-lyrics" itemprop="lyrics">
+            <pre class="song-lyrics-text">﻿Leave it be
 What does it all mean
 What does it all mean
 I try to see
@@ -1075,8 +1249,10 @@ There’s a chernobyl inside my abdomen and i’m glowing
 I already felt radioactive before this
 Maybe that's why I push people away
 Maybe that’s why I push them away</pre>
+          </div>
+        </details>
+        
       </div>
-      
     </article>
     </main>
     
