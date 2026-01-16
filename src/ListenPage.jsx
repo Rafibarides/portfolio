@@ -7,7 +7,8 @@ import './styles/ListenPage.css';
 const ALBUM_DATA = {
   title: "Storm Before the Storm",
   artist: "Rafi Barides",
-  year: "2025",
+  releaseDate: "February 1st, 2026",
+  writtenDate: "January 16, 2026",
   albumArt: "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/album-art.png",
   artistPhoto: "https://media.licdn.com/dms/image/v2/D4E03AQEIYnWFI8SldQ/profile-displayphoto-scale_400_400/B4EZltaOy4KoAg-/0/1758477217452?e=2147483647&v=beta&t=BK4xQVSQH9izZ6kPsFqMFTouMh0duFLnUpBClRxw8Qk",
   quote: "...ugh come on, get a grip, cut it out and stop being dramatic",
@@ -18,7 +19,7 @@ const ALBUM_DATA = {
       title: "In Again",
       audioUrl: "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/1.%20IN%20AGAIN%20.wav",
       lyricsFile: "In Again.txt",
-      essay: "I am a serial talker. When it comes to dating and romance, I sometimes run into a problem where it feels like I say too much too soon. In this song, I am expressing how when I am real with my love interest, I am letting them in. But letting them in usually pushes them out. The bridge is where I say it out loud and glue the song together. I sardonically take "accountability" for this mistake. The punchline is this:\n\n\"I need you to know\nWhat you mean to me\nEven if it makes you go\nI couldn't leave it unsaid\""
+      essay: "I am a serial talker. When it comes to dating and romance, I sometimes run into a problem where it feels like I say too much too soon. In this song, I am expressing how when I am real with my love interest, I am letting them in. But letting them in usually pushes them out. The bridge is where I say it out loud and glue the song together. I sardonically take \"accountability\" for this mistake. The punchline is this:\n\n\"I need you to know\nWhat you mean to me\nEven if it makes you go\nI couldn't leave it unsaid\""
     },
     {
       id: 2,
@@ -258,7 +259,7 @@ export default function ListenPage() {
       "name": ALBUM_DATA.artist,
       "url": "https://rafi-barides.com"
     },
-    "datePublished": "2025",
+    "datePublished": "2026-02-01",
     "image": ALBUM_DATA.albumArt,
     "numTracks": ALBUM_DATA.songs.length,
     "track": ALBUM_DATA.songs.map((song, index) => ({
@@ -278,10 +279,10 @@ export default function ListenPage() {
   return (
     <div className="listen-page">
       <SEO
-        title="Listen - Storm Before the Storm | Rafi Barides"
-        description="Stream Storm Before the Storm, the debut album by Rafi Barides. 8 deeply personal songs exploring love, identity, purpose, and vulnerability. Listen now with lyrics and stories behind each track."
+        title="Stream: Storm Before the Storm"
+        description="New album by Rafi Barides. Listen now."
         canonical="https://rafi-barides.com/listen"
-        image={ALBUM_DATA.albumArt}
+        image="https://rafi-barides.com/StormBeforeTheStorm.png"
         type="music.album"
         keywords={[
           "Rafi Barides",
@@ -320,7 +321,7 @@ export default function ListenPage() {
             <span className="album-label">Album</span>
             <h1 itemProp="name">{ALBUM_DATA.title}</h1>
             <p className="album-artist" itemProp="byArtist">{ALBUM_DATA.artist}</p>
-            <p className="album-meta">{ALBUM_DATA.year} • {ALBUM_DATA.songs.length} songs</p>
+            <p className="album-meta">{ALBUM_DATA.releaseDate} • {ALBUM_DATA.songs.length} songs</p>
             <div className="album-quote-section">
               <blockquote className="album-quote">
                 "{ALBUM_DATA.quote}"
@@ -328,7 +329,7 @@ export default function ListenPage() {
               <p className="quote-attribution">{ALBUM_DATA.quoteAttribution}</p>
             </div>
             <div className="written-by-section">
-              <span className="written-by-label">Written by</span>
+              <span className="written-by-label">Written {ALBUM_DATA.writtenDate} by</span>
               <div className="written-by-author">
                 <img 
                   src={ALBUM_DATA.artistPhoto} 
@@ -362,7 +363,7 @@ export default function ListenPage() {
 
         <footer className="listen-footer">
           <p>Written, produced, and performed by Rafi Barides</p>
-          <p className="footer-copyright">© {ALBUM_DATA.year} Rafi Barides. All rights reserved.</p>
+          <p className="footer-copyright">© 2026 Rafi Barides. All rights reserved.</p>
         </footer>
       </div>
     </div>

@@ -27,7 +27,8 @@ function getBuiltAssets() {
 const ALBUM_DATA = {
   title: "Storm Before the Storm",
   artist: "Rafi Barides",
-  year: "2025",
+  releaseDate: "February 1st, 2026",
+  writtenDate: "January 16, 2026",
   albumArt: "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/album-art.png",
   artistPhoto: "https://media.licdn.com/dms/image/v2/D4E03AQEIYnWFI8SldQ/profile-displayphoto-scale_400_400/B4EZltaOy4KoAg-/0/1758477217452?e=2147483647&v=beta&t=BK4xQVSQH9izZ6kPsFqMFTouMh0duFLnUpBClRxw8Qk",
   quote: "...ugh come on, get a grip, cut it out and stop being dramatic",
@@ -37,7 +38,7 @@ const ALBUM_DATA = {
       id: 1,
       title: "In Again",
       lyricsFile: "In Again.txt",
-      essay: "I am a serial talker. When it comes to dating and romance, I sometimes run into a problem where it feels like I say too much too soon. In this song, I am expressing how when I am real with my love interest, I am letting them in. But letting them in usually pushes them out. The bridge is where I say it out loud and glue the song together. I sardonically take "accountability" for this mistake. The punchline is this: \"I need you to know / What you mean to me / Even if it makes you go / I couldn't leave it unsaid\""
+      essay: "I am a serial talker. When it comes to dating and romance, I sometimes run into a problem where it feels like I say too much too soon. In this song, I am expressing how when I am real with my love interest, I am letting them in. But letting them in usually pushes them out. The bridge is where I say it out loud and glue the song together. I sardonically take 'accountability' for this mistake. The punchline is this: \"I need you to know / What you mean to me / Even if it makes you go / I couldn't leave it unsaid\""
     },
     {
       id: 2,
@@ -110,7 +111,7 @@ function generateStructuredData() {
         "https://www.linkedin.com/in/rafibarides"
       ]
     },
-    "datePublished": "2025",
+    "datePublished": "2026-02-01",
     "image": ALBUM_DATA.albumArt,
     "numTracks": ALBUM_DATA.songs.length,
     "track": ALBUM_DATA.songs.map((song, index) => ({
@@ -214,26 +215,29 @@ function generateListenPageHtml() {
   <title>Listen - Storm Before the Storm | Rafi Barides</title>
   
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Stream Storm Before the Storm, the debut album by Rafi Barides. 8 deeply personal songs exploring love, identity, purpose, and vulnerability. Listen now with lyrics and stories behind each track.">
+  <meta name="description" content="Stream Storm Before the Storm by Rafi Barides. 8 original songs with lyrics.">
   <meta name="keywords" content="${keywords}">
   <meta name="author" content="${ALBUM_DATA.artist}">
   <link rel="canonical" href="${canonical}">
   
-  <!-- Open Graph / Facebook -->
+  <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="music.album">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:title" content="Listen - Storm Before the Storm | Rafi Barides">
-  <meta property="og:description" content="Stream Storm Before the Storm, the debut album by Rafi Barides. 8 deeply personal songs exploring love, identity, purpose, and vulnerability.">
-  <meta property="og:image" content="${ALBUM_DATA.albumArt}">
+  <meta property="og:title" content="Stream: Storm Before the Storm">
+  <meta property="og:description" content="New album by Rafi Barides. Listen now.">
+  <meta property="og:image" content="${BASE_URL}/StormBeforeTheStorm.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="Rafi Barides">
   <meta property="music:musician" content="${BASE_URL}">
-  <meta property="music:release_date" content="2025">
+  <meta property="music:release_date" content="2026-02-01">
   
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="${canonical}">
-  <meta property="twitter:title" content="Listen - Storm Before the Storm | Rafi Barides">
-  <meta property="twitter:description" content="Stream Storm Before the Storm, the debut album by Rafi Barides. 8 deeply personal songs with lyrics.">
-  <meta property="twitter:image" content="${ALBUM_DATA.albumArt}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="${canonical}">
+  <meta name="twitter:title" content="Stream: Storm Before the Storm">
+  <meta name="twitter:description" content="New album by Rafi Barides. Listen now.">
+  <meta name="twitter:image" content="${BASE_URL}/StormBeforeTheStorm.png">
   
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -629,7 +633,7 @@ ${JSON.stringify(structuredData, null, 2)}
           <span class="album-label">Album</span>
           <h1 itemprop="name">${ALBUM_DATA.title}</h1>
           <p class="album-artist" itemprop="byArtist">${ALBUM_DATA.artist}</p>
-          <p class="album-meta">${ALBUM_DATA.year} • ${ALBUM_DATA.songs.length} songs</p>
+          <p class="album-meta">${ALBUM_DATA.releaseDate} • ${ALBUM_DATA.songs.length} songs</p>
           <div class="album-quote-section">
             <blockquote class="album-quote">
               "${ALBUM_DATA.quote}"
@@ -637,7 +641,7 @@ ${JSON.stringify(structuredData, null, 2)}
             <p class="quote-attribution">${ALBUM_DATA.quoteAttribution}</p>
           </div>
           <div class="written-by-section">
-            <span class="written-by-label">Written by</span>
+            <span class="written-by-label">Written ${ALBUM_DATA.writtenDate} by</span>
             <div class="written-by-author">
               <img 
                 src="${ALBUM_DATA.artistPhoto}" 
@@ -656,7 +660,7 @@ ${JSON.stringify(structuredData, null, 2)}
       
       <footer class="listen-footer">
         <p>Written, produced, and performed by Rafi Barides</p>
-        <p class="footer-copyright">© ${ALBUM_DATA.year} Rafi Barides. All rights reserved.</p>
+        <p class="footer-copyright">© 2026 Rafi Barides. All rights reserved.</p>
       </footer>
     </div>
   </div>
