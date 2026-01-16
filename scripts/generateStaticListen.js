@@ -577,8 +577,13 @@ ${JSON.stringify(structuredData, null, 2)}
     }
     
     /* React app will load over this */
-    #root {
+    #root:empty {
       display: none;
+    }
+    
+    #root:not(:empty) ~ .static-content,
+    #root:not(:empty) ~ .static-back-link {
+      display: none !important;
     }
   </style>
   
@@ -587,55 +592,58 @@ ${JSON.stringify(structuredData, null, 2)}
   <link rel="stylesheet" href="/assets/index.css">
 </head>
 <body>
-  <a href="/" class="back-link">← Portfolio</a>
+  <!-- React will mount here and take over when loaded -->
+  <div id="root"></div>
   
-  <div class="container">
-    <header class="album-header" itemscope itemtype="https://schema.org/MusicAlbum">
-      <div class="album-art-container">
-        <img 
-          src="${ALBUM_DATA.albumArt}" 
-          alt="${ALBUM_DATA.title} album cover by ${ALBUM_DATA.artist}"
-          class="album-art"
-          itemprop="image"
-        >
-      </div>
-      <div class="album-info">
-        <span class="album-label">Album</span>
-        <h1 itemprop="name">${ALBUM_DATA.title}</h1>
-        <p class="album-artist" itemprop="byArtist">${ALBUM_DATA.artist}</p>
-        <p class="album-meta">${ALBUM_DATA.year} • ${ALBUM_DATA.songs.length} songs</p>
-        <div class="album-quote-section">
-          <blockquote class="album-quote">
-            "${ALBUM_DATA.quote}"
-          </blockquote>
-          <p class="quote-attribution">${ALBUM_DATA.quoteAttribution}</p>
+  <!-- Static content for SEO - hidden when React loads -->
+  <a href="/" class="back-link static-back-link">← Portfolio</a>
+  
+  <div class="static-content">
+    <div class="container">
+      <header class="album-header" itemscope itemtype="https://schema.org/MusicAlbum">
+        <div class="album-art-container">
+          <img 
+            src="${ALBUM_DATA.albumArt}" 
+            alt="${ALBUM_DATA.title} album cover by ${ALBUM_DATA.artist}"
+            class="album-art"
+            itemprop="image"
+          >
         </div>
-        <div class="written-by-section">
-          <span class="written-by-label">Written by</span>
-          <div class="written-by-author">
-            <img 
-              src="${ALBUM_DATA.artistPhoto}" 
-              alt="${ALBUM_DATA.artist}"
-              class="author-photo"
-            >
-            <span class="author-name">${ALBUM_DATA.artist}</span>
+        <div class="album-info">
+          <span class="album-label">Album</span>
+          <h1 itemprop="name">${ALBUM_DATA.title}</h1>
+          <p class="album-artist" itemprop="byArtist">${ALBUM_DATA.artist}</p>
+          <p class="album-meta">${ALBUM_DATA.year} • ${ALBUM_DATA.songs.length} songs</p>
+          <div class="album-quote-section">
+            <blockquote class="album-quote">
+              "${ALBUM_DATA.quote}"
+            </blockquote>
+            <p class="quote-attribution">${ALBUM_DATA.quoteAttribution}</p>
+          </div>
+          <div class="written-by-section">
+            <span class="written-by-label">Written by</span>
+            <div class="written-by-author">
+              <img 
+                src="${ALBUM_DATA.artistPhoto}" 
+                alt="${ALBUM_DATA.artist}"
+                class="author-photo"
+              >
+              <span class="author-name">${ALBUM_DATA.artist}</span>
+            </div>
           </div>
         </div>
-      </div>
-    </header>
-    
-    <main class="songs-list">
-      ${songCards}
-    </main>
-    
-    <footer class="listen-footer">
-      <p>Written, produced, and performed by Rafi Barides</p>
-      <p class="footer-copyright">© ${ALBUM_DATA.year} Rafi Barides. All rights reserved.</p>
-    </footer>
+      </header>
+      
+      <main class="songs-list">
+        ${songCards}
+      </main>
+      
+      <footer class="listen-footer">
+        <p>Written, produced, and performed by Rafi Barides</p>
+        <p class="footer-copyright">© ${ALBUM_DATA.year} Rafi Barides. All rights reserved.</p>
+      </footer>
+    </div>
   </div>
-  
-  <!-- React will mount here -->
-  <div id="root"></div>
 </body>
 </html>`;
 }
