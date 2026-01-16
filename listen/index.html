@@ -490,8 +490,13 @@
     }
     
     /* React app will load over this */
-    #root {
+    #root:empty {
       display: none;
+    }
+    
+    #root:not(:empty) ~ .static-content,
+    #root:not(:empty) ~ .static-back-link {
+      display: none !important;
     }
   </style>
   
@@ -500,45 +505,50 @@
   <link rel="stylesheet" href="/assets/index.css">
 </head>
 <body>
-  <a href="/" class="back-link">← Portfolio</a>
+  <!-- React will mount here and take over when loaded -->
+  <div id="root"></div>
   
-  <div class="container">
-    <header class="album-header" itemscope itemtype="https://schema.org/MusicAlbum">
-      <div class="album-art-container">
-        <img 
-          src="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/album-art.png" 
-          alt="Storm Before the Storm album cover by Rafi Barides"
-          class="album-art"
-          itemprop="image"
-        >
-      </div>
-      <div class="album-info">
-        <span class="album-label">Album</span>
-        <h1 itemprop="name">Storm Before the Storm</h1>
-        <p class="album-artist" itemprop="byArtist">Rafi Barides</p>
-        <p class="album-meta">2025 • 8 songs</p>
-        <div class="album-quote-section">
-          <blockquote class="album-quote">
-            "...ugh come on, get a grip, cut it out and stop being dramatic"
-          </blockquote>
-          <p class="quote-attribution">My mother, after begrudgingly listening to the album</p>
+  <!-- Static content for SEO - hidden when React loads -->
+  <a href="/" class="back-link static-back-link">← Portfolio</a>
+  
+  <div class="static-content">
+    <div class="container">
+      <header class="album-header" itemscope itemtype="https://schema.org/MusicAlbum">
+        <div class="album-art-container">
+          <img 
+            src="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/album-art.png" 
+            alt="Storm Before the Storm album cover by Rafi Barides"
+            class="album-art"
+            itemprop="image"
+          >
         </div>
-        <div class="written-by-section">
-          <span class="written-by-label">Written by</span>
-          <div class="written-by-author">
-            <img 
-              src="https://media.licdn.com/dms/image/v2/D4E03AQEIYnWFI8SldQ/profile-displayphoto-scale_400_400/B4EZltaOy4KoAg-/0/1758477217452?e=2147483647&v=beta&t=BK4xQVSQH9izZ6kPsFqMFTouMh0duFLnUpBClRxw8Qk" 
-              alt="Rafi Barides"
-              class="author-photo"
-            >
-            <span class="author-name">Rafi Barides</span>
+        <div class="album-info">
+          <span class="album-label">Album</span>
+          <h1 itemprop="name">Storm Before the Storm</h1>
+          <p class="album-artist" itemprop="byArtist">Rafi Barides</p>
+          <p class="album-meta">2025 • 8 songs</p>
+          <div class="album-quote-section">
+            <blockquote class="album-quote">
+              "...ugh come on, get a grip, cut it out and stop being dramatic"
+            </blockquote>
+            <p class="quote-attribution">My mother, after begrudgingly listening to the album</p>
+          </div>
+          <div class="written-by-section">
+            <span class="written-by-label">Written by</span>
+            <div class="written-by-author">
+              <img 
+                src="https://media.licdn.com/dms/image/v2/D4E03AQEIYnWFI8SldQ/profile-displayphoto-scale_400_400/B4EZltaOy4KoAg-/0/1758477217452?e=2147483647&v=beta&t=BK4xQVSQH9izZ6kPsFqMFTouMh0duFLnUpBClRxw8Qk" 
+                alt="Rafi Barides"
+                class="author-photo"
+              >
+              <span class="author-name">Rafi Barides</span>
+            </div>
           </div>
         </div>
-      </div>
-    </header>
-    
-    <main class="songs-list">
+      </header>
       
+      <main class="songs-list">
+        
     <article class="song-card" itemscope itemtype="https://schema.org/MusicRecording">
       <meta itemprop="name" content="In Again">
       <meta itemprop="byArtist" content="Rafi Barides">
@@ -1254,15 +1264,13 @@ Maybe that’s why I push them away</pre>
         
       </div>
     </article>
-    </main>
-    
-    <footer class="listen-footer">
-      <p>Written, produced, and performed by Rafi Barides</p>
-      <p class="footer-copyright">© 2025 Rafi Barides. All rights reserved.</p>
-    </footer>
+      </main>
+      
+      <footer class="listen-footer">
+        <p>Written, produced, and performed by Rafi Barides</p>
+        <p class="footer-copyright">© 2025 Rafi Barides. All rights reserved.</p>
+      </footer>
+    </div>
   </div>
-  
-  <!-- React will mount here -->
-  <div id="root"></div>
 </body>
 </html>
