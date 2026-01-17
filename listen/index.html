@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Listen - Storm Before the Storm | Rafi Barides</title>
+  <link rel="icon" type="image/avif" href="/assets/favicon.avif">
   
   <!-- SEO Meta Tags -->
   <meta name="description" content="Stream Storm Before the Storm by Rafi Barides. 8 original songs with lyrics.">
@@ -17,8 +18,8 @@
   <meta property="og:title" content="Stream: Storm Before the Storm">
   <meta property="og:description" content="New album by Rafi Barides. Listen now.">
   <meta property="og:image" content="https://rafi-barides.com/StormBeforeTheStorm.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1874">
+  <meta property="og:image:height" content="1284">
   <meta property="og:site_name" content="Rafi Barides">
   <meta property="music:musician" content="https://rafi-barides.com">
   <meta property="music:release_date" content="2026-02-01">
@@ -287,7 +288,7 @@
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
     }
     
     .written-by-label {
@@ -311,10 +312,21 @@
       border: 2px solid rgba(139, 92, 246, 0.4);
     }
     
+    .author-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    
     .author-name {
       font-size: 0.95rem;
       font-weight: 500;
       color: #e8e8ed;
+    }
+    
+    .author-date {
+      font-size: 0.8rem;
+      color: #6b6b78;
     }
     
     @media (min-width: 768px) {
@@ -324,6 +336,7 @@
       
       .written-by-section {
         align-items: flex-start;
+        align-self: flex-start;
       }
     }
     
@@ -504,8 +517,8 @@
   </style>
   
   <!-- React App will hydrate over this content -->
-  <script type="module" crossorigin src="/assets/index-B5vkGHHH.js"></script>
-  <link rel="stylesheet" href="/assets/index-Co3RgIhO.css">
+  <script type="module" crossorigin src="/assets/index-DmR5Rf1N.js"></script>
+  <link rel="stylesheet" href="/assets/index-BGeYGuuG.css">
 </head>
 <body>
   <!-- React will mount here and take over when loaded -->
@@ -537,14 +550,17 @@
             <p class="quote-attribution">My mother, after begrudgingly listening to the album</p>
           </div>
           <div class="written-by-section">
-            <span class="written-by-label">Written January 16, 2026 by</span>
+            <span class="written-by-label">Written by</span>
             <div class="written-by-author">
               <img 
                 src="https://media.licdn.com/dms/image/v2/D4E03AQEIYnWFI8SldQ/profile-displayphoto-scale_400_400/B4EZltaOy4KoAg-/0/1758477217452?e=2147483647&v=beta&t=BK4xQVSQH9izZ6kPsFqMFTouMh0duFLnUpBClRxw8Qk" 
                 alt="Rafi Barides"
                 class="author-photo"
               >
-              <span class="author-name">Rafi Barides</span>
+              <div class="author-info">
+                <span class="author-name">Rafi Barides</span>
+                <span class="author-date">Jan 16, 2026</span>
+              </div>
             </div>
           </div>
         </div>
