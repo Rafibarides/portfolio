@@ -243,6 +243,7 @@ export default function ListenPage() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [showArtworkInfo, setShowArtworkInfo] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -353,7 +354,10 @@ export default function ListenPage() {
 
       <div className="listen-container">
         <header className="album-header">
-          <div className="album-art-container">
+          <div 
+            className="album-art-container"
+            onDoubleClick={() => setShowArtworkInfo(true)}
+          >
             <img 
               src={ALBUM_DATA.albumArt} 
               alt={`${ALBUM_DATA.title} album cover by ${ALBUM_DATA.artist}`}
@@ -414,6 +418,28 @@ export default function ListenPage() {
           <p className="footer-copyright">© 2026 Rafi Barides. All rights reserved.</p>
         </footer>
       </div>
+
+      {/* Artwork Info Popup */}
+      {showArtworkInfo && (
+        <div className="artwork-popup-overlay" onClick={() => setShowArtworkInfo(false)}>
+          <div className="artwork-popup" onClick={(e) => e.stopPropagation()}>
+            <button className="artwork-popup-close" onClick={() => setShowArtworkInfo(false)}>
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+              </svg>
+            </button>
+            <img 
+              src={ALBUM_DATA.albumArt} 
+              alt={`${ALBUM_DATA.title} album artwork`}
+              className="artwork-popup-image"
+            />
+            <div className="artwork-popup-info">
+              <h3>Storm Before the Storm</h3>
+              <p>Album artwork photographed by <strong>Simcha Kaplan</strong> near the historic Green-Wood Cemetery</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
