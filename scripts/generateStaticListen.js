@@ -28,7 +28,7 @@ const ALBUM_DATA = {
   title: "Storm Before the Storm",
   artist: "Rafi Barides",
   releaseDate: "February 1st, 2026",
-  writtenDate: "January 16, 2026",
+  writtenDate: "Jan 16, 2026",
   albumArt: "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/album-art.png",
   artistPhoto: "https://media.licdn.com/dms/image/v2/D4E03AQEIYnWFI8SldQ/profile-displayphoto-scale_400_400/B4EZltaOy4KoAg-/0/1758477217452?e=2147483647&v=beta&t=BK4xQVSQH9izZ6kPsFqMFTouMh0duFLnUpBClRxw8Qk",
   quote: "...ugh come on, get a grip, cut it out and stop being dramatic",
@@ -213,6 +213,7 @@ function generateListenPageHtml() {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Listen - Storm Before the Storm | Rafi Barides</title>
+  <link rel="icon" type="image/avif" href="/assets/favicon.avif">
   
   <!-- SEO Meta Tags -->
   <meta name="description" content="Stream Storm Before the Storm by Rafi Barides. 8 original songs with lyrics.">
@@ -226,8 +227,8 @@ function generateListenPageHtml() {
   <meta property="og:title" content="Stream: Storm Before the Storm">
   <meta property="og:description" content="New album by Rafi Barides. Listen now.">
   <meta property="og:image" content="${BASE_URL}/StormBeforeTheStorm.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1874">
+  <meta property="og:image:height" content="1284">
   <meta property="og:site_name" content="Rafi Barides">
   <meta property="music:musician" content="${BASE_URL}">
   <meta property="music:release_date" content="2026-02-01">
@@ -391,7 +392,7 @@ ${JSON.stringify(structuredData, null, 2)}
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
     }
     
     .written-by-label {
@@ -415,10 +416,21 @@ ${JSON.stringify(structuredData, null, 2)}
       border: 2px solid rgba(139, 92, 246, 0.4);
     }
     
+    .author-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    
     .author-name {
       font-size: 0.95rem;
       font-weight: 500;
       color: #e8e8ed;
+    }
+    
+    .author-date {
+      font-size: 0.8rem;
+      color: #6b6b78;
     }
     
     @media (min-width: 768px) {
@@ -428,6 +440,7 @@ ${JSON.stringify(structuredData, null, 2)}
       
       .written-by-section {
         align-items: flex-start;
+        align-self: flex-start;
       }
     }
     
@@ -641,14 +654,17 @@ ${JSON.stringify(structuredData, null, 2)}
             <p class="quote-attribution">${ALBUM_DATA.quoteAttribution}</p>
           </div>
           <div class="written-by-section">
-            <span class="written-by-label">Written ${ALBUM_DATA.writtenDate} by</span>
+            <span class="written-by-label">Written by</span>
             <div class="written-by-author">
               <img 
                 src="${ALBUM_DATA.artistPhoto}" 
                 alt="${ALBUM_DATA.artist}"
                 class="author-photo"
               >
-              <span class="author-name">${ALBUM_DATA.artist}</span>
+              <div class="author-info">
+                <span class="author-name">${ALBUM_DATA.artist}</span>
+                <span class="author-date">${ALBUM_DATA.writtenDate}</span>
+              </div>
             </div>
           </div>
         </div>

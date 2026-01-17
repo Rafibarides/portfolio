@@ -162,7 +162,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 .written-by-label {
@@ -186,10 +186,21 @@
   border: 2px solid rgba(139, 92, 246, 0.4);
 }
 
+.author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
 .author-name {
   font-size: 0.95rem;
   font-weight: 500;
   color: #e8e8ed;
+}
+
+.author-date {
+  font-size: 0.8rem;
+  color: #6b6b78;
 }
 
 @media (min-width: 768px) {
@@ -199,6 +210,7 @@
   
   .written-by-section {
     align-items: flex-start;
+    align-self: flex-start;
   }
 }
 
@@ -313,6 +325,93 @@
 
 .play-btn.playing:hover {
   box-shadow: 0 6px 25px rgba(236, 72, 153, 0.45);
+}
+
+/* Credits Menu */
+.credits-menu {
+  position: relative;
+}
+
+.credits-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #6b6b78;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.credits-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #b8b8c0;
+}
+
+.credits-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.credits-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  background: rgba(25, 25, 30, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  min-width: 220px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.credits-popup h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8b5cf6;
+  margin: 0 0 0.75rem;
+}
+
+.credits-popup ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.credits-popup li {
+  font-size: 0.85rem;
+  color: #b8b8c0;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.credits-popup li:last-child {
+  border-bottom: none;
+}
+
+.credits-popup li span {
+  color: #6b6b78;
+  margin-right: 0.5rem;
 }
 
 /* Progress Bar */

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from './components/SEO';
+import { StormBeforeTheStorm as albumCredits } from './utils/albumCredits';
 import './styles/ListenPage.css';
 
 // Album data
@@ -8,7 +9,7 @@ const ALBUM_DATA = {
   title: "Storm Before the Storm",
   artist: "Rafi Barides",
   releaseDate: "February 1st, 2026",
-  writtenDate: "January 16, 2026",
+  writtenDate: "Jan 16, 2026",
   albumArt: "https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/album-art.png",
   artistPhoto: "https://media.licdn.com/dms/image/v2/D4E03AQEIYnWFI8SldQ/profile-displayphoto-scale_400_400/B4EZltaOy4KoAg-/0/1758477217452?e=2147483647&v=beta&t=BK4xQVSQH9izZ6kPsFqMFTouMh0duFLnUpBClRxw8Qk",
   quote: "...ugh come on, get a grip, cut it out and stop being dramatic",
@@ -80,10 +81,12 @@ function formatTime(seconds) {
   return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-function SongCard({ song, isPlaying, isCurrentSong, onPlay, onPause, currentTime, duration, audioRef }) {
+function SongCard({ song, isPlaying, isCurrentSong, onPlay, onPause, currentTime, duration, audioRef, credits }) {
   const [lyrics, setLyrics] = useState('');
   const [lyricsLoading, setLyricsLoading] = useState(false);
+  const [showCredits, setShowCredits] = useState(false);
   const progressRef = useRef(null);
+  const creditsRef = useRef(null);
 
   const handleProgressClick = (e) => {
     if (!isCurrentSong || !audioRef.current) return;
@@ -92,6 +95,19 @@ function SongCard({ song, isPlaying, isCurrentSong, onPlay, onPause, currentTime
     const percentage = x / rect.width;
     audioRef.current.currentTime = percentage * duration;
   };
+
+  // Close credits popup when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (creditsRef.current && !creditsRef.current.contains(e.target)) {
+        setShowCredits(false);
+      }
+    };
+    if (showCredits) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showCredits]);
 
   const progress = isCurrentSong && duration > 0 ? (currentTime / duration) * 100 : 0;
 
@@ -122,6 +138,34 @@ function SongCard({ song, isPlaying, isCurrentSong, onPlay, onPause, currentTime
                 </svg>
               )}
             </button>
+            <div className="credits-menu" ref={creditsRef}>
+              <button 
+                className="credits-btn"
+                onClick={() => setShowCredits(!showCredits)}
+                aria-label="Show credits"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="5" cy="12" r="2" />
+                  <circle cx="12" cy="12" r="2" />
+                  <circle cx="19" cy="12" r="2" />
+                </svg>
+              </button>
+              {showCredits && credits && (
+                <div className="credits-popup">
+                  <h4>Credits</h4>
+                  <ul>
+                    {credits.credits.piano && <li><span>Piano:</span> {credits.credits.piano}</li>}
+                    {credits.credits.guitar && <li><span>Guitar:</span> {credits.credits.guitar}</li>}
+                    <li><span>Mixing:</span> {credits.credits.mixing}</li>
+                    {credits.credits.additionalMixing?.length > 0 && (
+                      <li><span>Additional Mixing:</span> {credits.credits.additionalMixing.join(', ')}</li>
+                    )}
+                    <li><span>Mastering:</span> {credits.mastering}</li>
+                    <li><span>Vocals Recorded:</span> {credits.vocalsRecordedAt}</li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -329,14 +373,17 @@ export default function ListenPage() {
               <p className="quote-attribution">{ALBUM_DATA.quoteAttribution}</p>
             </div>
             <div className="written-by-section">
-              <span className="written-by-label">Written {ALBUM_DATA.writtenDate} by</span>
+              <span className="written-by-label">Written by</span>
               <div className="written-by-author">
                 <img 
                   src={ALBUM_DATA.artistPhoto} 
                   alt={ALBUM_DATA.artist}
                   className="author-photo"
                 />
-                <span className="author-name">{ALBUM_DATA.artist}</span>
+                <div className="author-info">
+                  <span className="author-name">{ALBUM_DATA.artist}</span>
+                  <span className="author-date">{ALBUM_DATA.writtenDate}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -346,7 +393,7 @@ export default function ListenPage() {
           <meta itemProp="name" content={ALBUM_DATA.title} />
           <meta itemProp="byArtist" content={ALBUM_DATA.artist} />
           
-          {ALBUM_DATA.songs.map(song => (
+          {ALBUM_DATA.songs.map((song, index) => (
             <SongCard
               key={song.id}
               song={song}
@@ -357,6 +404,7 @@ export default function ListenPage() {
               currentTime={currentSong?.id === song.id ? currentTime : 0}
               duration={currentSong?.id === song.id ? duration : 0}
               audioRef={audioRef}
+              credits={albumCredits[index]}
             />
           ))}
         </main>
