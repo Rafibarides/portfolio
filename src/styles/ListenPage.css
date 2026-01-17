@@ -203,6 +203,46 @@
   color: #6b6b78;
 }
 
+/* Pre-save Button */
+.presave-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  padding: 0.85rem 1.75rem;
+  background: linear-gradient(135deg, #fc3c44 0%, #d62d35 100%);
+  color: #ffffff;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 15px rgba(252, 60, 68, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.presave-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 8px 25px rgba(252, 60, 68, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+  background: linear-gradient(135deg, #ff4d55 0%, #e63840 100%);
+}
+
+.presave-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.presave-button .apple-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 @media (min-width: 768px) {
   .album-quote-section {
     margin: 0 0 2rem;
