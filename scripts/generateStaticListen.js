@@ -226,7 +226,7 @@ function generateListenPageHtml() {
   <meta property="og:url" content="${canonical}">
   <meta property="og:title" content="Stream: Storm Before the Storm">
   <meta property="og:description" content="New album by Rafi Barides. Listen now.">
-  <meta property="og:image" content="${BASE_URL}/StormBeforeTheStorm.png">
+  <meta property="og:image" content="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/prev.png">
   <meta property="og:image:width" content="1874">
   <meta property="og:image:height" content="1284">
   <meta property="og:site_name" content="Rafi Barides">
@@ -238,7 +238,7 @@ function generateListenPageHtml() {
   <meta name="twitter:url" content="${canonical}">
   <meta name="twitter:title" content="Stream: Storm Before the Storm">
   <meta name="twitter:description" content="New album by Rafi Barides. Listen now.">
-  <meta name="twitter:image" content="${BASE_URL}/StormBeforeTheStorm.png">
+  <meta name="twitter:image" content="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/prev.png">
   
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
