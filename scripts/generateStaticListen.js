@@ -226,9 +226,12 @@ function generateListenPageHtml() {
   <meta property="og:url" content="${canonical}">
   <meta property="og:title" content="Stream: Storm Before the Storm">
   <meta property="og:description" content="New album by Rafi Barides. Listen now.">
-  <meta property="og:image" content="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/prev.png">
-  <meta property="og:image:width" content="1874">
-  <meta property="og:image:height" content="1284">
+  <meta property="og:image" content="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/preview1200-630.png">
+  <meta property="og:image:secure_url" content="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/preview1200-630.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Storm Before the Storm album cover by Rafi Barides">
   <meta property="og:site_name" content="Rafi Barides">
   <meta property="music:musician" content="${BASE_URL}">
   <meta property="music:release_date" content="2026-02-01">
@@ -238,7 +241,7 @@ function generateListenPageHtml() {
   <meta name="twitter:url" content="${canonical}">
   <meta name="twitter:title" content="Stream: Storm Before the Storm">
   <meta name="twitter:description" content="New album by Rafi Barides. Listen now.">
-  <meta name="twitter:image" content="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/prev.png">
+  <meta name="twitter:image" content="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/preview1200-630.png">
   
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">

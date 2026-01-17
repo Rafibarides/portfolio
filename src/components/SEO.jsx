@@ -50,8 +50,12 @@ export default function SEO({
     updateMetaTag('og:description', description);
     updateMetaTag('og:type', type);
     updateMetaTag('og:url', canonical);
+    updateMetaTag('og:site_name', 'Rafi Barides');
     if (image) {
       updateMetaTag('og:image', image);
+      updateMetaTag('og:image:secure_url', image);
+      updateMetaTag('og:image:type', 'image/png');
+      updateMetaTag('og:image:alt', title || 'Rafi Barides');
     }
 
     // Twitter Card tags

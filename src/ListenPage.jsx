@@ -327,7 +327,7 @@ export default function ListenPage() {
         title="Stream: Storm Before the Storm"
         description="New album by Rafi Barides. Listen now."
         canonical="https://rafi-barides.com/listen"
-        image="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/prev.png"
+        image="https://pub-6b585af950464b7ca12da1ee87798b6d.r2.dev/Listen/preview1200-630.png"
         type="music.album"
         keywords={[
           "Rafi Barides",
