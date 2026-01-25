@@ -102,7 +102,7 @@ export default function SEO({
     // Cleanup function
     return () => {
       // Reset title to default when component unmounts
-      document.title = 'Rafi Barides - Portfolio';
+      document.title = 'Rafi Barides | Brooklyn Software & Music';
     };
   }, [title, description, canonical, image, type, author, publishedTime, keywords, structuredData]);
 
