@@ -1,0 +1,68 @@
+{
+  "releaseTitle": "Storm Before the Storm",
+  "platforms": [
+    {
+      "id": "spotify",
+      "name": "Spotify",
+      "url": "https://open.spotify.com/artist/5sAxrl2D866fSNhrhTbO8Z?si=VEAeZp89TgWZyFZui8yKiA",
+      "icon": "spotify",
+      "color": "#1DB954"
+    },
+    {
+      "id": "apple-music",
+      "name": "Apple Music",
+      "url": "https://music.apple.com/us/album/storm-before-the-storm/1869537982",
+      "icon": "apple",
+      "color": "#FC3C44"
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube Music",
+      "url": "https://www.youtube.com/@RafiBarides",
+      "icon": "youtube",
+      "color": "#FF0000"
+    },
+    {
+      "id": "tidal",
+      "name": "Tidal",
+      "url": "https://tidal.com/artist/39969873/u",
+      "icon": "tidal",
+      "color": "#00FFFF"
+    },
+    {
+      "id": "deezer",
+      "name": "Deezer",
+      "url": "https://link.deezer.com/s/32jYSxuqMSnrqIzRg9Y9o",
+      "icon": "deezer",
+      "color": "#FEAA2D"
+    },
+    {
+      "id": "audius",
+      "name": "Audius",
+      "url": "https://audius.co/rafi_barides/album/storm-before-the-storm",
+      "icon": "audius",
+      "color": "#CC0FE0"
+    },
+    {
+      "id": "bandlab",
+      "name": "BandLab",
+      "url": "https://rafibarides.bandcamp.com/album/storm-before-the-storm",
+      "icon": "bandlab",
+      "color": "#E63946"
+    },
+    {
+      "id": "arbiem",
+      "name": "Arbiem",
+      "url": "https://apps.apple.com/us/app/arbiem/id6748650787",
+      "icon": "arbiem",
+      "color": "#8B5CF6"
+    },
+    {
+      "id": "stream-onsite",
+      "name": "Stream Onsite",
+      "url": "https://rafi-barides.com/listen/",
+      "icon": "onsite",
+      "color": "#EC4899"
+    }
+  ]
+}
