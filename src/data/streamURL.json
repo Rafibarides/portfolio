@@ -77,6 +77,13 @@
       "url": "https://archive.org/details/storm-before-the-storm?webamp=default",
       "icon": "webamp",
       "color": "#5BC236"
+    },
+    {
+      "id": "soundcloud",
+      "name": "SoundCloud",
+      "url": "https://soundcloud.com/user-778485137/sets/storm-before-the-storm",
+      "icon": "soundcloud",
+      "color": "#FF5500"
     }
   ]
 }
