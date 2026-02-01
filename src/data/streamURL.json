@@ -63,6 +63,20 @@
       "url": "https://rafi-barides.com/listen/",
       "icon": "onsite",
       "color": "#EC4899"
+    },
+    {
+      "id": "pandora",
+      "name": "Pandora",
+      "url": "https://www.pandora.com/artist/rafi-barides/AR2fgZJv244qmXg?part=ug-desktop&corr=207028146053068244",
+      "icon": "pandora",
+      "color": "#3668FF"
+    },
+    {
+      "id": "webamp",
+      "name": "WebAmp",
+      "url": "https://archive.org/details/storm-before-the-storm?webamp=default",
+      "icon": "webamp",
+      "color": "#5BC236"
     }
   ]
 }

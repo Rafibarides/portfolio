@@ -62,6 +62,18 @@ const PlatformIcon = ({ platform }) => {
           <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
         </svg>
       );
+    case 'pandora':
+      return (
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm3.5 16.5h-7v-9h7c1.657 0 3 1.343 3 3v3c0 1.657-1.343 3-3 3z"/>
+        </svg>
+      );
+    case 'webamp':
+      return (
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M3 3h18v18H3V3zm2 2v14h14V5H5zm2 2h10v2H7V7zm0 4h10v2H7v-2zm0 4h6v2H7v-2z"/>
+        </svg>
+      );
     default:
       return (
         <svg viewBox="0 0 24 24" fill="currentColor">
