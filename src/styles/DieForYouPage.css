@@ -1,0 +1,541 @@
+/* Die For You Page Styles */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+
+.die-for-you-page {
+  min-height: 100vh;
+  background: #050507;
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(220, 38, 38, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 100%, rgba(236, 72, 153, 0.06) 0%, transparent 50%);
+  color: #e8e8ed;
+  padding: 0 0 4rem;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+.die-for-you-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Back Link */
+.die-for-you-page .back-link {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+}
+
+.die-for-you-page .back-link:hover {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Hero Section */
+.song-hero {
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+}
+
+.release-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #ffffff;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  padding: 0.5rem 1.25rem;
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% {
+    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(220, 38, 38, 0.6);
+  }
+}
+
+.song-hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3rem, 12vw, 5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  margin: 0 0 1rem;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.song-credits {
+  font-size: 1.25rem;
+  color: #b8b8c0;
+  margin: 0;
+  font-weight: 400;
+}
+
+.song-credits .feat {
+  color: #6b6b78;
+  font-style: italic;
+  margin: 0 0.25rem;
+}
+
+/* Video Section */
+.video-section {
+  margin-bottom: 2.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0a0a0c;
+  box-shadow: 
+    0 25px 60px -12px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Stream Section */
+.stream-section {
+  margin-bottom: 2.5rem;
+}
+
+.stream-section h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+.stream-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stream-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stream-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stream-card:hover::before {
+  opacity: 1;
+}
+
+.stream-card:hover {
+  transform: translateY(-2px) scale(1.01);
+}
+
+.stream-card:active {
+  transform: scale(0.98);
+}
+
+/* Spotify */
+.stream-card.spotify {
+  background: rgba(30, 215, 96, 0.1);
+  border: 1px solid rgba(30, 215, 96, 0.2);
+}
+
+.stream-card.spotify::before {
+  background: linear-gradient(135deg, rgba(30, 215, 96, 0.15) 0%, rgba(30, 215, 96, 0.05) 100%);
+}
+
+.stream-card.spotify .stream-icon {
+  color: #1ed760;
+}
+
+.stream-card.spotify .stream-action {
+  background: #1ed760;
+  color: #000000;
+}
+
+/* Apple */
+.stream-card.apple {
+  background: rgba(252, 60, 68, 0.1);
+  border: 1px solid rgba(252, 60, 68, 0.2);
+}
+
+.stream-card.apple::before {
+  background: linear-gradient(135deg, rgba(252, 60, 68, 0.15) 0%, rgba(252, 60, 68, 0.05) 100%);
+}
+
+.stream-card.apple .stream-icon {
+  color: #fc3c44;
+}
+
+.stream-card.apple .stream-action {
+  background: #fc3c44;
+  color: #ffffff;
+}
+
+/* SoundCloud */
+.stream-card.soundcloud {
+  background: rgba(255, 85, 0, 0.1);
+  border: 1px solid rgba(255, 85, 0, 0.2);
+}
+
+.stream-card.soundcloud::before {
+  background: linear-gradient(135deg, rgba(255, 85, 0, 0.15) 0%, rgba(255, 85, 0, 0.05) 100%);
+}
+
+.stream-card.soundcloud .stream-icon {
+  color: #ff5500;
+}
+
+.stream-card.soundcloud .stream-action {
+  background: #ff5500;
+  color: #ffffff;
+}
+
+.stream-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stream-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.stream-name {
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.stream-action {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+}
+
+/* Cover Section */
+.cover-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.cover-art {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 0 80px rgba(220, 38, 38, 0.15);
+}
+
+/* Artists Section */
+.artists-section {
+  margin-bottom: 2.5rem;
+}
+
+.artists-section h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+.artist-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.artist-card:last-child {
+  margin-bottom: 0;
+}
+
+.artist-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.6rem;
+}
+
+.artist-card p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #a0a0ab;
+  margin: 0;
+}
+
+.artist-card em {
+  color: #b8b8c0;
+  font-style: italic;
+}
+
+/* Live Show CTA */
+.live-show-cta {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(168, 85, 247, 0.08) 100%);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.cta-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.cta-label {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.15);
+  padding: 0.35rem 0.9rem;
+  border-radius: 100px;
+  margin-bottom: 0.75rem;
+}
+
+.live-show-cta h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 0.75rem;
+}
+
+.live-show-cta p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #a0a0ab;
+  margin: 0 0 0.5rem;
+}
+
+.live-show-cta strong {
+  color: #e8e8ed;
+}
+
+.cta-date {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0.75rem 0 1.25rem !important;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: #ffffff;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 100px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.cta-button:active {
+  transform: scale(0.98);
+}
+
+.cta-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Footer */
+.song-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+  color: #3a3a45;
+  font-size: 0.8rem;
+}
+
+.song-footer p {
+  margin: 0;
+}
+
+/* Responsive - Mobile First Optimizations */
+@media (max-width: 480px) {
+  .die-for-you-page {
+    padding-bottom: 5rem;
+  }
+
+  .die-for-you-page .back-link {
+    bottom: 1rem;
+    left: 1rem;
+    font-size: 0.8rem;
+    padding: 0.55rem 1rem;
+  }
+
+  .song-hero {
+    padding: 3rem 0.5rem 1.5rem;
+  }
+
+  .release-badge {
+    font-size: 0.65rem;
+    padding: 0.4rem 1rem;
+  }
+
+  .song-hero h1 {
+    font-size: clamp(2.5rem, 15vw, 4rem);
+  }
+
+  .song-credits {
+    font-size: 1.1rem;
+  }
+
+  .video-wrapper {
+    border-radius: 12px;
+  }
+
+  .stream-card {
+    padding: 0.9rem 1rem;
+    border-radius: 12px;
+  }
+
+  .stream-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .stream-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .stream-name {
+    font-size: 0.95rem;
+  }
+
+  .stream-action {
+    font-size: 0.75rem;
+    padding: 0.45rem 0.85rem;
+  }
+
+  .cover-art {
+    max-width: 260px;
+    border-radius: 12px;
+  }
+}
+
+/* Tablet and up */
+@media (min-width: 600px) {
+  .die-for-you-container {
+    padding: 0 2rem;
+  }
+
+  .song-hero {
+    padding: 5rem 1rem 3rem;
+  }
+
+  .stream-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .stream-card {
+    flex: 1;
+    min-width: 180px;
+    max-width: 220px;
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem 1rem;
+  }
+
+  .stream-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.5rem;
+  }
+
+  .stream-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .stream-name {
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* Smooth scroll behavior */
+@media (prefers-reduced-motion: no-preference) {
+  .die-for-you-page {
+    scroll-behavior: smooth;
+  }
+}
